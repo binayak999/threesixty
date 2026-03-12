@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200" width="1200" height="200">
+  <defs>
+    <linearGradient id="skylineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e0e0e0;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#d0d0d0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c0c0c0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Mountains Background -->
+  <path d="M0,200 L0,120 L50,80 L100,100 L150,60 L200,90 L250,50 L300,80 L350,40 L400,70 L450,30 L500,60 L550,20 L600,50 L650,15 L700,45 L750,25 L800,55 L850,35 L900,65 L950,45 L1000,75 L1050,55 L1100,85 L1150,65 L1200,95 L1200,200 Z" fill="url(#skylineGradient)" opacity="0.3"/>
+  
+  <!-- Main Skyline -->
+  <g fill="url(#skylineGradient)" opacity="0.7">
+    <!-- Left section - Mountains and temples -->
+    <path d="M0,200 L0,160 L30,140 L60,150 L80,130 L100,140 L120,120 L140,130 L160,110 L180,120 L200,100 L220,110 L240,90 L260,100 L280,80 L300,90 L320,70 L340,80 L360,60 L380,70 L400,50 L420,60 L440,200 Z"/>
+    
+    <!-- Temple structures -->
+    <rect x="180" y="100" width="20" height="100"/>
+    <polygon points="180,100 190,80 200,100"/>
+    <rect x="185" y="85" width="10" height="15"/>
+    <polygon points="185,85 190,75 195,85"/>
+    
+    <rect x="320" y="70" width="25" height="130"/>
+    <polygon points="320,70 332.5,45 345,70"/>
+    <rect x="327" y="55" width="11" height="15"/>
+    <polygon points="327,55 332.5,40 338,55"/>
+    
+    <!-- Central buildings -->
+    <rect x="440" y="120" width="30" height="80"/>
+    <rect x="470" y="110" width="25" height="90"/>
+    <rect x="495" y="130" width="20" height="70"/>
+    <rect x="515" y="105" width="35" height="95"/>
+    <rect x="550" y="125" width="28" height="75"/>
+    <rect x="578" y="115" width="22" height="85"/>
+    <rect x="600" y="100" width="40" height="100"/>
+    <rect x="640" y="135" width="25" height="65"/>
+    <rect x="665" y="110" width="30" height="90"/>
+    <rect x="695" y="140" width="20" height="60"/>
+    
+    <!-- Traditional pagoda -->
+    <rect x="720" y="90" width="30" height="110"/>
+    <polygon points="720,90 735,65 750,90"/>
+    <rect x="725" y="75" width="20" height="15"/>
+    <polygon points="725,75 735,55 745,75"/>
+    <rect x="730" y="65" width="10" height="10"/>
+    <polygon points="730,65 735,50 740,65"/>
+    
+    <!-- Right section buildings -->
+    <rect x="750" y="125" width="25" height="75"/>
+    <rect x="775" y="105" width="35" height="95"/>
+    <rect x="810" y="130" width="20" height="70"/>
+    <rect x="830" y="115" width="30" height="85"/>
+    <rect x="860" y="100" width="25" height="100"/>
+    <rect x="885" y="120" width="40" height="80"/>
+    <rect x="925" y="110" width="30" height="90"/>
+    <rect x="955" y="135" width="25" height="65"/>
+    <rect x="980" y="105" width="35" height="95"/>
+    <rect x="1015" y="125" width="28" height="75"/>
+    <rect x="1043" y="115" width="22" height="85"/>
+    <rect x="1065" y="140" width="20" height="60"/>
+    <rect x="1085" y="120" width="30" height="80"/>
+    <rect x="1115" y="130" width="25" height="70"/>
+    <rect x="1140" y="110" width="35" height="90"/>
+    <rect x="1175" y="125" width="25" height="75"/>
+  </g>
+  
+  <!-- Far background mountains -->
+  <path d="M0,200 L0,170 L100,150 L200,160 L300,140 L400,155 L500,135 L600,150 L700,130 L800,145 L900,125 L1000,140 L1100,120 L1200,135 L1200,200 Z" fill="url(#skylineGradient)" opacity="0.2"/>
+</svg>

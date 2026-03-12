@@ -1,0 +1,39 @@
+{
+  "name": "threesixtynepal-server",
+  "version": "1.0.0",
+  "description": "360Nepal API - TypeScript Express Mongoose backend",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "lint": "tsc --noEmit",
+    "seed:admin": "ts-node src/scripts/seed-admin.ts",
+    "seed:refs": "ts-node src/scripts/seed-refs.ts",
+    "seed:locations": "ts-node src/scripts/seed-locations-from-csv.ts",
+    "assign-media-to-user": "ts-node src/scripts/assign-media-to-user.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "fluent-ffmpeg": "^2.1.3",
+    "mongoose": "^8.3.2",
+    "multer": "^2.1.1",
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/fluent-ffmpeg": "^2.1.27",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/multer": "^2.1.0",
+    "@types/node": "^22.5.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.5.4"
+  }
+}

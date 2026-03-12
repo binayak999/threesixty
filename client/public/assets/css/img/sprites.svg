@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 208" width="26" height="208" shape-rendering="geometricPrecision">
+  <defs>
+    <style>
+      .md-stroke { fill: none; stroke: #5f6368; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+      .md-fill { fill: #5f6368; stroke: none; }
+    </style>
+  </defs>
+  <!-- 0–26: add (zoom in) -->
+  <g class="md-stroke" transform="translate(1, 1)">
+    <path d="M12 4v16M4 12h16"/>
+  </g>
+  <!-- 26–52: remove (zoom out) -->
+  <g class="md-stroke" transform="translate(1, 27)">
+    <path d="M4 12h16"/>
+  </g>
+  <!-- 52–78: fullscreen expand – four L-shapes: TL, TR, BR, BL (clockwise), arms outward -->
+  <g class="md-fill" transform="translate(1, 53)">
+    <path d="M0 0h24v4H4v20H0Z"/>
+    <path d="M24 0H0v4h20v20h4V0Z"/>
+    <path d="M24 24H0v-4h20v-20h4V24Z"/>
+    <path d="M0 24h24v-4H4V4H0v20Z"/>
+  </g>
+  <!-- 78–104: fullscreen exit – four L-shapes: TL, TR, BR, BL (clockwise), arms inward -->
+  <g class="md-fill" transform="translate(1, 79)">
+    <path d="M0 0h20v4H4v16H0Z"/>
+    <path d="M24 0H4v4h16v16h4V0Z"/>
+    <path d="M24 24H4v-4h-16v-16h-4V24Z"/>
+    <path d="M0 24h20v-4H4v-16H0V24Z"/>
+  </g>
+  <!-- 156–182: gps_fixed (orientation) -->
+  <g class="md-stroke" transform="translate(1, 157)">
+    <circle cx="12" cy="12" r="4"/>
+    <path d="M12 3v4M12 17v4M3 12h4M17 12h4"/>
+  </g>
+  <!-- 182–208: orientation active -->
+  <g class="md-stroke" transform="translate(1, 183)">
+    <circle cx="12" cy="12" r="4"/>
+    <path d="M12 3v4M12 17v4M3 12h4M17 12h4"/>
+  </g>
+</svg>

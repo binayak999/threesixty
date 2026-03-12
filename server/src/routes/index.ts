@@ -1,0 +1,38 @@
+import { Router } from 'express';
+import listingRoutes from './listings';
+import authRoutes from './auth';
+import mediaRoutes from './media';
+import blogRoutes from './blogs';
+import blogCommentRoutes from './blogComments';
+import categoryRoutes from './categories';
+import reviewRoutes from './reviews';
+import settingRoutes from './settings';
+import amenityRoutes from './amenities';
+import locationRoutes from './locations';
+import countryRoutes from './countries';
+import menuItemRoutes from './menuItems';
+import videoRoutes from './videos';
+import bannerRoutes from './banners';
+import pageRoutes from './pages';
+import userRoutes from './users';
+
+const router = Router();
+
+router.use('/users', userRoutes);
+router.use('/listings', listingRoutes);
+router.use('/categories', categoryRoutes);
+router.use('/auth', authRoutes);
+router.use('/media', mediaRoutes);
+router.use('/blogs', blogRoutes);
+router.use('/blog-comments', blogCommentRoutes);
+router.use('/reviews', reviewRoutes);
+router.use('/settings', settingRoutes);
+router.use('/amenities', amenityRoutes);
+router.use('/locations', locationRoutes);
+router.use('/countries', countryRoutes);
+router.use('/menu-items', menuItemRoutes);
+router.use('/videos', videoRoutes);
+router.use('/banners', bannerRoutes);
+router.use('/pages', pageRoutes);
+
+export default router;

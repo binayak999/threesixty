@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Build / cache
+.next/
+out/
+dist/
+*.tsbuildinfo
+
+# Env and secrets
+.env
+.env.*
+!.env.example
+
+# Logs and OS
+*.log
+.DS_Store
+
+# Uploads (user media)
+uploads/

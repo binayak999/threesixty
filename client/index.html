@@ -1,0 +1,1931 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="assets/images/favicon.png">
+    <title>360Nepal - Discover Every Angle, Every Story : Explore, Connect , Thrive</title>
+    <link href="assets/plugins/aos/aos.min.css" rel="stylesheet">
+    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/plugins/fontawesome/css/all.min.css" rel="stylesheet">
+    <link href="assets/plugins/OwlCarousel2/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="assets/plugins/OwlCarousel2/css/owl.theme.default.min.css" rel="stylesheet">
+    <link href="assets/plugins/jquery-fancyfileuploader/fancy-file-uploader/fancy_fileupload.css" rel="stylesheet">
+    <link href="assets/plugins/ion.rangeSlider/ion.rangeSlider.min.css" rel="stylesheet">
+    <link href="assets/plugins/magnific-popup/magnific-popup.css" rel="stylesheet">
+    <link href="assets/plugins/select2/select2.min.css" rel="stylesheet">
+    <link href="assets/plugins/select2-bootstrap-5/select2-bootstrap-5-theme.min.css" rel="stylesheet">
+    <!-- Custom style for this template -->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/custom.css" rel="stylesheet">
+    <link href="assets/css/footer.css" rel="stylesheet">
+    <link href="assets/css/pannellum.css" rel="stylesheet">
+</head>
+
+<body>
+     <!-- start navbar -->
+     <nav class="custom-navbar navbar navbar-expand-lg navbar-fixed navbar-transfarent">
+        <div class="container">
+            <a class="navbar-brand m-0" href="index.html">
+                <img class="logo-white" src="assets/images/logo-white.png" alt="">
+                <img class="logo-dark" src="assets/images/logo.gif" alt="">
+            </a>
+            <div class="d-flex order-lg-2">
+                <!-- start button -->
+                <a href="signin.html" class="d-flex align-items-center justify-content-center p-0 btn-user position-relative" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" data-bs-title="Favourite">
+                    <i class="fa-solid fa-heart"></i>
+                    <span class="align-items-center bg-primary d-flex end-0 fs-11 justify-content-center nav-count position-absolute rounded-circle text-white">0</span>
+                </a>
+                <!-- end /. button -->
+                <!-- start button -->
+                <a href="sign-in.html" class="d-flex align-items-center justify-content-center p-0 btn-user" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" data-bs-title="Sign In">
+                    <i class="fa-solid fa-user-plus"></i>
+                </a>
+                <!-- end /. button -->
+                <!-- start button -->
+                <button type="button" id="themeToggleBtn" class="align-items-center bg-transparent border-0 btn-user d-flex justify-content-center p-0">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <!-- end /. button -->
+                <!-- start button -->
+                <a href="add-listing.html" class="btn btn-primary d-none d-sm-flex fw-medium gap-2 hstack rounded-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                    </svg>
+                    <div class="vr d-none d-sm-inline-block"></div>
+                    <span class="d-none d-sm-inline-block">Add Listing</span>
+                </a>
+                <!-- end /. button -->
+                <!-- start navbar toggle button -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span id="nav-icon" class="">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
+                <!-- end /. navbar toggle button -->
+            </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav m-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" aria-current="page" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            Home
+                        </a>                       
+                    </li>                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="typcn typcn-weather-stormy top-menu-icon"></i>Dashboard
+                        </a>                       
+                    </li>                 
+                    <li class="nav-item">
+                        <a class="nav-link" href="listings-grid-1-left.html">Business</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog-archive.html">Blogs</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            About
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="nav-item dropdown">
+                                <a class="dropdown-item" href="about.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">About</a>                                
+                            </li>
+                           <li><a class="dropdown-item" href="contact.html">Contact</a></li>
+                            <li><a class="dropdown-item" href="pricing.html">Pricing</a></li>                           
+                            <li class="nav-item dropdown">
+                                <a class="dropdown-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Help Center</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="faq.html">Faq Page</a></li>
+                                    <li><a class="dropdown-item" href="terms-conditions.html">Terms & Conditions</a></li>
+                                </ul>
+                            </li>              
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-sm-none">
+                    <!-- start button -->
+                    <a href="signin.html" class="btn btn-primary d-flex gap-2 hstack justify-content-center rounded-3">
+                        <div class="vr d-none d-sm-inline-block"></div>
+                        <span>Add Listing</span>
+                    </a>
+                    <!-- end /. button -->
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- end /. navbar -->
+    <!-- start hero header (classic) -->
+    <div class="align-items-center bg-dark d-flex hero-header-classic overflow-hidden position-relative">
+        <!-- Replace slider with pannellum 360 panorama iframe -->
+        <div class="position-absolute w-100 h-100 top-0 start-0">
+            <!-- <div id="panorama"></div> -->
+           <iframe width="100%" height="100%" allowfullscreen style="border-style:none;" 
+          
+                src="https://cdn.pannellum.org/2.5/pannellum.htm#panorama=https://i.imgur.com/G7t9QD9.jpg&amp;autoLoad=true&amp;autoRotate=-2">
+            </iframe> 
+        </div>
+        
+        <!-- Content overlay on top of the 360 panorama -->
+        <div class="container position-relative z-1">
+            <div class="hero-header-subtitle text-center text-white text-uppercase mb-3">WE ARE #1 ON THE MARKET</div>
+            <h1 class="display-1 fw-bold hero-header_title text-capitalize text-white text-center mb-5">We're Here to Help You<br class="d-none d-lg-block"> <span class="font-caveat text-span">Navigate</span> While Traveling</h1>
+            <div class="lead mb-4 mb-sm-5 text-center text-white">You'll get comprehensive results based on the provided location.</div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <!-- search content remains the same -->
+                    <div class="border-0 card d-flex flex-md-row position-relative search-wrapper">
+                        <div class="align-items-center d-flex search-field w-100">
+                            <div class="svg-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                </svg>
+                            </div>
+                            <input type="email" class="form-control search-input" placeholder="What are you looking for?">
+                        </div>
+                        <div class="vertical-divider"></div>
+                        <div class="align-items-center d-flex search-field w-100">
+                            <div class="svg-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
+                                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                </svg>
+                            </div>
+                            <select class="form-select search-select-field">
+                                <option selected>Location</option>
+                                <option value="1">Florence, Italy</option>
+                                <option value="2">Second choice</option>
+                                <option value="3">Third choice</option>
+                            </select>
+                        </div>
+                        <input type="submit" value="Search places" class="btn btn-primary rounded-5 mt-3 mt-md-0">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end /. hero header (classic) -->
+    <!-- start categories section -->
+    <div class="py-5 bg-light rounded-4 mx-3 mt-3">
+        <div class="container py-4">
+            <div class="row justify-content-center">
+                <div class="col-sm-10 col-md-10 col-lg-8 col-xl-7">
+                    <!-- start section header -->
+                    <div class="section-header text-center mb-5" data-aos="fade-down">
+                        <!-- start subtitle -->
+                        <div class="d-inline-block font-caveat fs-1 fw-medium section-header__subtitle text-capitalize text-primary">Categories</div>
+                        <!-- end /. subtitle -->
+                        <!-- start title -->
+                        <h2 class="display-5 fw-semibold mb-3 section-header__title text-capitalize">Global Categories</h2>
+                        <!-- end /. title -->
+                        <!-- start description -->
+                        <div class="sub-title fs-16">Discover exciting categories. <span class="text-primary fw-semibold">Find what you’re looking for.</span></div>
+                        <!-- end /. description -->
+                    </div>
+                    <!-- end /. section header -->
+                </div>
+            </div>
+            <div class="row g-3 g-lg-4">
+                <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex">
+                    <div class="border-0 card card-hover company-card flex-fill rounded-3 w-100">
+                        <!-- start card link -->
+                        <a href="listings-map-grid-1.html" class="stretched-link"></a>
+                        <!-- end /. card link -->
+                        <div class="card-body d-flex flex-column">
+                            <div class="text-end mb-4 text-primary">
+                                <!-- Start Image -->
+                                <i class="fa-solid fa-utensils fs-2"></i>
+                                <!-- /. End Image -->
+                            </div>
+                            <div class="mt-auto">
+                                <!-- Start Title -->
+                                <h5 class="mb-2">Restaurant</h5>
+                                <!-- End Title -->
+                                <!-- start link -->
+                                <div class="small mt-2 d-flex align-items-center gap-2 fw-medium text-primary">
+                                    <span>Explore Now</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square fs-12"></i>
+                                </div>
+                                <!-- end /. link -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex">
+                    <div class="border-0 card card-hover company-card flex-fill rounded-3 w-100">
+                        <!-- start card link -->
+                        <a href="listings-map-grid-1.html" class="stretched-link"></a>
+                        <!-- end /. card link -->
+                        <div class="card-body d-flex flex-column">
+                            <div class="text-end mb-4 text-primary">
+                                <!-- Start Image -->
+                                <i class="fa-solid fa-headphones fs-2"></i>
+                                <!-- /. End Image -->
+                            </div>
+                            <div class="mt-auto">
+                                <!-- Start Title -->
+                                <h5 class="mb-2">Music</h5>
+                                <!-- End Title -->
+                                <!-- start link -->
+                                <div class="small mt-2 d-flex align-items-center gap-2 fw-medium text-primary">
+                                    <span>Explore Now</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square fs-12"></i>
+                                </div>
+                                <!-- end /. link -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex">
+                    <div class="border-0 card card-hover company-card flex-fill rounded-3 w-100">
+                        <!-- start card link -->
+                        <a href="listings-map-grid-1.html" class="stretched-link"></a>
+                        <!-- end /. card link -->
+                        <div class="card-body d-flex flex-column">
+                            <div class="text-end mb-4 text-primary">
+                                <!-- Start Image -->
+                                <i class="fa-solid fa-dumbbell fs-2"></i>
+                                <!-- /. End Image -->
+                            </div>
+                            <div class="mt-auto">
+                                <!-- Start Title -->
+                                <h5 class="mb-2">Gymnasium</h5>
+                                <!-- End Title -->
+                                <!-- start link -->
+                                <div class="small mt-2 d-flex align-items-center gap-2 fw-medium text-primary">
+                                    <span>Explore Now</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square fs-12"></i>
+                                </div>
+                                <!-- end /. link -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex">
+                    <div class="border-0 card card-hover company-card flex-fill rounded-3 w-100">
+                        <!-- start card link -->
+                        <a href="listings-map-grid-1.html" class="stretched-link"></a>
+                        <!-- end /. card link -->
+                        <div class="card-body d-flex flex-column">
+                            <div class="text-end mb-4 text-primary">
+                                <!-- Start Image -->
+                                <i class="fa-solid fa-building-user fs-2"></i>
+                                <!-- /. End Image -->
+                            </div>
+                            <div class="mt-auto">
+                                <!-- Start Title -->
+                                <h5 class="mb-2">Appartment</h5>
+                                <!-- End Title -->
+                                <!-- start link -->
+                                <div class="small mt-2 d-flex align-items-center gap-2 fw-medium text-primary">
+                                    <span>Explore Now</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square fs-12"></i>
+                                </div>
+                                <!-- end /. link -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex">
+                    <div class="border-0 card card-hover company-card flex-fill rounded-3 w-100">
+                        <!-- start card link -->
+                        <a href="listings-map-grid-1.html" class="stretched-link"></a>
+                        <!-- end /. card link -->
+                        <div class="card-body d-flex flex-column">
+                            <div class="text-end mb-4 text-primary">
+                                <!-- Start Image -->
+                                <i class="fa-solid fa-bag-shopping fs-2"></i>
+                                <!-- /. End Image -->
+                            </div>
+                            <div class="mt-auto">
+                                <!-- Start Title -->
+                                <h5 class="mb-2">Shopping</h5>
+                                <!-- End Title -->
+                                <!-- start link -->
+                                <div class="small mt-2 d-flex align-items-center gap-2 fw-medium text-primary">
+                                    <span>Explore Now</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square fs-12"></i>
+                                </div>
+                                <!-- end /. link -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex">
+                    <div class="border-0 card card-hover company-card flex-fill rounded-3 w-100">
+                        <!-- start card link -->
+                        <a href="listings-map-grid-1.html" class="stretched-link"></a>
+                        <!-- end /. card link -->
+                        <div class="card-body d-flex flex-column">
+                            <div class="text-end mb-4 text-primary">
+                                <!-- Start Image -->
+                                <i class="fa-solid fa-tv fs-2"></i>
+                                <!-- /. End Image -->
+                            </div>
+                            <div class="mt-auto">
+                                <!-- Start Title -->
+                                <h5 class="mb-2">TV Shows</h5>
+                                <!-- End Title -->
+                                <!-- start link -->
+                                <div class="small mt-2 d-flex align-items-center gap-2 fw-medium text-primary">
+                                    <span>Explore Now</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square fs-12"></i>
+                                </div>
+                                <!-- end /. link -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex">
+                    <div class="border-0 card card-hover company-card flex-fill rounded-3 w-100">
+                        <!-- start card link -->
+                        <a href="listings-map-grid-1.html" class="stretched-link"></a>
+                        <!-- end /. card link -->
+                        <div class="card-body d-flex flex-column">
+                            <div class="text-end mb-4 text-primary">
+                                <!-- Start Image -->
+                                <i class="fa-solid fa-paintbrush fs-2"></i>
+                                <!-- /. End Image -->
+                            </div>
+                            <div class="mt-auto">
+                                <!-- Start Title -->
+                                <h5 class="mb-2">Creative & Digital</h5>
+                                <!-- End Title -->
+                                <!-- start link -->
+                                <div class="small mt-2 d-flex align-items-center gap-2 fw-medium text-primary">
+                                    <span>Explore Now</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square fs-12"></i>
+                                </div>
+                                <!-- end /. link -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex">
+                    <div class="border-0 card card-hover company-card flex-fill rounded-3 w-100">
+                        <!-- start card link -->
+                        <a href="listings-map-grid-1.html" class="stretched-link"></a>
+                        <!-- end /. card link -->
+                        <div class="card-body d-flex flex-column">
+                            <div class="text-end mb-4 text-primary">
+                                <!-- Start Image -->
+                                <i class="fa-solid fa-shield-virus fs-2"></i>
+                                <!-- /. End Image -->
+                            </div>
+                            <div class="mt-auto">
+                                <!-- Start Title -->
+                                <h5 class="mb-2">Health & beauty</h5>
+                                <!-- End Title -->
+                                <!-- start link -->
+                                <div class="small mt-2 d-flex align-items-center gap-2 fw-medium text-primary">
+                                    <span>Explore Now</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square fs-12"></i>
+                                </div>
+                                <!-- end /. link -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex">
+                    <div class="border-0 card card-hover company-card flex-fill rounded-3 w-100">
+                        <!-- start card link -->
+                        <a href="listings-map-grid-1.html" class="stretched-link"></a>
+                        <!-- end /. card link -->
+                        <div class="card-body d-flex flex-column">
+                            <div class="text-end mb-4 text-primary">
+                                <!-- Start Image -->
+                                <i class="fa-solid fa-shirt fs-2"></i>
+                                <!-- /. End Image -->
+                            </div>
+                            <div class="mt-auto">
+                                <!-- Start Title -->
+                                <h5 class="mb-2">Fashion</h5>
+                                <!-- End Title -->
+                                <!-- start link -->
+                                <div class="small mt-2 d-flex align-items-center gap-2 fw-medium text-primary">
+                                    <span>Explore Now</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square fs-12"></i>
+                                </div>
+                                <!-- end /. link -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex">
+                    <div class="border-0 card card-hover company-card flex-fill rounded-3 w-100">
+                        <!-- start card link -->
+                        <a href="listings-map-grid-1.html" class="stretched-link"></a>
+                        <!-- end /. card link -->
+                        <div class="card-body d-flex flex-column">
+                            <div class="text-end mb-4 text-primary">
+                                <!-- Start Image -->
+                                <i class="fa-solid fa-gem fs-2"></i>
+                                <!-- /. End Image -->
+                            </div>
+                            <div class="mt-auto">
+                                <!-- Start Title -->
+                                <h5 class="mb-2">Jewelry</h5>
+                                <!-- End Title -->
+                                <!-- start link -->
+                                <div class="small mt-2 d-flex align-items-center gap-2 fw-medium text-primary">
+                                    <span>Explore Now</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square fs-12"></i>
+                                </div>
+                                <!-- end /. link -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex">
+                    <div class="border-0 card card-hover company-card flex-fill rounded-3 w-100">
+                        <!-- start card link -->
+                        <a href="listings-map-grid-1.html" class="stretched-link"></a>
+                        <!-- end /. card link -->
+                        <div class="card-body d-flex flex-column">
+                            <div class="text-end mb-4 text-primary">
+                                <!-- Start Image -->
+                                <i class="fa-solid fa-motorcycle fs-2"></i>
+                                <!-- /. End Image -->
+                            </div>
+                            <div class="mt-auto">
+                                <!-- Start Title -->
+                                <h5 class="mb-2">Cars & Motorcycles</h5>
+                                <!-- End Title -->
+                                <!-- start link -->
+                                <div class="small mt-2 d-flex align-items-center gap-2 fw-medium text-primary">
+                                    <span>Explore Now</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square fs-12"></i>
+                                </div>
+                                <!-- end /. link -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 d-flex">
+                    <div class="border-0 card card-hover company-card flex-fill rounded-3 w-100">
+                        <!-- start card link -->
+                        <a href="listings-map-grid-1.html" class="stretched-link"></a>
+                        <!-- end /. card link -->
+                        <div class="card-body d-flex flex-column">
+                            <div class="text-end mb-4 text-primary">
+                                <!-- Start Image -->
+                                <i class="fa-solid fa-puzzle-piece fs-2"></i>
+                                <!-- /. End Image -->
+                            </div>
+                            <div class="mt-auto">
+                                <!-- Start Title -->
+                                <h5 class="mb-2">Video Games & Consoles</h5>
+                                <!-- End Title -->
+                                <!-- start link -->
+                                <div class="small mt-2 d-flex align-items-center gap-2 fw-medium text-primary">
+                                    <span>Explore Now</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square fs-12"></i>
+                                </div>
+                                <!-- end /. link -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end /. categories section -->
+    <!-- start place section -->
+    <div class="py-5">
+        <div class="container py-4">
+            <div class="row justify-content-center">
+                <div class="col-sm-10 col-md-10 col-lg-8 col-xl-7">
+                    <!-- start section header -->
+                    <div class="section-header text-center mb-5" data-aos="fade-down">
+                        <!-- start subtitle -->
+                        <div class="d-inline-block font-caveat fs-1 fw-medium section-header__subtitle text-capitalize text-primary">Places</div>
+                        <!-- end /. subtitle -->
+                        <!-- start title -->
+                        <h2 class="display-5 fw-semibold mb-3 section-header__title text-capitalize">Discover places around Germany</h2>
+                        <!-- end /. title -->
+                        <!-- start description -->
+                        <div class="sub-title fs-16">Discover exciting categories. <span class="text-primary fw-semibold">Find what you’re looking for.</span></div>
+                        <!-- end /. description -->
+                    </div>
+                    <!-- end /. section header -->
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <!-- start card -->
+                    <div class="card rounded-4 h-100 overflow-hidden bg-light border-0">
+                        <div class="position-relative overflow-hidden dark-overlay h-100">
+                            <img src="assets/images/locations/masonry/09.jpg" class="h-100 w-100 object-fit-cover image-zoom-hover" alt="Image">
+                        </div>
+                        <div class="align-items-center badge bg-white d-flex fs-13 fw-semibold justify-content-center position-absolute rounded-4 text-primary top-0 end-0 mt-3 me-3">21 Listing</div>
+                        <div class="card-body py-3">
+                            <h4 class="font-caveat text-primary mb-0">germany</h4>
+                            <h5 class="mb-0 fw-semibold"><a href="listings-map-grid-1.html" class="stretched-link">Berlin</a></h5>
+                        </div>
+                    </div>
+                    <!-- end/. card -->
+                </div>
+                <div class="col-md-3">
+                    <!-- start card -->
+                    <div class="card rounded-4 h-100 overflow-hidden bg-light border-0">
+                        <div class="position-relative overflow-hidden dark-overlay h-100">
+                            <img src="assets/images/locations/masonry/10.jpg" class="h-100 w-100 object-fit-cover image-zoom-hover" alt="Image">
+                        </div>
+                        <div class="align-items-center badge bg-white d-flex fs-13 fw-semibold justify-content-center position-absolute rounded-4 text-primary top-0 end-0 mt-3 me-3">69 Listing</div>
+                        <div class="card-body py-3">
+                            <h4 class="font-caveat text-primary mb-0">germany</h4>
+                            <h5 class="mb-0 fw-semibold"><a href="listings-map-grid-1.html" class="stretched-link">Hamburg</a></h5>
+                        </div>
+                    </div>
+                    <!-- end/. card -->
+                </div>
+                <div class="col-md-3">
+                    <div class="row g-4 h-100">
+                        <div class="col-12">
+                            <!-- start card -->
+                            <div class="card rounded-4 h-100 overflow-hidden bg-light border-0">
+                                <div class="position-relative overflow-hidden dark-overlay h-100">
+                                    <img src="assets/images/locations/masonry/11.jpg" class="h-100 w-100 object-fit-cover image-zoom-hover" alt="Image">
+                                </div>
+                                <div class="align-items-center badge bg-white d-flex fs-13 fw-semibold justify-content-center position-absolute rounded-4 text-primary top-0 end-0 mt-3 me-3">27 Listing</div>
+                                <div class="card-body py-3">
+                                    <h4 class="font-caveat text-primary mb-0">germany</h4>
+                                    <h5 class="mb-0 fw-semibold"><a href="listings-map-grid-1.html" class="stretched-link">Munich</a></h5>
+                                </div>
+                            </div>
+                            <!-- end/. card -->
+                        </div>
+                        <div class="col-12">
+                            <!-- start card -->
+                            <div class="card rounded-4 h-100 overflow-hidden bg-light border-0">
+                                <div class="position-relative overflow-hidden dark-overlay h-100">
+                                    <img src="assets/images/locations/masonry/12.jpg" class="h-100 w-100 object-fit-cover image-zoom-hover" alt="Image">
+                                </div>
+                                <div class="align-items-center badge bg-white d-flex fs-13 fw-semibold justify-content-center position-absolute rounded-4 text-primary top-0 end-0 mt-3 me-3">109 Listing</div>
+                                <div class="card-body py-3">
+                                    <h4 class="font-caveat text-primary mb-0">germany</h4>
+                                    <h5 class="mb-0 fw-semibold"><a href="listings-map-grid-1.html" class="stretched-link">Bremen</a></h5>
+                                </div>
+                            </div>
+                            <!-- end/. card -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end /. place section -->
+
+ <!-- start popular restaurants -->
+ <div class="py-5 bg-light rounded-4 mx-3 my-3 bg-size-contain js-bg-image js-bg-image-lines" data-image-src="assets/images/lines.svg">
+    <div class="container">
+        <div class="align-items-end row g-4 mb-5" data-aos="fade-down">
+            <div class="col">
+                <!-- start section header -->
+                <div class="section-header">
+                    <!-- start subtitle -->
+                    <div class="font-caveat fs-1 fw-medium section-header__subtitle text-capitalize text-center text-primary text-xl-start">Popular</div>
+                    <!-- end /. subtitle -->
+                    <!-- start title -->
+                    <h2 class="fw-semibold mb-0 section-header__title text-capitalize text-center text-xl-start display-6">Popular Restaurants</h2>
+                    <!-- end /. title -->
+                    <!-- start description -->
+                    <div class="sub-title fs-16 text-center text-xl-start">Discover exciting categories. <span class="text-primary fw-semibold">Find what you’re looking for.</span></div>
+                    <!-- end /. description -->
+                </div>
+                <!-- end /. section header -->
+            </div>
+            <div class="col-12 col-xl-auto">
+                <!-- start button -->
+                <a href="listings-map-grid-1.html" class="align-items-center d-flex fs-14 fw-bold gap-2 justify-content-center justify-content-xl-end l-spacing-1 text-primary text-uppercase">
+                    See All
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0v-6z"></path>
+                    </svg>
+                </a>
+                <!-- end /. button -->
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-6 d-flex">
+                <!-- start card list -->
+                <div class="border-0 card card-hover flex-fill overflow-hidden rounded-4 w-100">
+                    <a href="listing-details.html" class="stretched-link"></a>
+                    <div class="card-body p-0">
+                        <div class="g-0 h-100 row">
+                            <div class="bg-white col-lg-5 col-md-5 col-xxl-5 position-relative">
+                                <div class="card-image-hover dark-overlay h-100 overflow-hidden position-relative">
+                                    <!-- start image -->
+                                    <img src="assets/images/place/17.jpg" alt="" class="h-100 w-100 object-fit-cover">
+                                    <!-- end /. image -->
+                                    <div class="align-items-center bg-blur border-0 card-badge d-flex d-inline-block fw-semibold gap-1 position-absolute start-0 text-uppercase text-white z-2"><i class="fa-solid fa-percent me-1"></i>CRAZY+20% OFF</div>
+                                    <div class="align-items-center bg-blur border-0 card-badge d-flex d-inline-block fw-semibold gap-1 position-absolute start-0 text-uppercase text-white z-2">$100 off $399: eblwc</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-xxl-7 p-3 p-lg-4 p-md-3 p-sm-4">
+                                <div class="d-flex flex-column h-100">
+                                    <div class="d-flex end-0 gap-2 me-3 mt-3 position-absolute top-0 z-1">
+                                        <a href="" class="align-items-center bg-light btn-icon d-flex justify-content-center rounded-circle text-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Bookmark">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="align-items-center d-flex flex-wrap gap-1 text-primary  card-start mb-2">
+                                        <!-- start ratings -->
+                                        <i class="fa-solid fa-star"></i>
+                                        <!-- end /. ratings -->
+                                        <!-- start rating counter text -->
+                                        <span class="fw-medium text-primary"><span class="fs-6 fw-semibold me-1">(4.5)</span>2,391 reviews</span>
+                                        <!-- end /. rating counter text -->
+                                    </div>
+                                    <!-- start card title -->
+                                    <h4 class="fs-19 fw-semibold mb-0">
+                                        <span>Vorta Vaji Restaurant</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-patch-check-fill text-success" viewBox="0 0 16 16">
+                                            <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"></path>
+                                        </svg>
+                                    </h4>
+                                    <!-- end /. card title -->
+                                    <!-- start card description -->
+                                    <p class="mt-1 fs-14 text-muted">904, Sobha Ivory II, AL ASAYEL ST, Business Bay, Dubai, UAE.</p>
+                                    <!-- end /. card description -->
+                                    <!-- start contact content -->
+                                    <div class="d-flex flex-wrap gap-3 gap-lg-2 gap-xl-3 mt-auto z-1">
+                                        <a href="tel:+4733378901" class="d-flex gap-2 align-items-center fs-13 fw-semibold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="#9b9b9b" class="bi bi-telephone" viewBox="0 0 16 16">
+                                                <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                                            </svg>
+                                            <span>+1 754-399-1127</span>
+                                        </a>
+                                        <a href="#" class="d-flex gap-2 align-items-center fs-13 fw-semibold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#9b9b9b" class="bi bi-compass" viewBox="0 0 16 16">
+                                                <path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+                                                <path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z" />
+                                            </svg>
+                                            <span>Directions</span>
+                                        </a>
+                                    </div>
+                                    <!-- end contact content -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end /. card list -->
+            </div>
+            <div class="col-lg-6 d-flex">
+                <!-- start card list -->
+                <div class="border-0 card card-hover flex-fill overflow-hidden rounded-4 w-100">
+                    <a href="listing-details.html" class="stretched-link"></a>
+                    <div class="card-body p-0">
+                        <div class="g-0 h-100 row">
+                            <div class="bg-white col-lg-5 col-md-5 col-xxl-5 position-relative">
+                                <div class="card-image-hover dark-overlay h-100 overflow-hidden position-relative">
+                                    <!-- start image -->
+                                    <img src="assets/images/place/18.jpg" alt="" class="h-100 w-100 object-fit-cover">
+                                    <!-- end /. image -->
+                                    <div class="align-items-center bg-blur border-0 card-badge d-flex d-inline-block fw-semibold gap-1 position-absolute start-0 text-uppercase text-white z-2"><i class="fa-solid fa-star me-1"></i>Featured</div>
+                                    <div class="align-items-centercol-lg-6 bg-blur border-0 card-badge d-flex d-inline-block fw-semibold gap-1 position-absolute start-0 text-uppercase text-white z-2">$100 off $399: eblwc</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-xxl-7 p-3 p-lg-4 p-md-3 p-sm-4">
+                                <div class="d-flex flex-column h-100">
+                                    <div class="d-flex end-0 gap-2 me-3 mt-3 position-absolute top-0 z-1">
+                                        <a href="" class="align-items-center bg-light btn-icon d-flex justify-content-center rounded-circle text-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Bookmark">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="align-items-center d-flex flex-wrap gap-1 text-primary  card-start mb-2">
+                                        <!-- start ratings -->
+                                        <i class="fa-solid fa-star"></i>
+                                        <!-- end /. ratings -->
+                                        <!-- start rating counter text -->
+                                        <span class="fw-medium text-primary"><span class="fs-6 fw-semibold me-1">(4.5)</span>2,391 reviews</span>
+                                        <!-- end /. rating counter text -->
+                                    </div>
+                                    <!-- start card title -->
+                                    <h4 class="fs-19 fw-semibold mb-0">
+                                        Chuijhal Hotel And Restaurant
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-patch-check-fill text-success" viewBox="0 0 16 16">
+                                            <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"></path>
+                                        </svg>
+                                    </h4>
+                                    <!-- end /. card title -->
+                                    <!-- start card description -->
+                                    <p class="mt-1 fs-14 text-muted">1115 Broadway, 16 Madison Square West 12th Floor, New York, NY 100101115 Broadway, USA.</p>
+                                    <!-- end /. card description -->
+                                    <!-- start contact content -->
+                                    <div class="d-flex flex-wrap gap-3 gap-lg-2 gap-xl-3 mt-auto z-1">
+                                        <a href="tel:+4733378901" class="d-flex gap-2 align-items-center fs-13 fw-semibold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="#9b9b9b" class="bi bi-telephone" viewBox="0 0 16 16">
+                                                <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                                            </svg>
+                                            <span>+1 754-399-1127</span>
+                                        </a>
+                                        <a href="#" class="d-flex gap-2 align-items-center fs-13 fw-semibold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#9b9b9b" class="bi bi-compass" viewBox="0 0 16 16">
+                                                <path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+                                                <path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z" />
+                                            </svg>
+                                            <span>Directions</span>
+                                        </a>
+                                    </div>
+                                    <!-- end contact content -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end /. card list -->
+            </div>
+            <div class="col-lg-6 d-flex">
+                <!-- start card list -->
+                <div class="border-0 card card-hover flex-fill overflow-hidden rounded-4 w-100">
+                    <a href="listing-details.html" class="stretched-link"></a>
+                    <div class="card-body p-0">
+                        <div class="g-0 h-100 row">
+                            <div class="bg-white col-lg-5 col-md-5 col-xxl-5 position-relative">
+                                <div class="card-image-hover dark-overlay h-100 overflow-hidden position-relative">
+                                    <!-- start image -->
+                                    <img src="assets/images/place/19.jpg" alt="" class="h-100 w-100 object-fit-cover">
+                                    <!-- end /. image -->
+                                    <div class="align-items-center bg-blur border-0 card-badge d-flex d-inline-block fw-semibold gap-1 position-absolute start-0 text-uppercase text-white z-2"><i class="fa-solid fa-star me-1"></i>Featured</div>
+                                    <div class="align-items-center bg-blur border-0 card-badge d-flex d-inline-block fw-semibold gap-1 position-absolute start-0 text-uppercase text-white z-2">$100 off $399: eblwc</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-xxl-7 p-3 p-lg-4 p-md-3 p-sm-4">
+                                <div class="d-flex flex-column h-100">
+                                    <div class="d-flex end-0 gap-2 me-3 mt-3 position-absolute top-0 z-1">
+                                        <a href="" class="align-items-center bg-light btn-icon d-flex justify-content-center rounded-circle text-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Bookmark">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="align-items-center d-flex flex-wrap gap-1 text-primary  card-start mb-2">
+                                        <!-- start ratings -->
+                                        <i class="fa-solid fa-star"></i>
+                                        <!-- end /. ratings -->
+                                        <!-- start rating counter text -->
+                                        <span class="fw-medium text-primary"><span class="fs-6 fw-semibold me-1">(4.5)</span>2,391 reviews</span>
+                                        <!-- end /. rating counter text -->
+                                    </div>
+                                    <!-- start card title -->
+                                    <h4 class="fs-19 fw-semibold mb-0">
+                                        The Barber's Lounge
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-patch-check-fill text-success" viewBox="0 0 16 16">
+                                            <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"></path>
+                                        </svg>
+                                    </h4>
+                                    <!-- end /. card title -->
+                                    <!-- start card description -->
+                                    <p class="mt-1 fs-14 text-muted">13/P Mymensingh Ln, Dhaka 1000,Bangladesh</p>
+                                    <!-- end /. card description -->
+                                    <!-- start contact content -->
+                                    <div class="d-flex flex-wrap gap-3 gap-lg-2 gap-xl-3 mt-auto z-1">
+                                        <a href="tel:+4733378901" class="d-flex gap-2 align-items-center fs-13 fw-semibold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="#9b9b9b" class="bi bi-telephone" viewBox="0 0 16 16">
+                                                <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                                            </svg>
+                                            <span>+1 754-399-1127</span>
+                                        </a>
+                                        <a href="#" class="d-flex gap-2 align-items-center fs-13 fw-semibold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#9b9b9b" class="bi bi-compass" viewBox="0 0 16 16">
+                                                <path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+                                                <path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z" />
+                                            </svg>
+                                            <span>Directions</span>
+                                        </a>
+                                    </div>
+                                    <!-- end contact content -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end /. card list -->
+            </div>
+            <div class="col-lg-6 d-flex">
+                <!-- start card list -->
+                <div class="border-0 card card-hover flex-fill overflow-hidden rounded-4 w-100">
+                    <a href="listing-details.html" class="stretched-link"></a>
+                    <div class="card-body p-0">
+                        <div class="g-0 h-100 row">
+                            <div class="bg-white col-lg-5 col-md-5 col-xxl-5 position-relative">
+                                <div class="card-image-hover dark-overlay h-100 overflow-hidden position-relative">
+                                    <!-- start image -->
+                                    <img src="assets/images/place/20.jpg" alt="" class="h-100 w-100 object-fit-cover">
+                                    <!-- end /. image -->
+                                    <div class="align-items-center bg-blur border-0 card-badge d-flex d-inline-block fw-semibold gap-1 position-absolute start-0 text-uppercase text-white z-2"><i class="fa-solid fa-star me-1"></i>Featured</div>
+                                    <div class="align-items-center bg-blur border-0 card-badge d-flex d-inline-block fw-semibold gap-1 position-absolute start-0 text-uppercase text-white z-2">$100 off $399: eblwc</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-xxl-7 p-3 p-lg-4 p-md-3 p-sm-4">
+                                <div class="d-flex flex-column h-100">
+                                    <div class="d-flex end-0 gap-2 me-3 mt-3 position-absolute top-0 z-1">
+                                        <a href="" class="align-items-center bg-light btn-icon d-flex justify-content-center rounded-circle text-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Bookmark">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="align-items-center d-flex flex-wrap gap-1 text-primary  card-start mb-2">
+                                        <!-- start ratings -->
+                                        <i class="fa-solid fa-star"></i>
+                                        <!-- end /. ratings -->
+                                        <!-- start rating counter text -->
+                                        <span class="fw-medium text-primary"><span class="fs-6 fw-semibold me-1">(4.5)</span>2,391 reviews</span>
+                                        <!-- end /. rating counter text -->
+                                    </div>
+                                    <!-- start card title -->
+                                    <h4 class="fs-19 fw-semibold mb-0">
+                                        Gaming Expo Spectacle
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-patch-check-fill text-success" viewBox="0 0 16 16">
+                                            <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"></path>
+                                        </svg>
+                                    </h4>
+                                    <!-- end /. card title -->
+                                    <!-- start card description -->
+                                    <p class="mt-1 fs-14 text-muted">13/P Mymensingh Ln, Dhaka 1000,Bangladesh</p>
+                                    <!-- end /. card description -->
+                                    <!-- start contact content -->
+                                    <div class="d-flex flex-wrap gap-3 gap-lg-2 gap-xl-3 mt-auto z-1">
+                                        <a href="tel:+4733378901" class="d-flex gap-2 align-items-center fs-13 fw-semibold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="#9b9b9b" class="bi bi-telephone" viewBox="0 0 16 16">
+                                                <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                                            </svg>
+                                            <span>+1 754-399-1127</span>
+                                        </a>
+                                        <a href="#" class="d-flex gap-2 align-items-center fs-13 fw-semibold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#9b9b9b" class="bi bi-compass" viewBox="0 0 16 16">
+                                                <path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+                                                <path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z" />
+                                            </svg>
+                                            <span>Directions</span>
+                                        </a>
+                                    </div>
+                                    <!-- end contact content -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end /. card list -->
+            </div>
+            <div class="col-lg-6 d-flex">
+                <!-- start card list -->
+                <div class="border-0 card card-hover flex-fill overflow-hidden rounded-4 w-100">
+                    <a href="listing-details.html" class="stretched-link"></a>
+                    <div class="card-body p-0">
+                        <div class="g-0 h-100 row">
+                            <div class="bg-white col-lg-5 col-md-5 col-xxl-5 position-relative">
+                                <div class="card-image-hover dark-overlay h-100 overflow-hidden position-relative">
+                                    <!-- start image -->
+                                    <img src="assets/images/place/21.jpg" alt="" class="h-100 w-100 object-fit-cover">
+                                    <!-- end /. image -->
+                                    <div class="align-items-center bg-blur border-0 card-badge d-flex d-inline-block fw-semibold gap-1 position-absolute start-0 text-uppercase text-white z-2"><i class="fa-solid fa-star me-1"></i>Featured</div>
+                                    <div class="align-items-center bg-blur border-0 card-badge d-flex d-inline-block fw-semibold gap-1 position-absolute start-0 text-uppercase text-white z-2">$100 off $399: eblwc</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-xxl-7 p-3 p-lg-4 p-md-3 p-sm-4">
+                                <div class="d-flex flex-column h-100">
+                                    <div class="d-flex end-0 gap-2 me-3 mt-3 position-absolute top-0 z-1">
+                                        <a href="" class="align-items-center bg-light btn-icon d-flex justify-content-center rounded-circle text-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Bookmark">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="align-items-center d-flex flex-wrap gap-1 text-primary  card-start mb-2">
+                                        <!-- start ratings -->
+                                        <i class="fa-solid fa-star"></i>
+                                        <!-- end /. ratings -->
+                                        <!-- start rating counter text -->
+                                        <span class="fw-medium text-primary"><span class="fs-6 fw-semibold me-1">(4.5)</span>2,391 reviews</span>
+                                        <!-- end /. rating counter text -->
+                                    </div>
+                                    <!-- start card title -->
+                                    <h4 class="fs-19 fw-semibold mb-0">
+                                        Burnowl Tours & Travels
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-patch-check-fill text-success" viewBox="0 0 16 16">
+                                            <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"></path>
+                                        </svg>
+                                    </h4>
+                                    <!-- end /. card title -->
+                                    <!-- start card description -->
+                                    <p class="mt-1 fs-14 text-muted">13/P Mymensingh Ln, Dhaka 1000,Bangladesh</p>
+                                    <!-- end /. card description -->
+                                    <!-- start contact content -->
+                                    <div class="d-flex flex-wrap gap-3 gap-lg-2 gap-xl-3 mt-auto z-1">
+                                        <a href="tel:+4733378901" class="d-flex gap-2 align-items-center fs-13 fw-semibold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="#9b9b9b" class="bi bi-telephone" viewBox="0 0 16 16">
+                                                <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                                            </svg>
+                                            <span>+1 754-399-1127</span>
+                                        </a>
+                                        <a href="#" class="d-flex gap-2 align-items-center fs-13 fw-semibold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#9b9b9b" class="bi bi-compass" viewBox="0 0 16 16">
+                                                <path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+                                                <path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z" />
+                                            </svg>
+                                            <span>Directions</span>
+                                        </a>
+                                    </div>
+                                    <!-- end contact content -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end /. card list -->
+            </div>
+            <div class="col-lg-6 d-flex">
+                <!-- start card list -->
+                <div class="border-0 card card-hover flex-fill overflow-hidden rounded-4 w-100">
+                    <a href="listing-details.html" class="stretched-link"></a>
+                    <div class="card-body p-0">
+                        <div class="g-0 h-100 row">
+                            <div class="bg-white col-lg-5 col-md-5 col-xxl-5 position-relative">
+                                <div class="card-image-hover dark-overlay h-100 overflow-hidden position-relative">
+                                    <!-- start image -->
+                                    <img src="assets/images/place/22.jpg" alt="" class="h-100 w-100 object-fit-cover">
+                                    <!-- end /. image -->
+                                    <div class="align-items-center bg-blur border-0 card-badge d-flex d-inline-block fw-semibold gap-1 position-absolute start-0 text-uppercase text-white z-2"><i class="fa-solid fa-star me-1"></i>Featured</div>
+                                    <div class="align-items-center bg-blur border-0 card-badge d-flex d-inline-block fw-semibold gap-1 position-absolute start-0 text-uppercase text-white z-2">$100 off $399: eblwc</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-xxl-7 p-3 p-lg-4 p-md-3 p-sm-4">
+                                <div class="d-flex flex-column h-100">
+                                    <div class="d-flex end-0 gap-2 me-3 mt-3 position-absolute top-0 z-1">
+                                        <a href="" class="align-items-center bg-light btn-icon d-flex justify-content-center rounded-circle text-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Bookmark">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="align-items-center d-flex flex-wrap gap-1 text-primary  card-start mb-2">
+                                        <!-- start ratings -->
+                                        <i class="fa-solid fa-star"></i>
+                                        <!-- end /. ratings -->
+                                        <!-- start rating counter text -->
+                                        <span class="fw-medium text-primary"><span class="fs-6 fw-semibold me-1">(4.5)</span>2,391 reviews</span>
+                                        <!-- end /. rating counter text -->
+                                    </div>
+                                    <!-- start card title -->
+                                    <h4 class="fs-19 fw-semibold mb-0">
+                                        Exclusive Education Aid
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-patch-check-fill text-success" viewBox="0 0 16 16">
+                                            <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"></path>
+                                        </svg>
+                                    </h4>
+                                    <!-- end /. card title -->
+                                    <!-- start card description -->
+                                    <p class="mt-1 fs-14 text-muted">13/P Mymensingh Ln, Dhaka 1000,Bangladesh</p>
+                                    <!-- end /. card description -->
+                                    <!-- start contact content -->
+                                    <div class="d-flex flex-wrap gap-3 gap-lg-2 gap-xl-3 mt-auto z-1">
+                                        <a href="tel:+4733378901" class="d-flex gap-2 align-items-center fs-13 fw-semibold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="#9b9b9b" class="bi bi-telephone" viewBox="0 0 16 16">
+                                                <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                                            </svg>
+                                            <span>+1 754-399-1127</span>
+                                        </a>
+                                        <a href="#" class="d-flex gap-2 align-items-center fs-13 fw-semibold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#9b9b9b" class="bi bi-compass" viewBox="0 0 16 16">
+                                                <path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+                                                <path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z" />
+                                            </svg>
+                                            <span>Directions</span>
+                                        </a>
+                                    </div>
+                                    <!-- end contact content -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end /. card list -->
+            </div>
+        </div>
+        <!-- start banner -->
+        <div class="banner banne-restaurant dark-overlay mt-5 overflow-hidden position-relative rounded-4">
+            <img src="assets/images/banner-bg-03.jpg" class="bg-image js-image-parallax" alt="">
+            <div class="align-items-center g-4 h-100 justify-content-between p-3 p-sm-5 position-relative row text-white wrapper z-1">
+                <div class="col-md-7 col-lg-6 text-center text-md-start">
+                    <div class="fs-14 l-spacing-1">SPECIAL OFFER</div>
+                    <h2 class="display-5 fw-semibold lh-1">Fast Food Dishes<br class="d-none d-lg-block"> at Just $19</h2>
+                    <p>Hamburger, Chips, Sausages, Beer, Chicken Fries</p>
+                    <a href="grid-listing-filterscol.html" class="btn btn-primary mt-3">Reserve now !</a>
+                </div>
+                <div class="col-md-5 col-lg-4">
+                    <img src="assets/images/png-img/happy-hour-02.png" alt="" class="img-fluid">
+                </div>
+            </div>
+            <!-- /wrapper -->
+        </div>
+        <!-- end /. banner -->
+    </div>
+</div>
+<!-- end /. popular restaurants -->
+
+<!-- start video section -->
+<div class="py-5">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-sm-10 col-md-10 col-lg-8 col-xl-7">
+                <!-- start section header -->
+                <div class="section-header text-center mb-5" data-aos="fade-down">
+                    <!-- start subtitle -->
+                    <div class="d-inline-block font-caveat fs-1 fw-medium section-header__subtitle text-capitalize text-primary">Featured Videos</div>
+                    <!-- end /. subtitle -->
+                    <!-- start title -->
+                    <h2 class="display-5 fw-semibold mb-3 section-header__title text-capitalize">Discover Amazing Travel Destinations</h2>
+                    <!-- end /. title -->
+                    <!-- start description -->
+                    <div class="sub-title fs-16">Watch our curated collection of travel videos. <span class="text-primary fw-semibold">Experience the world from every angle.</span></div>
+                    <!-- end /. description -->
+                </div>
+                <!-- end /. section header -->
+            </div>
+        </div>
+        
+        <!-- Video thumbnails grid -->
+        <div class="row g-4" id="videoGrid">
+            <!-- Video items will be populated by JavaScript -->
+        </div>
+        
+        <!-- Load more button -->
+        <div class="row">
+            <div class="col-12 text-center mt-5">
+                <button class="btn btn-primary" id="loadMoreVideos">Load More Videos</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Video Modal -->
+<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="videoModalLabel">Video Player</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="ratio ratio-16x9">
+                    <iframe id="videoPlayer" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end /. video section -->
+
+    
+      <!-- start blog categories section -->
+      <div class="py-5 bg-light">
+        <div class="container py-4">
+          <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+              <!-- start section header -->
+              <div class="section-header text-center mb-5">
+                <!-- start subtitle -->
+                <div class="d-inline-block font-caveat fs-1 fw-medium section-header__subtitle text-capitalize text-primary">Explore by Category</div>
+                <!-- end /. subtitle -->
+                <!-- start title -->
+                <h2 class="display-5 fw-semibold mb-3 section-header__title text-capitalize">Discover Your Next Read</h2>
+                <!-- end /. title -->
+                <!-- start description -->
+                <div class="sub-title fs-16">Dive into our popular categories and find the stories that matter to you.</div>
+                <!-- end /. description -->
+              </div>
+              <!-- end /. section header -->
+            </div>
+          </div>
+          <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+              <div class="blog-category-card" data-category="travel" style="background-image: url('assets/images/locations/01.jpg');">
+                <a href="#" class="category-link">
+                  <div class="category-content">
+                    <div class="category-icon">
+                      <i class="fas fa-plane text-white fs-2 mb-3"></i>
+                    </div>
+                    <div class="category-title">Travel</div>
+                    <div class="category-stats">
+                      <span class="article-count">42 Articles</span>
+                      <span class="read-time">~5 min read</span>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <div class="blog-category-card" data-category="food" style="background-image: url('assets/images/place/17.jpg');">
+                <a href="#" class="category-link">
+                  <div class="category-content">
+                    <div class="category-icon">
+                      <i class="fas fa-utensils text-white fs-2 mb-3"></i>
+                    </div>
+                    <div class="category-title">Food & Dining</div>
+                    <div class="category-stats">
+                      <span class="article-count">28 Articles</span>
+                      <span class="read-time">~4 min read</span>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <div class="blog-category-card" data-category="technology" style="background-image: url('assets/images/place/20.jpg');">
+                <a href="#" class="category-link">
+                  <div class="category-content">
+                    <div class="category-icon">
+                      <i class="fas fa-laptop-code text-white fs-2 mb-3"></i>
+                    </div>
+                    <div class="category-title">Technology</div>
+                    <div class="category-stats">
+                      <span class="article-count">35 Articles</span>
+                      <span class="read-time">~6 min read</span>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <div class="blog-category-card" data-category="lifestyle" style="background-image: url('assets/images/about/01.jpg');">
+                <a href="#" class="category-link">
+                  <div class="category-content">
+                    <div class="category-icon">
+                      <i class="fas fa-heart text-white fs-2 mb-3"></i>
+                    </div>
+                    <div class="category-title">Lifestyle</div>
+                    <div class="category-stats">
+                      <span class="article-count">31 Articles</span>
+                      <span class="read-time">~4 min read</span>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <div class="blog-category-card" data-category="business" style="background-image: url('assets/images/place/22.jpg');">
+                <a href="#" class="category-link">
+                  <div class="category-content">
+                    <div class="category-icon">
+                      <i class="fas fa-briefcase text-white fs-2 mb-3"></i>
+                    </div>
+                    <div class="category-title">Business</div>
+                    <div class="category-stats">
+                      <span class="article-count">19 Articles</span>
+                      <span class="read-time">~7 min read</span>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <div class="blog-category-card" data-category="health" style="background-image: url('assets/images/place/19.jpg');">
+                <a href="#" class="category-link">
+                  <div class="category-content">
+                    <div class="category-icon">
+                      <i class="fas fa-heartbeat text-white fs-2 mb-3"></i>
+                    </div>
+                    <div class="category-title">Health & Wellness</div>
+                    <div class="category-stats">
+                      <span class="article-count">24 Articles</span>
+                      <span class="read-time">~5 min read</span>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end /. blog categories section -->
+    
+       <!-- start blog section -->
+       <div class="py-5 position-relative overflow-hidden bg-light">
+        <div class="container py-4">
+            <div class="row justify-content-center">
+                <div class="col-sm-10 col-md-10 col-lg-8 col-xl-7">
+                    <!-- start section header -->
+                    <div class="section-header text-center mb-5" data-aos="fade-down">
+                        <!-- start subtitle -->
+                        <div class="d-inline-block font-caveat fs-1 fw-medium section-header__subtitle text-capitalize text-primary">Explore Latest Insights</div>
+                        <!-- end /. subtitle -->
+                        <!-- start title -->
+                        <h2 class="display-5 fw-semibold mb-3 section-header__title text-capitalize">Stay updated with the newest posts across all categories..</h2>
+                        <!-- end /. title -->
+                        <!-- start description -->
+                        <div class="sub-title fs-16">Explore the freshest content in Travel, Technology, Health, Food, and more.<span class="text-primary fw-semibold">Find what you’re looking for.</span></div>
+                        <!-- end /. description -->
+                    </div>
+                    <!-- end /. section header -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-5 col-12 mb-lg-0 mb-4">
+                    <!-- start article -->
+                    <article class="card h-100 border-0 shadow-sm">
+                        <div class="position-relative">
+                            <a href="blog-details.html" class="position-absolute top-0 start-0 w-100 h-100" aria-label="Read more"></a>
+                            <a href="#" class="align-items-center bg-white btn-icon d-flex end-0 justify-content-center me-3 mt-3 position-absolute rounded-circle text-primary top-0 z-3" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Read later" data-bs-original-title="Read later">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                                    <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
+                                </svg>
+                            </a>
+                            <div class="card-img-top overflow-hidden position-relative">
+                                <img src="assets/images/blog/02-lg.jpg" class="card-img-top image-zoom-hover" alt="Image">
+                            </div>
+                        </div>
+                        <div class="card-body pb-4">
+                            <!-- start meta info -->
+                            <div class="hstack gap-3 mb-3">
+                                <span class="fs-sm small text-muted">9 hours ago</span>
+                                <span class="opacity-25">|</span>
+                                <a class="badge border fw-semibold text-primary bg-white" href="#">Events</a>
+                            </div>
+                            <!-- end /. meta info -->
+                            <h3 class="fs-4 fw-semibold mb-0 post-title">
+                                <a href="blog-details.html">Etiam Dapibus Metus Aliquam Orci Venenatis, Suscipit Efficitur.</a>
+                            </h3>
+                        </div>
+                        <div class="card-footer py-4">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <img src="assets/images/avatar/01.jpg" class="rounded-circle" width="48" height="48" alt="Avatar">
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <a href="#" class="d-block"><span class="fst-italic text-muted">By</span> <span class="fw-medium">Ethan Blackwood</span></a>
+                                    <small class="text-muted">Engineer</small>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <!-- end /. article -->
+                </div>
+                <div class="col">
+                    <!-- start article -->
+                    <article class="card overflow-hidden mb-4 border-0 shadow-sm">
+                        <div class="row g-0">
+                            <div class="col-sm-5 position-relative bg-position-center bg-repeat-0 bg-size-cover">
+                                <div class="h-100 overflow-hidden position-absolute position-relative start-0 top-0 w-100">
+                                    <img src="assets/images/blog/01-sm.jpg" alt="Image" class="h-100 image-zoom-hover object-fit-cover w-100">
+                                </div>
+                                <a href="blog-details.html" class="position-absolute top-0 start-0 w-100 h-100" aria-label="Read more"></a>
+                                <a href="#" class="align-items-center bg-white btn-icon d-flex end-0 justify-content-center me-3 mt-3 position-absolute rounded-circle text-primary top-0 z-3" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Read later" data-bs-original-title="Read later">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
+                                    </svg>
+                                </a>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="card-body">
+                                    <!-- start meta info -->
+                                    <div class="hstack gap-3 mb-3">
+                                        <span class="fs-sm small text-muted">9 hours ago</span>
+                                        <span class="opacity-25">|</span>
+                                        <a class="badge border fw-semibold text-primary bg-white" href="#">Events</a>
+                                    </div>
+                                    <!-- end /. meta info -->
+                                    <h3 class="h5 fw-semibold post-title">
+                                        <a href="blog-details.html">Etiam in lorem malesuada, gravida felis in, pretium lacus.</a>
+                                    </h3>
+                                    <hr class="my-4">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-shrink-0">
+                                            <img src="assets/images/avatar/02.jpg" class="rounded-circle" width="48" height="48" alt="Avatar">
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <a href="#" class="d-block"><span class="fst-italic text-muted">By</span> <span class="fw-medium">Alexander Kaminski</span></a>
+                                            <small class="text-muted">Engineer</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <!-- end /. article -->
+                    <!-- start article -->
+                    <article class="card overflow-hidden border-0 shadow-sm">
+                        <div class="row g-0">
+                            <div class="col-sm-5 position-relative bg-position-center bg-repeat-0 bg-size-cover">
+                                <div class="h-100 overflow-hidden position-absolute position-relative start-0 top-0 w-100">
+                                    <img src="assets/images/blog/02-sm.jpg" alt="Image" class="h-100 image-zoom-hover object-fit-cover w-100">
+                                </div>
+                                <a href="blog-details.html" class="position-absolute top-0 start-0 w-100 h-100" aria-label="Read more"></a>
+                                <a href="#" class="align-items-center bg-white btn-icon d-flex end-0 justify-content-center me-3 mt-3 position-absolute rounded-circle text-primary top-0 z-3" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Read later" data-bs-original-title="Read later">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
+                                    </svg>
+                                </a>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="card-body">
+                                    <!-- start meta info -->
+                                    <div class="hstack gap-3 mb-3">
+                                        <span class="fs-sm small text-muted">Oct 02, 2023</span>
+                                        <span class="opacity-25">|</span>
+                                        <a class="badge border fw-semibold text-primary bg-white" href="#">Events</a>
+                                    </div>
+                                    <!-- end /. meta info -->
+                                    <h3 class="h5 fw-semibold post-title">
+                                        <a href="blog-details.html">Ut ut velit et eros gravida rutrum at sit amet ligula.</a>
+                                    </h3>
+                                    <hr class="my-4">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-shrink-0">
+                                            <img src="assets/images/avatar/04.jpg" class="rounded-circle" width="48" height="48" alt="Avatar">
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <a href="#" class="d-block"><span class="fst-italic text-muted">By</span> <span class="fw-medium">Pranoti Deshpande</span></a>
+                                            <small class="text-muted">Engineer</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <!-- end /. article -->
+                </div>
+                <div class="col-12 mt-4 pt-lg-4 pt-3 text-center">
+                    <a href="blog.html" class="btn btn-lg btn-primary">More blog posts</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end /. blog section -->
+<!-- start blog section -->
+<div class="py-5 position-relative overflow-hidden">
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-sm-10 col-md-10 col-lg-8 col-xl-7">
+                <!-- start section header -->
+                <div class="section-header text-center mb-5" data-aos="fade-down">
+                    <!-- start subtitle -->
+                    <div class="d-inline-block font-caveat fs-1 fw-medium section-header__subtitle text-capitalize text-primary">Trending Now</div>
+                    <!-- end /. subtitle -->
+                    <!-- start title -->
+                    <h2 class="display-5 fw-semibold mb-3 section-header__title text-capitalize">Catch up on what's buzzing right now.</h2>
+                    <!-- end /. title -->
+                    <!-- start description -->
+                    <div class="sub-title fs-16">Discover articles that are gaining attention and sparking conversations. <span class="text-primary fw-semibold">Find what you're looking for.</span></div>
+                    <!-- end /. description -->
+                </div>
+                <!-- end /. section header -->
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="blog-carousel owl-carousel owl-theme owl-nav-bottom">
+            <!-- start article -->
+            <article class="card h-100 overflow-hidden">
+                <div class="position-relative overflow-hidden">
+                    <a href="blog-details.html" class="h-100 position-absolute start-0 top-0 w-100 z-1" aria-label="Read more"></a>
+                    <a href="#" class="align-items-center bg-white btn-icon d-flex end-0 justify-content-center me-3 mt-3 position-absolute rounded-circle text-primary top-0 z-3" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Read later" data-bs-original-title="Read later">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
+                        </svg>
+                    </a>
+                    <img src="assets/images/blog/01-lg.jpg" class="card-img-top image-zoom-hover" alt="Image">
+                </div>
+                <div class="card-body">
+                    <div class="hstack gap-3 mb-3">
+                        <span class="fs-sm small text-muted">9 hours ago</span>
+                        <span class="opacity-25">|</span>
+                        <a class="badge border fw-semibold text-primary bg-white" href="#">Events</a>
+                    </div>
+                    <h3 class="h5 fw-semibold mb-0 post-title overflow-hidden">
+                        <a href="blog-details.html">Etiam Dapibus Metus Aliquam Orci Venenatis, Suscipit Efficitur.</a>
+                    </h3>
+                </div>
+                <div class="card-footer py-3">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <img src="assets/images/avatar/01.jpg" class="rounded-circle" width="48" height="48" alt="Avatar">
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <a href="#" class="d-block"><span class="fst-italic text-muted">By</span> <span class="fw-medium">Ethan Blackwood</span></a>
+                            <small class="text-muted">Engineer</small>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <!-- end /. article -->
+            <!-- start article -->
+            <article class="card h-100 overflow-hidden">
+                <div class="position-relative overflow-hidden">
+                    <a href="blog-details.html" class="h-100 position-absolute start-0 top-0 w-100 z-1" aria-label="Read more"></a>
+                    <a href="#" class="align-items-center bg-white btn-icon d-flex end-0 justify-content-center me-3 mt-3 position-absolute rounded-circle text-primary top-0 z-3" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Read later" data-bs-original-title="Read later">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
+                        </svg>
+                    </a>
+                    <img src="assets/images/blog/02-lg.jpg" class="image-zoom-hover" alt="Image">
+                </div>
+                <div class="card-body">
+                    <div class="hstack gap-3 mb-3">
+                        <span class="fs-sm small text-muted">August 30, 2023</span>
+                        <span class="opacity-25">|</span>
+                        <a class="badge border fw-semibold text-primary bg-white" href="#">Events</a>
+                    </div>
+                    <h3 class="h5 fw-semibold mb-0 post-title overflow-hidden">
+                        <a href="blog-details.html">Praesent sit amet augue tincidunt, venenatis risus ut.</a>
+                    </h3>
+                </div>
+                <div class="card-footer py-3">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <img src="assets/images/avatar/02.jpg" class="rounded-circle" width="48" height="48" alt="Avatar">
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <a href="#" class="d-block"><span class="fst-italic text-muted">By</span> <span class="fw-medium">Alexander Kaminski</span></a>
+                            <small class="text-muted">Data analysis</small>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <!-- end /. article -->
+            <!-- start article -->
+            <article class="card h-100 overflow-hidden">
+                <div class="position-relative overflow-hidden">
+                    <a href="blog-details.html" class="h-100 position-absolute start-0 top-0 w-100 z-1" aria-label="Read more"></a>
+                    <a href="#" class="align-items-center bg-white btn-icon d-flex end-0 justify-content-center me-3 mt-3 position-absolute rounded-circle text-primary top-0 z-3" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Read later" data-bs-original-title="Read later">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
+                        </svg>
+                    </a>
+                    <img src="assets/images/blog/03-lg.jpg" class="image-zoom-hover" alt="Image">
+                </div>
+                <div class="card-body">
+                    <div class="hstack gap-3 mb-3">
+                        <span class="fs-sm small text-muted">Jun 28, 2023</span>
+                        <span class="opacity-25">|</span>
+                        <a class="badge border fw-semibold text-primary bg-white" href="#">Events</a>
+                    </div>
+                    <h3 class="h5 fw-semibold mb-0 post-title overflow-hidden">
+                        <a href="blog-details.html">Duis volutpat ipsum eget pretium posuere.</a>
+                    </h3>
+                </div>
+                <div class="card-footer py-3">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <img src="assets/images/avatar/03.jpg" class="rounded-circle" width="48" height="48" alt="Avatar">
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <a href="#" class="d-block"><span class="fst-italic text-muted">By</span> <span class="fw-medium">Edwin Martins</span></a>
+                            <small class="text-muted">Security Engineer</small>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <!-- end /. article -->
+            <!-- start article -->
+            <article class="card h-100 overflow-hidden">
+                <div class="position-relative overflow-hidden">
+                    <a href="blog-details.html" class="h-100 position-absolute start-0 top-0 w-100 z-1" aria-label="Read more"></a>
+                    <a href="#" class="align-items-center bg-white btn-icon d-flex end-0 justify-content-center me-3 mt-3 position-absolute rounded-circle text-primary top-0 z-3" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Read later" data-bs-original-title="Read later">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
+                        </svg>
+                    </a>
+                    <img src="assets/images/blog/04-lg.jpg" class="image-zoom-hover" alt="Image">
+                </div>
+                <div class="card-body">
+                    <div class="hstack gap-3 mb-3">
+                        <span class="fs-sm small text-muted">Jul 28, 2023</span>
+                        <span class="opacity-25">|</span>
+                        <a class="badge border fw-semibold text-primary bg-white" href="#">Events</a>
+                    </div>
+                    <h3 class="h5 fw-semibold mb-0 post-title overflow-hidden">
+                        <a href="blog-details.html">In ut tellus id nisl convallis bibendum eu nec diam.</a>
+                    </h3>
+                </div>
+                <div class="card-footer py-3">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <img src="assets/images/avatar/04.jpg" class="rounded-circle" width="48" height="48" alt="Avatar">
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <a href="#" class="d-block"><span class="fst-italic text-muted">By</span> <span class="fw-medium">Pranoti Deshpande</span></a>
+                            <small class="text-muted">Product Manager</small>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <!-- end /. article -->
+            <!-- start article -->
+            <article class="card h-100 overflow-hidden">
+                <div class="position-relative overflow-hidden">
+                    <a href="blog-details.html" class="h-100 position-absolute start-0 top-0 w-100 z-1" aria-label="Read more"></a>
+                    <a href="#" class="align-items-center bg-white btn-icon d-flex end-0 justify-content-center me-3 mt-3 position-absolute rounded-circle text-primary top-0 z-3" data-bs-toggle="tooltip" data-bs-placement="left" aria-label="Read later" data-bs-original-title="Read later">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
+                        </svg>
+                    </a>
+                    <img src="assets/images/blog/05-lg.jpg" class="image-zoom-hover" alt="Image">
+                </div>
+                <div class="card-body">
+                    <div class="hstack gap-3 mb-3">
+                        <span class="fs-sm small text-muted">Oct 24, 2023</span>
+                        <span class="opacity-25">|</span>
+                        <a class="badge border fw-semibold text-primary bg-white" href="#">Events</a>
+                    </div>
+                    <h3 class="h5 fw-semibold mb-0 post-title overflow-hidden">
+                        <a href="blog-details.html">Vestibulum scelerisque urna ut velit auctor varius.</a>
+                    </h3>
+                </div>
+                <div class="card-footer py-3">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-shrink-0">
+                            <img src="assets/images/avatar/05.jpg" class="rounded-circle" width="48" height="48" alt="Avatar">
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <a href="#" class="d-block"><span class="fst-italic text-muted">By</span> <span class="fw-medium">Gabriel North</span></a>
+                            <small class="text-muted">DevOps</small>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <!-- end /. article -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end /. blog section -->
+     
+       <!-- start news section -->
+       <div class="py-5 bg-light overflow-hidden position-relative">
+        <div class="decoration blur-2 z-1"></div>
+        <div class="decoration blur-3 z-1"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-4 sidebar">
+                    <!-- start section header -->
+                    <div class="section-header mb-5" data-aos="fade-down">
+                        <!-- start subtitle -->
+                        <div class="d-inline-block font-caveat fs-1 fw-medium section-header__subtitle text-capitalize text-primary">Most Popular Articles</div>
+                        <!-- end /. subtitle -->
+                        <!-- start title -->
+                        <h2 class="display-6 fw-semibold mb-3 section-header__title text-capitalize">Check out the trending contents that everyone’s talking about.</h2>
+                        <!-- end /. title -->
+                        <!-- start description -->
+                        <div class="sub-title fs-16">Read our informative blog articles to stay updated with the latest trends, technological applications, products, and news. Our articles will provide you with tips and insights that can be very helpful while traveling.</div>
+                        <!-- end /. description -->
+                        <div>
+                            <a href="blog.html" class="btn btn-primary mt-4">View All Posts</a>
+                        </div>
+                        <svg class="text-primary mt-4 d-none d-xl-block" width="200" height="211" viewBox="0 0 200 211" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M198.804 194.488C189.279 189.596 179.529 185.52 169.407 182.07L169.384 182.049C169.227 181.994 169.07 181.939 168.912 181.884C166.669 181.139 165.906 184.546 167.669 185.615C174.053 189.473 182.761 191.837 189.146 195.695C156.603 195.912 119.781 196.591 91.266 179.049C62.5221 161.368 48.1094 130.695 56.934 98.891C84.5539 98.7247 112.556 84.0176 129.508 62.667C136.396 53.9724 146.193 35.1448 129.773 30.2717C114.292 25.6624 93.7109 41.8875 83.1971 51.3147C70.1109 63.039 59.63 78.433 54.2039 95.0087C52.1221 94.9842 50.0776 94.8683 48.0703 94.6608C30.1803 92.8027 11.2197 83.6338 5.44902 65.1074C-1.88449 41.5699 14.4994 19.0183 27.9202 1.56641C28.6411 0.625793 27.2862 -0.561638 26.5419 0.358501C13.4588 16.4098 -0.221091 34.5242 0.896608 56.5659C1.8218 74.6941 14.221 87.9401 30.4121 94.2058C37.7076 97.0203 45.3454 98.5003 53.0334 98.8449C47.8679 117.532 49.2961 137.487 60.7729 155.283C87.7615 197.081 139.616 201.147 184.786 201.155L174.332 206.827C172.119 208.033 174.345 211.287 176.537 210.105C182.06 207.125 187.582 204.122 193.084 201.144C193.346 201.147 195.161 199.887 195.423 199.868C197.08 198.548 193.084 201.144 195.528 199.81C196.688 199.192 197.846 198.552 199.006 197.935C200.397 197.167 200.007 195.087 198.804 194.488ZM60.8213 88.0427C67.6894 72.648 78.8538 59.1566 92.1207 49.0388C98.8475 43.9065 106.334 39.2953 114.188 36.1439C117.295 34.8947 120.798 33.6609 124.168 33.635C134.365 33.5511 136.354 42.9911 132.638 51.031C120.47 77.4222 86.8639 93.9837 58.0983 94.9666C58.8971 92.6666 59.783 90.3603 60.8213 88.0427Z" fill="currentColor"></path>
+                        </svg>
+                    </div>
+                    <!-- end /. section header -->
+                </div>
+                <div class="col-xl-8 content ps-xxl-5">
+                    <!-- start blog list card -->
+                    <div class="blog-list-card border-0 card d-md-flex flex-md-row mb-3 p-4 rounded-4 z-2">
+                        <div class="flex-grow-1 p-post me-md-5">
+                            <!-- start meta info -->
+                            <div class="hstack gap-3 mb-3">
+                                <span class="fs-sm small text-muted">9 hours ago</span>
+                                <span class="opacity-25">|</span>
+                                <a class="badge border fw-semibold text-primary bg-white" href="#">Events</a>
+                            </div>
+                            <!-- end /. meta info -->
+                            <!-- start title -->
+                            <h2 class="fw-semibold news-title overflow-hidden text-capitalize"><a href="blog-details.html">Etiam dapibus metus aliquam orci venenatis, suscipit efficitur cursus.</a></h2>
+                            <!-- end /. title -->
+                            <p class="mb-0">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure.</p>
+                        </div>
+                        <div class="flex-shrink-0 img-wrapper mt-4 mt-md-0">
+                            <!-- start image thumb -->
+                            <a href="blog-details.html" class="thumb position-relative d-block overflow-hidden position-relative rounded-4"><img src="assets/images/blog/01.jpg" alt="" height="300" width="300" class="image-zoom-hover object-fit-cover w-100"></a>
+                            <!-- end /. image thumb -->
+                        </div>
+                    </div>
+                    <!-- end /. blog list card -->
+                    <!-- start blog list card -->
+                    <div class="blog-list-card border-0 card d-md-flex flex-md-row mb-3 p-4 rounded-4 z-2">
+                        <div class="flex-grow-1 p-post me-md-5">
+                            <!-- start meta info -->
+                            <div class="hstack gap-3 mb-3">
+                                <span class="fs-sm small text-muted">9 hours ago</span>
+                                <span class="opacity-25">|</span>
+                                <a class="badge border fw-semibold text-primary bg-white" href="#">Events</a>
+                            </div>
+                            <!-- end /. meta info -->
+                            <!-- start title -->
+                            <h2 class="fw-semibold news-title overflow-hidden text-capitalize"><a href="blog-details.html">Nunc sagittis est eu sapien condimentum, sit amet ultrices tellus.</a></h2>
+                            <!-- end /. title -->
+                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use.</p>
+                        </div>
+                        <div class="flex-shrink-0 img-wrapper mt-4 mt-md-0">
+                            <!-- start image thumb -->
+                            <a href="blog-details.html" class="thumb position-relative d-block overflow-hidden position-relative rounded-4"><img src="assets/images/blog/02.jpg" alt="" height="300" width="300" class="image-zoom-hover object-fit-cover w-100"></a>
+                            <!-- end /. image thumb -->
+                        </div>
+                    </div>
+                    <!-- end /. blog list card -->
+                    <!-- start blog list card -->
+                    <div class="blog-list-card border-0 card d-md-flex flex-md-row mb-3 p-4 rounded-4 z-2">
+                        <div class="flex-grow-1 p-post me-md-5">
+                            <!-- start meta info -->
+                            <div class="hstack gap-3 mb-3">
+                                <span class="fs-sm small text-muted">9 hours ago</span>
+                                <span class="opacity-25">|</span>
+                                <a class="badge border fw-semibold text-primary bg-white" href="#">Events</a>
+                            </div>
+                            <!-- end /. meta info -->
+                            <!-- start title -->
+                            <h2 class="fw-semibold news-title overflow-hidden text-capitalize"><a href="blog-details.html">Donec tincidunt nunc ac diam mattis, nec luctus eros sodales.</a></h2>
+                            <!-- end /. title -->
+                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                        </div>
+                        <div class="flex-shrink-0 img-wrapper mt-4 mt-md-0">
+                            <!-- start image thumb -->
+                            <a href="blog-details.html" class="thumb position-relative d-block overflow-hidden position-relative rounded-4"><img src="assets/images/blog/03.jpg" alt="" height="300" width="300" class="image-zoom-hover object-fit-cover w-100"></a>
+                            <!-- end /. image thumb -->
+                        </div>
+                    </div>
+                    <!-- end /. blog list card -->
+                    <!-- start blog list card -->
+                    <div class="blog-list-card border-0 card d-md-flex flex-md-row mb-3 p-4 rounded-4 z-2">
+                        <div class="flex-grow-1 p-post me-md-5">
+                            <!-- start meta info -->
+                            <div class="hstack gap-3 mb-3">
+                                <span class="fs-sm small text-muted">9 hours ago</span>
+                                <span class="opacity-25">|</span>
+                                <a class="badge border fw-semibold text-primary bg-white" href="#">Events</a>
+                            </div>
+                            <!-- end /. meta info -->
+                            <!-- start title -->
+                            <h2 class="fw-semibold news-title overflow-hidden text-capitalize"><a href="blog-details.html">Nam sit amet orci tristique, cursus tortor a, viverra lacus.</a></h2>
+                            <!-- end /. title -->
+                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                        </div>
+                        <div class="flex-shrink-0 img-wrapper mt-4 mt-md-0">
+                            <!-- start image thumb -->
+                            <a href="blog-details.html" class="thumb position-relative d-block overflow-hidden position-relative rounded-4"><img src="assets/images/blog/04.jpg" alt="" height="300" width="300" class="image-zoom-hover object-fit-cover w-100"></a>
+                            <!-- end /. image thumb -->
+                        </div>
+                    </div>
+                    <!-- end /. blog list card -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end /. news section -->
+    
+    <!-- start about section -->
+    <div class="bg-primary bg-size-contain home-about js-bg-image js-bg-image-lines bg-light mx-3 rounded-4 position-relative pt-5" data-image-src="assets/images/lines.svg">
+        <div class="container pt-4">
+            <div class="row justify-content-center">
+                <div class="col-sm-10 col-md-10 col-lg-8 col-xl-7">
+                    <!-- start section header -->
+                    <div class="section-header text-center mb-5" data-aos="fade-down">
+                        <!-- start subtitle -->
+                        <div class="d-inline-block font-caveat fs-1 fw-medium section-header__subtitle text-capitalize text-primary">About Us</div>
+                        <!-- end /. subtitle -->
+                        <!-- start title -->
+                        <h2 class="display-5 fw-semibold mb-3 section-header__title text-capitalize">Discover Every Angle, Every Story — Explore, Connect, Thrive.</h2>
+                        <!-- end /. title -->
+                        <!-- start description -->
+                        <div class="sub-title fs-16">360 Nepal is your gateway to the heart of Nepal. From vibrant culture and delicious cuisine to trusted local businesses, immersive 360° visuals, and rich blogs, we bring Nepal's true spirit to your screen. <span class="text-primary fw-semibold">Explore more, connect deeper, and thrive with every click.</span></div>
+                        <!-- end /. description -->
+                    </div>
+                    <!-- end /. section header -->
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="column-text-box left">
+                        <p><span class="float-start important-text mb-2 me-2 position-relative text-primary fs-50"><strong>W</strong></span>elcome to 360 Nepal, your ultimate gateway to the heart of Nepal. We're passionate about showcasing the vibrant culture, delicious cuisine, and rich heritage of our beautiful country.</p>
+                        <p>Our platform connects you with trusted local businesses, from hidden restaurants to boutique hotels, ensuring you experience the authentic Nepal.</p>
+                        <blockquote class="about-blockquote display-6 font-caveat fst-italic my-3">Immersive 360° visuals and rich blogs bring Nepal's true spirit to your screen.</blockquote>
+                        <p>Whether you're planning a trip or exploring from afar, 360 Nepal offers an unparalleled digital experience. Explore more, connect deeper, and thrive with every click.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 ps-xxl-5">
+                    <!-- start about image masonry -->
+                    <div class="ps-xl-4 position-relative">
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="about-image-wrap mb-3 rounded-4">
+                                    <img src="assets/images/about/01.jpg" alt="" class="h-100 w-100 object-fit-cover about-image-one rounded-3">
+                                </div>
+                                <div class="about-image-wrap rounded-4">
+                                    <img src="assets/images/about/02.jpg" alt="" class="h-100 w-100 object-fit-cover about-image-two rounded-3">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="about-image-wrap mb-3 rounded-4">
+                                    <img src="assets/images/about/03.jpg" alt="" class="h-100 w-100 object-fit-cover about-image-three rounded-3">
+                                </div>
+                                <div class="about-image-wrap rounded-4">
+                                    <img src="assets/images/about/04.jpg" alt="" class="h-100 w-100 object-fit-cover about-image-four rounded-3">
+                                </div>
+                            </div>
+                        </div>
+                        <img src="assets/images/png-img/about-shape-1.png" alt="About Shape" class="banner-shape-one position-absolute">
+                        <img src="assets/images/png-img/about-shape-2.png" alt="About Shape" class="banner-shape-two position-absolute">
+                    </div>
+                    <!-- end /. about image masonry -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end /. about section -->
+   
+   
+    <!-- start footer -->
+    <footer class="modern-footer">
+        <div class="container">
+            <!-- Logo and Tagline Section -->
+            <div class="footer-logo-section">
+                <img src="assets/images/logo-white.png" alt="360Nepal Logo" class="footer-main-logo">
+                <p class="footer-tagline">
+                    Discover Every Angle, Every Story. Your ultimate guide to exploring, connecting, and thriving in Nepal's rich cultural landscape.
+                </p>
+            </div>
+
+            <!-- Main Footer Content -->
+            <div class="footer-sections">
+                <div class="row g-4">
+                    <!-- Quick Links Section -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-section">
+                            <h4>Quick Links</h4>
+                            <ul class="footer-links">
+                                <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
+                                <li><a href="about.html"><i class="fas fa-info-circle"></i>About Us</a></li>
+                                <li><a href="listings-grid-1-left.html"><i class="fas fa-briefcase"></i>Business Listings</a></li>
+                                <li><a href="blog.html"><i class="fas fa-blog"></i>Blog</a></li>
+                                <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
+                                <li><a href="pricing.html"><i class="fas fa-tags"></i>Pricing</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Categories Section -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-section">
+                            <h4>Categories</h4>
+                            <ul class="footer-links">
+                                <li><a href="listings-map-grid-1.html"><i class="fas fa-utensils"></i>Restaurants</a></li>
+                                <li><a href="listings-map-grid-1.html"><i class="fas fa-hotel"></i>Hotels</a></li>
+                                <li><a href="listings-map-grid-1.html"><i class="fas fa-shopping-bag"></i>Shopping</a></li>
+                                <li><a href="listings-map-grid-1.html"><i class="fas fa-heartbeat"></i>Health & Wellness</a></li>
+                                <li><a href="listings-map-grid-1.html"><i class="fas fa-palette"></i>Arts & Culture</a></li>
+                                <li><a href="listings-map-grid-1.html"><i class="fas fa-mountain"></i>Adventure</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-section">
+                            <h4>Contact Info</h4>
+                            <div class="footer-contact-info">
+                                <div class="contact-item">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <div class="contact-details">
+                                        <h6>Address</h6>
+                                        <p>Kathmandu, Nepal<br>Thamel District</p>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div class="contact-details">
+                                        <h6>Phone</h6>
+                                        <p>+977-1-234-5678</p>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div class="contact-details">
+                                        <h6>Email</h6>
+                                        <p>info@360nepal.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Newsletter Section -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-section">
+                            <div class="newsletter-section">
+                                <h5>Stay Updated</h5>
+                                <p>Subscribe to our newsletter for the latest updates and travel insights.</p>
+                                <form class="newsletter-form" id="newsletterForm">
+                                    <input type="email" class="newsletter-input" placeholder="Enter your email" required>
+                                    <button type="submit" class="newsletter-btn">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </button>
+                                </form>
+                                <div class="social-links">
+                                    <a href="#" class="social-link facebook" aria-label="Facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                    <a href="#" class="social-link twitter" aria-label="Twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                    <a href="#" class="social-link instagram" aria-label="Instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                    <a href="#" class="social-link youtube" aria-label="YouTube">
+                                        <i class="fab fa-youtube"></i>
+                                    </a>
+                                    <a href="#" class="social-link whatsapp" aria-label="WhatsApp">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="container">
+                <!-- Footer Background -->
+                <div class="footer-skyline">
+                    <img src="assets/images/footer_back.png" alt="Footer Background" class="skyline-image">
+                </div>
+                
+                <div class="footer-bottom-content">
+                    <p class="footer-copyright">
+                        © 2024 360Nepal. All rights reserved. Made with ❤️ in Nepal.
+                    </p>
+                    <div class="footer-nav-links">
+                        <a href="terms-conditions.html">Terms & Conditions</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Cookie Policy</a>
+                        <a href="faq.html">FAQ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+    <!-- end /. footer -->
+    <!-- Optional JavaScript -->
+    <script src="assets/plugins/jQuery/jquery.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/plugins/aos/aos.min.js"></script>
+    <script src="assets/plugins/macy/macy.js"></script>
+    <script src="assets/plugins/simple-parallax/simpleParallax.min.js"></script>
+    <script src="assets/plugins/OwlCarousel2/owl.carousel.min.js"></script>
+    <script src="assets/plugins/theia-sticky-sidebar/ResizeSensor.min.js"></script>
+    <script src="assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.min.js"></script>
+    <script src="assets/plugins/waypoints/jquery.waypoints.min.js"></script>
+    <script src="assets/plugins/counter-up/jquery.counterup.min.js"></script>
+    <script src="assets/plugins/jquery-fancyfileuploader/fancy-file-uploader/jquery.ui.widget.js"></script>
+    <script src="assets/plugins/jquery-fancyfileuploader/fancy-file-uploader/jquery.fileupload.js"></script>
+    <script src="assets/plugins/jquery-fancyfileuploader/fancy-file-uploader/jquery.iframe-transport.js"></script>
+    <script src="assets/plugins/jquery-fancyfileuploader/fancy-file-uploader/jquery.fancy-fileupload.js"></script>
+    <script src="assets/plugins/ion.rangeSlider/ion.rangeSlider.min.js"></script>
+    <script src="assets/plugins/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="assets/plugins/select2/select2.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4iuUg1YDRIBRZ5e-jdssfqDuT9VLiOnY"></script>
+    <!-- Custom script for this template -->
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/listing-map.js"></script>
+    <script src="assets/js/pannellum.js"></script>
+    
+    <script>
+        // Initialize pannellum with an absolute URL
+        pannellum.viewer('panorama', {
+    "type": "equirectangular",
+    "panorama": "./assets/images/360/examplepano.jpg", // Relative path for local use
+    "autoLoad": true,
+    "mouseZoom": false,
+    "showControls": false,
+    "compass": false
+});
+        </script>
+
+</body>
+
+</html>

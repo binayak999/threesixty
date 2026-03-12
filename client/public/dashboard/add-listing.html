@@ -1,0 +1,2994 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add Listing - ListOn Directory & Listing</title>
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/dist/img/favicon.png">
+    <!-- Global Styles(used by all pages) -->
+    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="assets/plugins/fontawesome/css/all.min.css" rel="stylesheet">
+    <!-- Third party Styles(used by this page) -->
+    <link rel="stylesheet" href="assets/plugins/jquery-fancyfileuploader/fancy-file-uploader/fancy_fileupload.css">
+    <!-- CKEditor CDN -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+    <!-- App css -->
+    <link href="assets/dist/css/app.min.css" rel="stylesheet">
+    <!-- Start Your Custom Style Now -->
+    <link href="assets/dist/css/style.css" rel="stylesheet">
+    <style>
+        /* Multi-step Form Styles */
+        .form-step {
+            display: none;
+        }
+        .form-step.active {
+            display: block;
+        }
+        .step-progress {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .progress-bar-container {
+            position: relative;
+            height: 4px;
+            background: #e9ecef;
+            border-radius: 2px;
+            margin: 1rem 0;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--bs-primary);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        .step-indicators {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        .step-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+        }
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e9ecef;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .step-indicator.completed .step-number {
+            background: var(--bs-success);
+            color: white;
+        }
+        .step-indicator.active .step-number {
+            background: var(--bs-primary);
+            color: white;
+        }
+        .step-title {
+            font-size: 12px;
+            text-align: center;
+            color: #6c757d;
+            font-weight: 500;
+        }
+        .step-indicator.active .step-title {
+            color: var(--bs-primary);
+            font-weight: 600;
+        }
+        .step-indicator.completed .step-title {
+            color: var(--bs-success);
+        }
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid #e9ecef;
+            margin-top: 2rem;
+        }
+        .btn-step {
+            min-width: 120px;
+        }
+        
+        .category-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--bs-primary);
+        }
+        .category-card {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .category-card:hover {
+            border-color: var(--bs-primary);
+            box-shadow: 0 4px 15px rgba(0,123,255,0.1);
+            transform: translateY(-2px);
+        }
+        .category-card.selected {
+            border-color: var(--bs-primary);
+            background-color: rgba(0,123,255,0.05);
+        }
+        .category-card.hidden {
+            display: none;
+        }
+        .dynamic-section {
+            display: none;
+        }
+        .dynamic-section.active {
+            display: block;
+        }
+        .seo-preview {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .seo-title {
+            color: #1a0dab;
+            font-size: 18px;
+            text-decoration: none;
+            font-weight: normal;
+        }
+        .seo-url {
+            color: #006621;
+            font-size: 14px;
+        }
+        .seo-description {
+            color: #545454;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        .amenity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+        }
+        .form-check-custom {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 0.5rem;
+            border: 1px solid #e9ecef;
+        }
+        .form-check-custom:hover {
+            background: #e9ecef;
+        }
+        
+        /* Enhanced Media Gallery Styles */
+        .media-upload-zone {
+            border: 2px dashed #dee2e6;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .media-upload-zone:hover {
+            border-color: var(--bs-primary);
+            background: rgba(0,123,255,0.05);
+        }
+        .media-upload-zone.dragover {
+            border-color: var(--bs-success);
+            background: rgba(25,135,84,0.1);
+        }
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--bs-primary);
+            margin-bottom: 1rem;
+        }
+        .media-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .media-preview-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #dee2e6;
+        }
+        .media-preview-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+        .media-preview-item .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(220,53,69,0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        /* Category Search Styles */
+        .category-search {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        .category-search input {
+            padding-left: 2.5rem;
+        }
+        .category-search .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+        
+        /* Enhanced Form Field Styles */
+        .form-group-enhanced {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        .form-group-enhanced .form-label {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+        .form-group-enhanced .form-control:focus {
+            border-color: var(--bs-primary);
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+        }
+        
+        /* Amenities Section Styles */
+        .amenities-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .amenity-category {
+            margin-bottom: 1.5rem;
+        }
+        .amenity-category h6 {
+            color: var(--bs-primary);
+            border-bottom: 2px solid var(--bs-primary);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .amenity-item {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .amenity-item:hover {
+            border-color: var(--bs-primary);
+            background: rgba(0,123,255,0.05);
+        }
+        .amenity-item.selected {
+            border-color: var(--bs-primary);
+            background: rgba(0,123,255,0.1);
+        }
+        
+        /* Accessibility Features Styles */
+        .accessibility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .accessibility-item {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .accessibility-item:hover {
+            border-color: var(--bs-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,123,255,0.1);
+        }
+        .accessibility-item.selected {
+            border-color: var(--bs-success);
+            background: rgba(25,135,84,0.1);
+        }
+        .accessibility-icon {
+            font-size: 2rem;
+            color: var(--bs-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* CKEditor Custom Styles */
+        .ck-editor__editable {
+            min-height: 200px;
+        }
+        
+        /* Enhanced Button Styles */
+        .btn-enhanced {
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-enhanced:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+
+<body class="fixed sidebar-mini">
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <a href="/dashboard" class="sidebar-brand">
+                    <span class="sidebar-brand_text">360<span>Nepal</span></span>
+                </a>
+            </div>
+            <!--/.sidebar header-->
+            <div class="sidebar-body">
+                <nav class="sidebar-nav">
+                    <ul class="metismenu">
+                        <li class="nav-label">
+                            <span class="nav-label_text">Main Menu</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-three-dots nav-label_ellipsis m-auto" viewBox="0 0 16 16">
+                                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
+                            </svg>
+                        </li>
+                        <li>
+                            <a href="/dashboard">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-speedometer" viewBox="0 0 16 16">
+                                    <path d="M8 2a.5.5 0 0 1 .5.5V4a.5.5 0 0 1-1 0V2.5A.5.5 0 0 1 8 2M3.732 3.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 8a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8m9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5m.754-4.246a.389.389 0 0 0-.527-.02L7.547 7.31A.91.91 0 1 0 8.85 8.569l3.434-4.297a.389.389 0 0 0-.029-.518z" />
+                                    <path fill-rule="evenodd" d="M6.664 15.889A8 8 0 1 1 9.336.11a8 8 0 0 1-2.672 15.78zm-4.665-4.283A11.945 11.945 0 0 1 8 10c2.186 0 4.236.585 6.001 1.606a7 7 0 1 0-12.002 0z" />
+                                </svg>
+                                <span class="ms-2">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="mm-active">
+                            <a href="add-listing.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-add" viewBox="0 0 16 16">
+                                    <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h4a.5.5 0 1 0 0-1h-4a.5.5 0 0 1-.5-.5V7.207l5-5 6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z" />
+                                    <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 1 0 1 0v-1h1a.5.5 0 1 0 0-1h-1v-1a.5.5 0 0 0-.5-.5" />
+                                </svg>
+                                <span class="ms-2">Add listing</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="file-manager.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-folder" viewBox="0 0 16 16">
+                                    <path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h4.672a2 2 0 0 1 2 2l-.04.87a1.99 1.99 0 0 0-.342-.87A1 1 0 0 0 15.5 4h-4.672a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 1l.04.87a1.99 1.99 0 0 0-.342.87z"/>
+                                    <path d="M1 4.5A1.5 1.5 0 0 1 2.5 3h11A1.5 1.5 0 0 1 15 4.5v7a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 11.5v-7zM2.5 4a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.5-.5h-11z"/>
+                                </svg>
+                                <span class="ms-2">File Manager</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="wallet.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wallet2" viewBox="0 0 16 16">
+                                    <path d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499L12.136.326zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z" />
+                                </svg>
+                                <span class="ms-2">Wallet</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="messages.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-text" viewBox="0 0 16 16">
+                                    <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                    <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6m0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5" />
+                                </svg>
+                                <span class="ms-2">Message</span>
+                                <span class="badge rounded-pill bg-success">2</span>
+                            </a>
+                        </li>
+                        <li class="nav-label">
+                            <span class="nav-label_text">Listing</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-three-dots nav-label_ellipsis m-auto" viewBox="0 0 16 16">
+                                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
+                            </svg>
+                        </li>
+                        <li>
+                            <a class="has-arrow material-ripple" href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
+                                    <path d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5" />
+                                    <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5z" />
+                                </svg>
+                                <span class="ms-2">My Listing</span>
+                            </a>
+                            <ul class="nav-second-level">
+                                <li><a href="my-listing.html">Active</a></li>
+                                <li><a href="my-listing.html">Pending</a></li>
+                                <li><a href="my-listing.html">Expired</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="reviews.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-stars" viewBox="0 0 16 16">
+                                    <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.734 1.734 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z" />
+                                </svg>
+                                <span class="ms-2">Reviews</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="bookings.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-bookmark-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M6 1h6v7a.5.5 0 0 1-.757.429L9 7.083 6.757 8.43A.5.5 0 0 1 6 8z" />
+                                    <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
+                                    <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
+                                </svg>
+                                <span class="ms-2">Bookings</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="bookmark.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                                </svg>
+                                <span class="ms-2">Bookmark</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="invoice.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-richtext" viewBox="0 0 16 16">
+                                    <path d="M7.5 3.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0m-.861 1.542 1.33.886 1.854-1.855a.25.25 0 0 1 .289-.047L11 4.75V7a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 7v-.5s1.54-1.274 1.639-1.208M5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
+                                    <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
+                                    <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
+                                </svg>
+                                <span class="ms-2">Invoice</span>
+                            </a>
+                        </li>
+                        <li class="nav-label">
+                            <span class="nav-label_text">Account</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-three-dots nav-label_ellipsis m-auto" viewBox="0 0 16 16">
+                                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
+                            </svg>
+                        </li>
+                        <li>
+                            <a href="profile.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard2-plus" viewBox="0 0 16 16">
+                                    <path d="M9.5 0a.5.5 0 0 1 .5.5.5.5 0 0 0 .5.5.5.5 0 0 1 .5.5V2a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 2v-.5a.5.5 0 0 1 .5-.5.5.5 0 0 0 .5-.5.5.5 0 0 1 .5-.5z" />
+                                    <path d="M3 2.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1H12a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5z" />
+                                    <path d="M8.5 6.5a.5.5 0 0 0-1 0V8H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V9H10a.5.5 0 0 0 0-1H8.5z" />
+                                </svg>
+                                <span class="ms-2">Edit Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="setting-app.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+                                    <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
+                                    <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115
+2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
+                                </svg>
+                                <span class="ms-2">Setting</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../sign-up.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-headset" viewBox="0 0 16 16">
+                                    <path d="M8 1a5 5 0 0 0-5 5v1h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a6 6 0 1 1 12 0v6a2.5 2.5 0 0 1-2.5 2.5H9.366a1 1 0 0 1-.866.5h-1a1 1 0 1 1 0-2h1a1 1 0 0 1 .866.5H11.5A1.5 1.5 0 0 0 13 12h-1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1V6a5 5 0 0 0-5-5" />
+                                </svg>
+                                <span class="ms-2">Support</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="../sign-in.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z" />
+                                    <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
+                                </svg>
+                                <span class="ms-2">Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="card p-4 shadow-none m-4 help-box alert" role="alert">
+                    <button type="button" class="btn-close end-0 me-3 mt-3 position-absolute top-0" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <div class="text-center"><img src="assets/dist/img/predictive_analytics.png" alt="" height="120" class="mb-3">
+                        <h6 class="mb-1">Monthly Sales Report</h6>
+                        <p class="fs-12">Your monthly sales report is ready for download!</p>
+                        <div class="d-grid"><a class="btn btn-primary" href="#" target="_blank">Purchase</a></div>
+                    </div>
+                </div>
+            </div><!-- sidebar-body -->
+        </nav>
+        
+        <!-- Page Content  -->
+        <div class="content-wrapper">
+            <div class="main-content">
+                <!-- Star navbar -->
+                <nav class="navbar-custom-menu navbar navbar-expand-xl m-0 navbar-transfarent">
+                    <div class="sidebar-toggle">
+                        <div class="sidebar-toggle-icon" id="sidebarCollapse">
+                            sidebar toggle<span></span>
+                        </div>
+                    </div>
+                    <!--/.sidebar toggle icon-->
+                    <!-- Collapse -->
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <!-- Toggler -->
+                        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-expanded="true" aria-label="Toggle navigation"><span></span> <span></span></button>
+                        <!-- Start search -->
+                        <form class="search" action="#" method="get">
+                            <div class="search__inner">
+                                <input type="text" class="search__text" placeholder="Search (Ctrl+/)">
+                                <svg data-sa-action="search-close" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search search__helper" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                </svg>
+                                <span class="search-shortcode">(Ctrl+/)</span>
+                            </div>
+                        </form>
+                        <!-- End /. search -->
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown user-menu user-menu-custom">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="profile-element d-flex align-items-center flex-shrink-0 p-0 text-start">
+                                        <div class="avatar online">
+                                            <img src="assets/dist/img/avatar/01.jpg" class="img-fluid rounded-circle" alt="">
+                                        </div>
+                                        <div class="profile-text">
+                                            <h6 class="m-0 fw-medium fs-14">Naeem Khan</h6>
+                                            <span>example@gmail.com</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-header d-sm-none">
+                                        <a href="" class="header-arrow"><i class="icon ion-md-arrow-back"></i></a>
+                                    </div>
+                                    <div class="user-header">
+                                        <div class="img-user">
+                                            <img src="assets/dist/img/avatar/01.jpg" alt="">
+                                        </div><!-- img-user -->
+                                        <h6>Naeem Khan</h6>
+                                        <span>example@gmail.com</span>
+                                    </div><!-- user-header -->
+                                    <a href="profile.html" class="dropdown-item">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664z" />
+                                        </svg>
+                                        My Profile</a>
+                                    <a href="../sign-in.html" class="dropdown-item">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
+                                            <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                                        </svg>
+                                        Sign Out</a>
+                                </div>
+                                <!--/.dropdown-menu -->
+                            </li>
+                        </ul>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars fs-18"></i>
+                    </button>
+                </nav>
+                <!-- End /. navbar -->
+                
+                <div class="body-content">
+                    <div class="decoration blur-2"></div>
+                    <div class="decoration blur-3"></div>
+                    <div class="container-xxl">
+                        <!-- Progress Indicator -->
+                        <div class="step-progress">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0">Add New Listing</h5>
+                                <span class="badge bg-primary" id="stepCounter">Step 1 of 8</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" id="progressBar" style="width: 12.5%;"></div>
+                            </div>
+                            <div class="step-indicators">
+                                <div class="step-indicator active" data-step="1">
+                                    <div class="step-number">1</div>
+                                    <div class="step-title">Category</div>
+                                </div>
+                                <div class="step-indicator" data-step="2">
+                                    <div class="step-number">2</div>
+                                    <div class="step-title">Basic Info</div>
+                                </div>
+                                <div class="step-indicator" data-step="3">
+                                    <div class="step-number">3</div>
+                                    <div class="step-title">Location</div>
+                                </div>
+                                <div class="step-indicator" data-step="4">
+                                    <div class="step-number">4</div>
+                                    <div class="step-title">Contact</div>
+                                </div>
+                                <div class="step-indicator" data-step="5">
+                                    <div class="step-number">5</div>
+                                    <div class="step-title">Media</div>
+                                </div>
+                                <div class="step-indicator" data-step="6">
+                                    <div class="step-number">6</div>
+                                    <div class="step-title">Features</div>
+                                </div>
+                                <div class="step-indicator" data-step="7">
+                                    <div class="step-number">7</div>
+                                    <div class="step-title">Settings</div>
+                                </div>
+                                <div class="step-indicator" data-step="8">
+                                    <div class="step-number">8</div>
+                                    <div class="step-title">Review</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form id="listingForm" method="POST" enctype="multipart/form-data">
+                            <!-- Step 1: Category Selection -->
+                            <div class="form-step active" id="step-1">
+                                <div class="card mb-4">
+                                <div class="card-header position-relative">
+                                    <h6 class="fs-17 fw-semi-bold mb-0">
+                                        <i class="fas fa-layer-group me-2 text-primary"></i>
+                                        Select Place Category
+                                    </h6>
+                                    <p class="text-muted mb-0 mt-2">Choose the type of place you want to list</p>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Category Search -->
+                                    <div class="category-search">
+                                        <div class="position-relative">
+                                            <input type="text" class="form-control" id="categorySearch" placeholder="Search categories...">
+                                            <i class="fas fa-search search-icon"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row g-3" id="categoryGrid">
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="category-card" data-category="restaurant">
+                                                <div class="category-icon">
+                                                    <i class="fas fa-utensils"></i>
+                                                </div>
+                                                <h6 class="fw-medium mb-2">Restaurants & Cafes</h6>
+                                                <p class="text-muted small mb-0">Dining establishments, cafes, bars, food courts</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="category-card" data-category="accommodation">
+                                                <div class="category-icon">
+                                                    <i class="fas fa-bed"></i>
+                                                </div>
+                                                <h6 class="fw-medium mb-2">Hotels & Lodging</h6>
+                                                <p class="text-muted small mb-0">Hotels, resorts, hostels, guesthouses</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="category-card" data-category="religious">
+                                                <div class="category-icon">
+                                                    <i class="fas fa-place-of-worship"></i>
+                                                </div>
+                                                <h6 class="fw-medium mb-2">Religious Places</h6>
+                                                <p class="text-muted small mb-0">Temples, churches, mosques, monasteries</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="category-card" data-category="historical">
+                                                <div class="category-icon">
+                                                    <i class="fas fa-landmark"></i>
+                                                </div>
+                                                <h6 class="fw-medium mb-2">Historical Sites</h6>
+                                                <p class="text-muted small mb-0">Monuments, museums, heritage sites</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="category-card" data-category="public">
+                                                <div class="category-icon">
+                                                    <i class="fas fa-restroom"></i>
+                                                </div>
+                                                <h6 class="fw-medium mb-2">Public Facilities</h6>
+                                                <p class="text-muted small mb-0">Public toilets, parks, libraries, hospitals</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="category-card" data-category="entertainment">
+                                                <div class="category-icon">
+                                                    <i class="fas fa-theater-masks"></i>
+                                                </div>
+                                                <h6 class="fw-medium mb-2">Entertainment</h6>
+                                                <p class="text-muted small mb-0">Cinemas, theaters, clubs, gaming centers</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="category-card" data-category="shopping">
+                                                <div class="category-icon">
+                                                    <i class="fas fa-shopping-bag"></i>
+                                                </div>
+                                                <h6 class="fw-medium mb-2">Shopping</h6>
+                                                <p class="text-muted small mb-0">Malls, markets, stores, boutiques</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-6">
+                                            <div class="category-card" data-category="services">
+                                                <div class="category-icon">
+                                                    <i class="fas fa-tools"></i>
+                                                </div>
+                                                <h6 class="fw-medium mb-2">Services</h6>
+                                                <p class="text-muted small mb-0">Banks, salons, repair shops, offices</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="selectedCategory" name="category" required>
+                                </div>
+                            </div>
+                            
+                            <!-- Navigation for Step 1 -->
+                            <div class="form-navigation">
+                                <div></div>
+                                <button type="button" class="btn btn-primary btn-step" id="nextStep1">
+                                    Next: Basic Info <i class="fas fa-arrow-right ms-2"></i>
+                                </button>
+                            </div>
+                            </div>
+
+                            <!-- Step 2: Basic Information -->
+                            <div class="form-step" id="step-2">
+                                <div class="card mb-4">
+                                <div class="card-header position-relative">
+                                    <h6 class="fs-17 fw-semi-bold mb-0">
+                                        <i class="fas fa-info-circle me-2 text-primary"></i>
+                                        Basic Information
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-4">
+                                        <div class="col-sm-8">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label required">Place Name/Title</label>
+                                                <input type="text" class="form-control" name="title" id="listingTitle" placeholder="Enter the name of your place" required>
+                                                <div class="form-text">This will be the main title displayed in search results</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label required">Sub-Category</label>
+                                                <select class="form-select" name="subcategory" id="subcategorySelect" required>
+                                                    <option value="">Select sub-category</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label">Business/Brand Name</label>
+                                                <input type="text" class="form-control" name="brand_name" placeholder="Official business or brand name">
+                                                <div class="form-text">If different from place name</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label">Establishment Year</label>
+                                                <input type="number" class="form-control" name="establishment_year" placeholder="e.g., 2010" min="1800" max="2024">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label">Owner/Manager Name</label>
+                                                <input type="text" class="form-control" name="owner_name" placeholder="Full name">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label">License/Registration Number</label>
+                                                <input type="text" class="form-control" name="license_number" placeholder="Business license number">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label">Tax ID/VAT Number</label>
+                                                <input type="text" class="form-control" name="tax_id" placeholder="Tax identification number">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label required">Description</label>
+                                                <div id="descriptionEditor"></div>
+                                                <textarea class="form-control d-none" name="description" id="listingDescription" required></textarea>
+                                                <div class="form-text">Minimum 50 characters. This description will be used for SEO and search results.</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label">Short Description</label>
+                                                <textarea class="form-control" name="short_description" rows="2" maxlength="150" placeholder="Brief one-line description for listings"></textarea>
+                                                <div class="form-text"><span id="shortDescCount">0</span>/150 characters</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label">Tags</label>
+                                                <input type="text" class="form-control" name="tags" placeholder="Enter relevant tags separated by commas">
+                                                <div class="form-text">Add relevant keywords to help people find your place</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label">Average Price Range</label>
+                                                <select class="form-select" name="price_range_general">
+                                                    <option value="">Select price range</option>
+                                                    <option value="free">Free</option>
+                                                    <option value="budget">Budget ($)</option>
+                                                    <option value="moderate">Moderate ($$)</option>
+                                                    <option value="expensive">Expensive ($$$)</option>
+                                                    <option value="luxury">Luxury ($$$$)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label">Capacity/Size</label>
+                                                <input type="number" class="form-control" name="capacity" placeholder="e.g., 50 people, 100 sqft">
+                                                <div class="form-text">Maximum capacity or area size</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label">Languages Spoken</label>
+                                                <input type="text" class="form-control" name="languages" placeholder="e.g., English, Nepali, Hindi">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label">Place Access Type</label>
+                                                <select class="form-select" name="access_type">
+                                                    <option value="">Select access type</option>
+                                                    <option value="public">Public - Open to everyone</option>
+                                                    <option value="free">Free - No entry fee required</option>
+                                                    <option value="paid">Paid - Entry fee required</option>
+                                                    <option value="restricted">Restricted - Limited access</option>
+                                                    <option value="private">Private - By invitation only</option>
+                                                    <option value="membership">Membership - Members only</option>
+                                                </select>
+                                                <div class="form-text">Choose how people can access your place</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Navigation for Step 2 -->
+                            <div class="form-navigation">
+                                <button type="button" class="btn btn-outline-secondary btn-step" id="prevStep2">
+                                    <i class="fas fa-arrow-left me-2"></i>Previous
+                                </button>
+                                <button type="button" class="btn btn-primary btn-step" id="nextStep2">
+                                    Next: Location <i class="fas fa-arrow-right ms-2"></i>
+                                </button>
+                            </div>
+                            </div>
+
+                            <!-- Step 3: Location Information -->
+                            <div class="form-step" id="step-3">
+                                <div class="card mb-4">
+                                <div class="card-header position-relative">
+                                    <h6 class="fs-17 fw-semi-bold mb-0">
+                                        <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                                        Location Details
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-4">
+                                        <div class="col-sm-6">
+                                            <div class="">
+                                                <label class="required fw-medium mb-2">Country</label>
+                                                <select class="form-select" name="country" required>
+                                                    <option value="">Select Country</option>
+                                                    <option value="nepal">Nepal</option>
+                                                    <option value="india">India</option>
+                                                    <option value="usa">United States</option>
+                                                    <option value="uk">United Kingdom</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="">
+                                                <label class="required fw-medium mb-2">State/Province</label>
+                                                <input type="text" class="form-control" name="state" placeholder="Enter state or province" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="">
+                                                <label class="required fw-medium mb-2">City</label>
+                                                <input type="text" class="form-control" name="city" placeholder="Enter city name" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">ZIP/Postal Code</label>
+                                                <input type="text" class="form-control" name="zipcode" placeholder="Enter ZIP or postal code">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="">
+                                                <label class="required fw-medium mb-2">Full Address</label>
+                                                <textarea class="form-control" name="address" rows="3" placeholder="Enter complete address with landmarks" required></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Latitude</label>
+                                                <input type="number" step="any" class="form-control" name="latitude" placeholder="e.g., 27.7172">
+                                                <div class="form-text">Optional: For precise location mapping</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Longitude</label>
+                                                <input type="number" step="any" class="form-control" name="longitude" placeholder="e.g., 85.3240">
+                                                <div class="form-text">Optional: For precise location mapping</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Navigation for Step 3 -->
+                            <div class="form-navigation">
+                                <button type="button" class="btn btn-outline-secondary btn-step" id="prevStep3">
+                                    <i class="fas fa-arrow-left me-2"></i>Previous
+                                </button>
+                                <button type="button" class="btn btn-primary btn-step" id="nextStep3">
+                                    Next: Contact <i class="fas fa-arrow-right ms-2"></i>
+                                </button>
+                            </div>
+                            </div>
+
+                            <!-- Step 4: Contact Information -->
+                            <div class="form-step" id="step-4">
+                                <div class="card mb-4">
+                                <div class="card-header position-relative">
+                                    <h6 class="fs-17 fw-semi-bold mb-0">
+                                        <i class="fas fa-phone me-2 text-primary"></i>
+                                        Contact Information
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-4">
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Phone Number</label>
+                                                <input type="tel" class="form-control" name="phone" placeholder="+1 (555) 123-4567">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Email Address</label>
+                                                <input type="email" class="form-control" name="email" placeholder="contact@example.com">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Website URL</label>
+                                                <input type="url" class="form-control" name="website" placeholder="https://www.example.com">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <hr>
+                                            <h6 class="fw-medium text-dark mb-3">Social Media Links <span class="fs-13 ms-1 text-muted">(optional)</span></h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Facebook Page</label>
+                                                <input type="url" class="form-control" name="facebook" placeholder="https://facebook.com/yourpage">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Instagram Profile</label>
+                                                <input type="url" class="form-control" name="instagram" placeholder="https://instagram.com/yourprofile">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Twitter Profile</label>
+                                                <input type="url" class="form-control" name="twitter" placeholder="https://twitter.com/yourprofile">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">LinkedIn Page</label>
+                                                <input type="url" class="form-control" name="linkedin" placeholder="https://linkedin.com/company/yourcompany">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Navigation for Step 4 -->
+                            <div class="form-navigation">
+                                <button type="button" class="btn btn-outline-secondary btn-step" id="prevStep4">
+                                    <i class="fas fa-arrow-left me-2"></i>Previous
+                                </button>
+                                <button type="button" class="btn btn-primary btn-step" id="nextStep4">
+                                    Next: Media <i class="fas fa-arrow-right ms-2"></i>
+                                </button>
+                            </div>
+                            </div>
+
+                            <!-- Step 5: Media Gallery -->
+                            <div class="form-step" id="step-5">
+                                <div class="card mb-4">
+                                <div class="card-header position-relative">
+                                    <h6 class="fs-17 fw-semi-bold mb-0">
+                                        <i class="fas fa-images me-2 text-primary"></i>
+                                        Media Gallery
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-4">
+                                        <!-- Main Images Upload -->
+                                        <div class="col-sm-12">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label required">Main Images</label>
+                                                <div class="media-upload-zone" id="mainImagesZone">
+                                                    <div class="upload-icon">
+                                                        <i class="fas fa-cloud-upload-alt"></i>
+                                                    </div>
+                                                    <h6 class="fw-medium mb-2">Drag & Drop Images Here</h6>
+                                                    <p class="text-muted mb-3">or click to browse files</p>
+                                                    <input type="file" class="d-none" id="mainImages" name="images[]" accept=".jpg,.png,.jpeg,image/jpeg,image/png" multiple required>
+                                                    <button type="button" class="btn btn-primary btn-sm" onclick="document.getElementById('mainImages').click()">
+                                                        <i class="fas fa-plus me-2"></i>Choose Images
+                                                    </button>
+                                                    <div class="form-text mt-2">Upload high-quality images (recommended: 1200x800px, max 10MB each). First image will be the cover photo.</div>
+                                                </div>
+                                                <div class="media-preview-grid" id="mainImagesPreview"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- 360° Images Upload -->
+                                        <div class="col-sm-6">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label">360° Images <span class="text-muted">(optional)</span></label>
+                                                <div class="media-upload-zone" id="images360Zone">
+                                                    <div class="upload-icon">
+                                                        <i class="fas fa-globe"></i>
+                                                    </div>
+                                                    <h6 class="fw-medium mb-2">360° Panoramic Images</h6>
+                                                    <p class="text-muted mb-3">Virtual tour images</p>
+                                                    <input type="file" class="d-none" id="images360" name="images_360[]" accept=".jpg,.png,.jpeg,image/jpeg,image/png" multiple>
+                                                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="document.getElementById('images360').click()">
+                                                        <i class="fas fa-plus me-2"></i>Add 360° Images
+                                                    </button>
+                                                    <div class="form-text mt-2">Max 20MB each, up to 5 images</div>
+                                                </div>
+                                                <div class="media-preview-grid" id="images360Preview"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Videos Upload -->
+                                        <div class="col-sm-6">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label">Videos <span class="text-muted">(optional)</span></label>
+                                                <div class="media-upload-zone" id="videosZone">
+                                                    <div class="upload-icon">
+                                                        <i class="fas fa-video"></i>
+                                                    </div>
+                                                    <h6 class="fw-medium mb-2">Promotional Videos</h6>
+                                                    <p class="text-muted mb-3">Showcase your place</p>
+                                                    <input type="file" class="d-none" id="videos" name="videos[]" accept=".mp4,.avi,.mov,video/mp4,video/avi,video/quicktime" multiple>
+                                                    <button type="button" class="btn btn-outline-primary btn-sm" onclick="document.getElementById('videos').click()">
+                                                        <i class="fas fa-plus me-2"></i>Add Videos
+                                                    </button>
+                                                    <div class="form-text mt-2">Max 100MB each, up to 3 videos</div>
+                                                </div>
+                                                <div class="media-preview-grid" id="videosPreview"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Logo Upload -->
+                                        <div class="col-sm-6">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label">Logo/Brand Image <span class="text-muted">(optional)</span></label>
+                                                <div class="media-upload-zone" id="logoZone">
+                                                    <div class="upload-icon">
+                                                        <i class="fas fa-image"></i>
+                                                    </div>
+                                                    <h6 class="fw-medium mb-2">Business Logo</h6>
+                                                    <input type="file" class="d-none" id="logo" name="logo" accept=".jpg,.png,.jpeg,image/jpeg,image/png">
+                                                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="document.getElementById('logo').click()">
+                                                        <i class="fas fa-plus me-2"></i>Upload Logo
+                                                    </button>
+                                                    <div class="form-text mt-2">Square format recommended (500x500px)</div>
+                                                </div>
+                                                <div class="media-preview-grid" id="logoPreview"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Menu/Brochure Upload -->
+                                        <div class="col-sm-6">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label">Menu/Brochure <span class="text-muted">(optional)</span></label>
+                                                <div class="media-upload-zone" id="menuZone">
+                                                    <div class="upload-icon">
+                                                        <i class="fas fa-file-pdf"></i>
+                                                    </div>
+                                                    <h6 class="fw-medium mb-2">Menu or Brochure</h6>
+                                                    <input type="file" class="d-none" id="menu" name="menu[]" accept=".pdf,.jpg,.png,.jpeg" multiple>
+                                                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="document.getElementById('menu').click()">
+                                                        <i class="fas fa-plus me-2"></i>Upload Files
+                                                    </button>
+                                                    <div class="form-text mt-2">PDF, JPG, PNG formats accepted</div>
+                                                </div>
+                                                <div class="media-preview-grid" id="menuPreview"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                               </div>
+                           </div>
+                           
+                           <!-- Navigation for Step 5 -->
+                           <div class="form-navigation">
+                               <button type="button" class="btn btn-outline-secondary btn-step" id="prevStep5">
+                                   <i class="fas fa-arrow-left me-2"></i>Previous
+                               </button>
+                               <button type="button" class="btn btn-primary btn-step" id="nextStep5">
+                                   Next: Features <i class="fas fa-arrow-right ms-2"></i>
+                               </button>
+                           </div>
+                           </div>
+
+                           <!-- Step 6: Features & Amenities -->
+                           <div class="form-step" id="step-6">
+
+                           <!-- Dynamic Category-Specific Sections -->
+                            
+                            <!-- Restaurant Specific Fields -->
+                            <div class="card mb-4 dynamic-section" id="restaurant-fields">
+                                <div class="card-header position-relative">
+                                    <h6 class="fs-17 fw-semi-bold mb-0">
+                                        <i class="fas fa-utensils me-2 text-primary"></i>
+                                        Restaurant Details
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-4">
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Cuisine Type</label>
+                                                <select class="form-select" name="cuisine_type">
+                                                    <option value="">Select cuisine</option>
+                                                    <option value="nepali">Nepali</option>
+                                                    <option value="indian">Indian</option>
+                                                    <option value="chinese">Chinese</option>
+                                                    <option value="continental">Continental</option>
+                                                    <option value="italian">Italian</option>
+                                                    <option value="mexican">Mexican</option>
+                                                    <option value="thai">Thai</option>
+                                                    <option value="japanese">Japanese</option>
+                                                    <option value="multi-cuisine">Multi-cuisine</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Price Range</label>
+                                                <select class="form-select" name="price_range">
+                                                    <option value="">Select price range</option>
+                                                    <option value="budget">Budget (Under $10)</option>
+                                                    <option value="moderate">Moderate ($10-30)</option>
+                                                    <option value="expensive">Expensive ($30-60)</option>
+                                                    <option value="luxury">Luxury ($60+)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Seating Capacity</label>
+                                                <input type="number" class="form-control" name="seating_capacity" placeholder="e.g., 50">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                
+                            <div class="fw-medium text-dark mb-3">Restaurant Features</div>
+                                            <div class="amenity-grid">
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="restaurant_features[]" value="outdoor_seating" id="outdoor_seating">
+                                                        <label class="form-check-label" for="outdoor_seating">Outdoor Seating</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="restaurant_features[]" value="delivery" id="delivery">
+                                                        <label class="form-check-label" for="delivery">Home Delivery</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="restaurant_features[]" value="takeaway" id="takeaway">
+                                                        <label class="form-check-label" for="takeaway">Takeaway</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="restaurant_features[]" value="live_music" id="live_music">
+                                                        <label class="form-check-label" for="live_music">Live Music</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="restaurant_features[]" value="bar" id="bar">
+                                                        <label class="form-check-label" for="bar">Bar/Alcohol</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="restaurant_features[]" value="vegetarian" id="vegetarian">
+                                                        <label class="form-check-label" for="vegetarian">Vegetarian Options</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hotel Specific Fields -->
+                            <div class="card mb-4 dynamic-section" id="accommodation-fields">
+                                <div class="card-header position-relative">
+                                    <h6 class="fs-17 fw-semi-bold mb-0">
+                                        <i class="fas fa-bed me-2 text-primary"></i>
+                                        Accommodation Details
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-4">
+                                        <div class="col-sm-3">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Star Rating</label>
+                                                <select class="form-select" name="star_rating">
+                                                    <option value="">Select rating</option>
+                                                    <option value="1">1 Star</option>
+                                                    <option value="2">2 Star</option>
+                                                    <option value="3">3 Star</option>
+                                                    <option value="4">4 Star</option>
+                                                    <option value="5">5 Star</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Total Rooms</label>
+                                                <input type="number" class="form-control" name="total_rooms" placeholder="e.g., 25">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Check-in Time</label>
+                                                <input type="time" class="form-control" name="checkin_time">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Check-out Time</label>
+                                                <input type="time" class="form-control" name="checkout_time">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="fw-medium text-dark mb-3">Hotel Amenities</div>
+                                            <div class="amenity-grid">
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="hotel_amenities[]" value="wifi" id="hotel_wifi">
+                                                        <label class="form-check-label" for="hotel_wifi">Free WiFi</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="hotel_amenities[]" value="parking" id="hotel_parking">
+                                                        <label class="form-check-label" for="hotel_parking">Parking</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="hotel_amenities[]" value="pool" id="hotel_pool">
+                                                        <label class="form-check-label" for="hotel_pool">Swimming Pool</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="hotel_amenities[]" value="gym" id="hotel_gym">
+                                                        <label class="form-check-label" for="hotel_gym">Fitness Center</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="hotel_amenities[]" value="spa" id="hotel_spa">
+                                                        <label class="form-check-label" for="hotel_spa">Spa Services</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="hotel_amenities[]" value="restaurant" id="hotel_restaurant">
+                                                        <label class="form-check-label" for="hotel_restaurant">Restaurant</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="hotel_amenities[]" value="room_service" id="room_service">
+                                                        <label class="form-check-label" for="room_service">Room Service</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="hotel_amenities[]" value="laundry" id="hotel_laundry">
+                                                        <label class="form-check-label" for="hotel_laundry">Laundry Service</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Religious Places Specific Fields -->
+                            <div class="card mb-4 dynamic-section" id="religious-fields">
+                                <div class="card-header position-relative">
+                                    <h6 class="fs-17 fw-semi-bold mb-0">
+                                        <i class="fas fa-place-of-worship me-2 text-primary"></i>
+                                        Religious Place Details
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-4">
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Religion/Faith</label>
+                                                <select class="form-select" name="religion">
+                                                    <option value="">Select religion</option>
+                                                    <option value="hinduism">Hinduism</option>
+                                                    <option value="buddhism">Buddhism</option>
+                                                    <option value="christianity">Christianity</option>
+                                                    <option value="islam">Islam</option>
+                                                    <option value="sikhism">Sikhism</option>
+                                                    <option value="judaism">Judaism</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Established Year</label>
+                                                <input type="number" class="form-control" name="established_year" placeholder="e.g., 1850" min="1" max="2024">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Architectural Style</label>
+                                                <input type="text" class="form-control" name="architectural_style" placeholder="e.g., Pagoda, Gothic">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Historical Significance</label>
+                                                <textarea class="form-control" name="historical_significance" rows="3" placeholder="Describe the historical and cultural importance of this place"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="fw-medium text-dark mb-3">Facilities Available</div>
+                                            <div class="amenity-grid">
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="religious_facilities[]" value="parking" id="religious_parking">
+                                                        <label class="form-check-label" for="religious_parking">Parking Available</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="religious_facilities[]" value="wheelchair" id="religious_wheelchair">
+                                                        <label class="form-check-label" for="religious_wheelchair">Wheelchair Accessible</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="religious_facilities[]" value="guided_tours" id="guided_tours">
+                                                        <label class="form-check-label" for="guided_tours">Guided Tours</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="religious_facilities[]" value="photography" id="photography_allowed">
+                                                        <label class="form-check-label" for="photography_allowed">Photography Allowed</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Historical Sites Specific Fields -->
+                            <div class="card mb-4 dynamic-section" id="historical-fields">
+                                <div class="card-header position-relative">
+                                    <h6 class="fs-17 fw-semi-bold mb-0">
+                                        <i class="fas fa-landmark me-2 text-primary"></i>
+                                        Historical Site Details
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-4">
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Historical Period</label>
+                                                <input type="text" class="form-control" name="historical_period" placeholder="e.g., Medieval, Colonial">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">UNESCO Heritage Site</label>
+                                                <select class="form-select" name="unesco_site">
+                                                    <option value="">Select status</option>
+                                                    <option value="yes">Yes</option>
+                                                    <option value="no">No</option>
+                                                    <option value="tentative">Tentative List</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Entry Fee</label>
+                                                <input type="text" class="form-control" name="entry_fee" placeholder="e.g., $5, Free">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Historical Background</label>
+                                                <textarea class="form-control" name="historical_background" rows="4" placeholder="Provide detailed historical information about this site"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Public Facilities Specific Fields -->
+                            <div class="card mb-4 dynamic-section" id="public-fields">
+                                <div class="card-header position-relative">
+                                    <h6 class="fs-17 fw-semi-bold mb-0">
+                                        <i class="fas fa-restroom me-2 text-primary"></i>
+                                        Public Facility Details
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-4">
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Facility Type</label>
+                                                <select class="form-select" name="facility_type">
+                                                    <option value="">Select type</option>
+                                                    <option value="public_toilet">Public Toilet</option>
+                                                    <option value="park">Park/Garden</option>
+                                                    <option value="library">Library</option>
+                                                    <option value="hospital">Hospital/Clinic</option>
+                                                    <option value="government">Government Office</option>
+                                                    <option value="police_station">Police Station</option>
+                                                    <option value="fire_station">Fire Station</option>
+                                                    <option value="post_office">Post Office</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Operating Hours</label>
+                                                <input type="text" class="form-control" name="operating_hours" placeholder="e.g., 24/7, 9 AM - 5 PM">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Access Fee</label>
+                                                <select class="form-select" name="access_fee">
+                                                    <option value="free">Free</option>
+                                                    <option value="paid">Paid</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="fw-medium text-dark mb-3">Available Features</div>
+                                            <div class="amenity-grid">
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="public_features[]" value="wheelchair_accessible" id="public_wheelchair">
+                                                        <label class="form-check-label" for="public_wheelchair">Wheelchair Accessible</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="public_features[]" value="baby_changing" id="baby_changing">
+                                                        <label class="form-check-label" for="baby_changing">Baby Changing Facility</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="public_features[]" value="clean_maintained" id="clean_maintained">
+                                                        <label class="form-check-label" for="clean_maintained">Well Maintained</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-check-custom">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="public_features[]" value="security" id="public_security">
+                                                        <label class="form-check-label" for="public_security">Security Available</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Comprehensive Amenities Section -->
+                            <div class="card mb-4">
+                                <div class="card-header position-relative">
+                                    <h6 class="fs-17 fw-semi-bold mb-0">
+                                        <i class="fas fa-star me-2 text-primary"></i>
+                                        Amenities & Features
+                                    </h6>
+                                    <p class="text-muted mb-0 mt-2">Select all amenities and features available at your place</p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="amenities-section">
+                                        <!-- Basic Amenities -->
+                                        <div class="amenity-category">
+                                            <h6><i class="fas fa-home me-2"></i>Basic Amenities</h6>
+                                            <div class="row g-2">
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="amenity-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="wifi" id="amenity_wifi">
+                                                            <label class="form-check-label" for="amenity_wifi">
+                                                                <i class="fas fa-wifi me-2"></i>Free WiFi
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="amenity-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="parking" id="amenity_parking">
+                                                            <label class="form-check-label" for="amenity_parking">
+                                                                <i class="fas fa-parking me-2"></i>Parking Available
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="amenity-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="ac" id="amenity_ac">
+                                                            <label class="form-check-label" for="amenity_ac">
+                                                                <i class="fas fa-snowflake me-2"></i>Air Conditioning
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="amenity-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="heating" id="amenity_heating">
+                                                            <label class="form-check-label" for="amenity_heating">
+                                                                <i class="fas fa-fire me-2"></i>Heating
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Food & Beverage -->
+                                        <div class="amenity-category">
+                                            <h6><i class="fas fa-utensils me-2"></i>Food & Beverage</h6>
+                                            <div class="row g-2">
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="amenity-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="restaurant" id="amenity_restaurant">
+                                                            <label class="form-check-label" for="amenity_restaurant">
+                                                                <i class="fas fa-utensils me-2"></i>Restaurant
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="amenity-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="bar" id="amenity_bar">
+                                                            <label class="form-check-label" for="amenity_bar">
+                                                                <i class="fas fa-cocktail me-2"></i>Bar/Lounge
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="amenity-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="room_service" id="amenity_room_service">
+                                                            <label class="form-check-label" for="amenity_room_service">
+                                                                <i class="fas fa-concierge-bell me-2"></i>Room Service
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="amenity-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="breakfast" id="amenity_breakfast">
+                                                            <label class="form-check-label" for="amenity_breakfast">
+                                                                <i class="fas fa-coffee me-2"></i>Breakfast Included
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Recreation & Entertainment -->
+                                        <div class="amenity-category">
+                                            <h6><i class="fas fa-gamepad me-2"></i>Recreation & Entertainment</h6>
+                                            <div class="row g-2">
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="amenity-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="pool" id="amenity_pool">
+                                                            <label class="form-check-label" for="amenity_pool">
+                                                                <i class="fas fa-swimming-pool me-2"></i>Swimming Pool
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="amenity-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="gym" id="amenity_gym">
+                                                            <label class="form-check-label" for="amenity_gym">
+                                                                <i class="fas fa-dumbbell me-2"></i>Fitness Center
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="amenity-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="spa" id="amenity_spa">
+                                                            <label class="form-check-label" for="amenity_spa">
+                                                                <i class="fas fa-spa me-2"></i>Spa Services
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="amenity-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="entertainment" id="amenity_entertainment">
+                                                            <label class="form-check-label" for="amenity_entertainment">
+                                                                <i class="fas fa-music me-2"></i>Live Entertainment
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Business Services -->
+                                        <div class="amenity-category">
+                                            <h6><i class="fas fa-briefcase me-2"></i>Business Services</h6>
+                                            <div class="row g-2">
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="amenity-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="meeting_rooms" id="amenity_meeting">
+                                                            <label class="form-check-label" for="amenity_meeting">
+                                                                <i class="fas fa-users me-2"></i>Meeting Rooms
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="amenity-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="business_center" id="amenity_business">
+                                                            <label class="form-check-label" for="amenity_business">
+                                                                <i class="fas fa-laptop me-2"></i>Business Center
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="amenity-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="conference" id="amenity_conference">
+                                                            <label class="form-check-label" for="amenity_conference">
+                                                                <i class="fas fa-presentation me-2"></i>Conference Facilities
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="amenity-item">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="printing" id="amenity_printing">
+                                                            <label class="form-check-label" for="amenity_printing">
+                                                                <i class="fas fa-print me-2"></i>Printing Services
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Accessibility Features Section -->
+                            <div class="card mb-4">
+                                <div class="card-header position-relative">
+                                    <h6 class="fs-17 fw-semi-bold mb-0">
+                                        <i class="fas fa-universal-access me-2 text-primary"></i>
+                                        Accessibility Features
+                                    </h6>
+                                    <p class="text-muted mb-0 mt-2">Select accessibility features available at your place</p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="accessibility-grid">
+                                        <div class="accessibility-item">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="accessibility[]" value="wheelchair_accessible" id="access_wheelchair">
+                                                <label class="form-check-label" for="access_wheelchair">
+                                                    <div class="accessibility-icon">
+                                                        <i class="fas fa-wheelchair"></i>
+                                                    </div>
+                                                    <h6 class="fw-medium">Wheelchair Accessible</h6>
+                                                    <p class="text-muted small mb-0">Ramps, wide doorways, accessible restrooms</p>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="accessibility-item">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="accessibility[]" value="hearing_impaired" id="access_hearing">
+                                                <label class="form-check-label" for="access_hearing">
+                                                    <div class="accessibility-icon">
+                                                        <i class="fas fa-deaf"></i>
+                                                    </div>
+                                                    <h6 class="fw-medium">Hearing Impaired Support</h6>
+                                                    <p class="text-muted small mb-0">Sign language, hearing loops, visual alerts</p>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="accessibility-item">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="accessibility[]" value="visually_impaired" id="access_visual">
+                                                <label class="form-check-label" for="access_visual">
+                                                    <div class="accessibility-icon">
+                                                        <i class="fas fa-eye-slash"></i>
+                                                    </div>
+                                                    <h6 class="fw-medium">Visually Impaired Support</h6>
+                                                    <p class="text-muted small mb-0">Braille signage, audio guides, tactile paths</p>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="accessibility-item">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="accessibility[]" value="mobility_assistance" id="access_mobility">
+                                                <label class="form-check-label" for="access_mobility">
+                                                    <div class="accessibility-icon">
+                                                        <i class="fas fa-walking"></i>
+                                                    </div>
+                                                    <h6 class="fw-medium">Mobility Assistance</h6>
+                                                    <p class="text-muted small mb-0">Elevators, handrails, accessible seating</p>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="accessibility-item">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="accessibility[]" value="service_animals" id="access_animals">
+                                                <label class="form-check-label" for="access_animals">
+                                                    <div class="accessibility-icon">
+                                                        <i class="fas fa-dog"></i>
+                                                    </div>
+                                                    <h6 class="fw-medium">Service Animals Welcome</h6>
+                                                    <p class="text-muted small mb-0">Guide dogs and service animals allowed</p>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="accessibility-item">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="accessibility[]" value="accessible_parking" id="access_parking">
+                                                <label class="form-check-label" for="access_parking">
+                                                    <div class="accessibility-icon">
+                                                        <i class="fas fa-parking"></i>
+                                                    </div>
+                                                    <h6 class="fw-medium">Accessible Parking</h6>
+                                                    <p class="text-muted small mb-0">Designated accessible parking spaces</p>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Additional Accessibility Notes -->
+                                    <div class="mt-4">
+                                        <label class="form-label">Additional Accessibility Information</label>
+                                        <textarea class="form-control" name="accessibility_notes" rows="3" placeholder="Describe any other accessibility features or accommodations available at your place..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Navigation for Step 6 -->
+                            <div class="form-navigation">
+                                <button type="button" class="btn btn-outline-secondary btn-step" id="prevStep6">
+                                    <i class="fas fa-arrow-left me-2"></i>Previous
+                                </button>
+                                <button type="button" class="btn btn-primary btn-step" id="nextStep6">
+                                    Next: Settings <i class="fas fa-arrow-right ms-2"></i>
+                                </button>
+                            </div>
+                            </div>
+
+                            <!-- Step 7: Settings & SEO -->
+                            <div class="form-step" id="step-7">
+
+                            <!-- SEO Optimization Section -->
+                            <div class="card mb-4">
+                                <div class="card-header position-relative">
+                                    <h6 class="fs-17 fw-semi-bold mb-0">
+                                        <i class="fas fa-search me-2 text-primary"></i>
+                                        SEO Optimization
+                                    </h6>
+                                    <p class="text-muted mb-0 mt-2">Optimize your listing for search engines and better visibility</p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-4">
+                                        <div class="col-sm-12">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">SEO Title <span class="text-muted">(60 characters recommended)</span></label>
+                                                <input type="text" class="form-control" name="seo_title" id="seoTitle" maxlength="60" placeholder="Enter SEO-friendly title">
+                                                <div class="form-text">
+                                                    <span id="seoTitleCount">0</span>/60 characters
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Meta Description <span class="text-muted">(160 characters recommended)</span></label>
+                                                <textarea class="form-control" name="meta_description" id="metaDescription" maxlength="160" rows="3" placeholder="Write a compelling description for search results"></textarea>
+                                                <div class="form-text">
+                                                    <span id="metaDescCount">0</span>/160 characters
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Focus Keywords</label>
+                                                <input type="text" class="form-control" name="focus_keywords" placeholder="Enter main keywords separated by commas">
+                                                <div class="form-text">Add 3-5 main keywords that people might search for</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">URL Slug</label>
+                                                <input type="text" class="form-control" name="url_slug" id="urlSlug" placeholder="auto-generated-from-title">
+                                                <div class="form-text">SEO-friendly URL (auto-generated from title)</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="">
+                                                <label class="fw-medium mb-2">Schema Type</label>
+                                                <select class="form-select" name="schema_type">
+                                                    <option value="LocalBusiness">Local Business</option>
+                                                    <option value="Restaurant">Restaurant</option>
+                                                    <option value="Hotel">Hotel</option>
+                                                    <option value="TouristAttraction">Tourist Attraction</option>
+                                                    <option value="Place">Place</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="seo-preview">
+                                                <h6 class="fw-medium mb-2">Search Result Preview</h6>
+                                                <div class="seo-title" id="previewTitle">Your SEO Title Will Appear Here</div>
+                                                <div class="seo-url" id="previewUrl">https://yoursite.com/listing/your-url-slug</div>
+                                                <div class="seo-description" id="previewDescription">Your meta description will appear here. Make it compelling to encourage clicks from search results.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Operating Hours -->
+                            <div class="card mb-4">
+                                <div class="card-header position-relative">
+                                    <h6 class="fs-17 fw-semi-bold mb-0">
+                                        <i class="fas fa-clock me-2 text-primary"></i>
+                                        Operating Hours <span class="fs-13 ms-1 text-muted">(optional)</span>
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <div class="col-sm-12">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="always_open" name="always_open">
+                                                <label class="form-check-label fw-medium" for="always_open">
+                                                    Open 24/7
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div id="operating-hours-section">
+                                            <div class="row g-3">
+                                                <div class="col-sm-2">
+                                                    <label class="fw-medium mb-2">Monday</label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="time" class="form-control" name="monday_open">
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="time" class="form-control" name="monday_close">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="monday_closed" id="monday_closed">
+                                                        <label class="form-check-label" for="monday_closed">Closed</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 mt-2">
+                                                <div class="col-sm-2">
+                                                    <label class="fw-medium mb-2">Tuesday</label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="time" class="form-control" name="tuesday_open">
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="time" class="form-control" name="tuesday_close">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="tuesday_closed" id="tuesday_closed">
+                                                        <label class="form-check-label" for="tuesday_closed">Closed</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 mt-2">
+                                                <div class="col-sm-2">
+                                                    <label class="fw-medium mb-2">Wednesday</label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="time" class="form-control" name="wednesday_open">
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="time" class="form-control" name="wednesday_close">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="wednesday_closed" id="wednesday_closed">
+                                                        <label class="form-check-label" for="wednesday_closed">Closed</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 mt-2">
+                                                <div class="col-sm-2">
+                                                    <label class="fw-medium mb-2">Thursday</label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="time" class="form-control" name="thursday_open">
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="time" class="form-control" name="thursday_close">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="thursday_closed" id="thursday_closed">
+                                                        <label class="form-check-label" for="thursday_closed">Closed</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 mt-2">
+                                                <div class="col-sm-2">
+                                                    <label class="fw-medium mb-2">Friday</label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="time" class="form-control" name="friday_open">
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="time" class="form-control" name="friday_close">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="friday_closed" id="friday_closed">
+                                                        <label class="form-check-label" for="friday_closed">Closed</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 mt-2">
+                                                <div class="col-sm-2">
+                                                    <label class="fw-medium mb-2">Saturday</label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="time" class="form-control" name="saturday_open">
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="time" class="form-control" name="saturday_close">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="saturday_closed" id="saturday_closed">
+                                                        <label class="form-check-label" for="saturday_closed">Closed</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 mt-2">
+                                                <div class="col-sm-2">
+                                                    <label class="fw-medium mb-2">Sunday</label>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="time" class="form-control" name="sunday_open">
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input type="time" class="form-control" name="sunday_close">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="sunday_closed" id="sunday_closed">
+                                                        <label class="form-check-label" for="sunday_closed">Closed</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Website Options Section -->
+                            <div class="card mb-4">
+                                <div class="card-header position-relative">
+                                    <h6 class="fs-17 fw-semi-bold mb-0">
+                                        <i class="fas fa-globe me-2 text-primary"></i>
+                                        Website Options
+                                    </h6>
+                                    <p class="text-muted mb-0 mt-2">Do you need a website for your business?</p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-4">
+                                        <div class="col-sm-12">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label">Do you need a website?</label>
+                                                <div class="form-check mb-3">
+                                                    <input class="form-check-input" type="radio" name="need_website" id="need_website_yes" value="yes">
+                                                    <label class="form-check-label" for="need_website_yes">
+                                                        <strong>Yes, I need a website</strong>
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mb-3">
+                                                    <input class="form-check-input" type="radio" name="need_website" id="need_website_no" value="no">
+                                                    <label class="form-check-label" for="need_website_no">
+                                                        <strong>No, I don't need a website</strong>
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mb-3">
+                                                    <input class="form-check-input" type="radio" name="need_website" id="have_website" value="existing">
+                                                    <label class="form-check-label" for="have_website">
+                                                        <strong>I already have a website</strong>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Website Creation Option -->
+                                        <div class="col-sm-12" id="website_creation_section" style="display: none;">
+                                            <div class="alert alert-info">
+                                                <h6 class="fw-medium mb-2">
+                                                    <i class="fas fa-star me-2"></i>Create Your Website with 360Nepal
+                                                </h6>
+                                                <p class="mb-2">Get a professional website for your business with our partner 360Nepal. Features include:</p>
+                                                <ul class="mb-2">
+                                                    <li>Professional design templates</li>
+                                                    <li>Mobile-responsive layout</li>
+                                                    <li>SEO optimization</li>
+                                                    <li>Easy content management</li>
+                                                    <li>24/7 support</li>
+                                                </ul>
+                                                <div class="form-check mb-3">
+                                                    <input class="form-check-input" type="checkbox" name="create_with_360nepal" id="create_with_360nepal">
+                                                    <label class="form-check-label" for="create_with_360nepal">
+                                                        <strong>Yes, create my website with 360Nepal</strong>
+                                                    </label>
+                                                </div>
+                                                <div class="form-group-enhanced">
+                                                    <label class="form-label">Desired Website Name</label>
+                                                    <input type="text" class="form-control" name="desired_website_name" placeholder="e.g., myrestaurant, mybusiness">
+                                                    <div class="form-text">Enter your preferred website name (will be used as yourname.360nepal.com)</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Existing Website Option -->
+                                        <div class="col-sm-12" id="existing_website_section" style="display: none;">
+                                            <div class="form-group-enhanced">
+                                                <label class="form-label">Enter your existing domain name</label>
+                                                <input type="url" class="form-control" name="existing_domain" placeholder="https://www.yourwebsite.com">
+                                                <div class="form-text">Enter the full URL of your existing website</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Navigation for Step 7 -->
+                            <div class="form-navigation">
+                                <button type="button" class="btn btn-outline-secondary btn-step" id="prevStep7">
+                                    <i class="fas fa-arrow-left me-2"></i>Previous
+                                </button>
+                                <button type="button" class="btn btn-primary btn-step" id="nextStep7">
+                                    Next: Review <i class="fas fa-arrow-right ms-2"></i>
+                                </button>
+                            </div>
+                            </div>
+
+                            <!-- Step 8: Review & Submit -->
+                            <div class="form-step" id="step-8">
+
+                            <!-- Terms and Conditions Section -->
+                            <div class="card mb-4">
+                                <div class="card-header position-relative">
+                                    <h6 class="fs-17 fw-semi-bold mb-0">
+                                        <i class="fas fa-file-contract me-2 text-primary"></i>
+                                        Terms and Conditions
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <div class="col-sm-12">
+                                            <div class="alert alert-light border">
+                                                <h6 class="fw-medium mb-3">Please read and agree to the following:</h6>
+                                                
+                                                <div class="form-check mb-3">
+                                                    <input class="form-check-input" type="checkbox" name="agree_terms" id="agree_terms" required>
+                                                    <label class="form-check-label" for="agree_terms">
+                                                        I agree to the <a href="#" class="text-primary" target="_blank">Terms of Service</a> and <a href="#" class="text-primary" target="_blank">Privacy Policy</a>
+                                                    </label>
+                                                </div>
+                                                
+                                                <div class="form-check mb-3">
+                                                    <input class="form-check-input" type="checkbox" name="agree_listing_policy" id="agree_listing_policy" required>
+                                                    <label class="form-check-label" for="agree_listing_policy">
+                                                        I agree to the <a href="#" class="text-primary" target="_blank">Listing Guidelines</a> and understand that my listing will be reviewed before publication
+                                                    </label>
+                                                </div>
+                                                
+                                                <div class="form-check mb-3">
+                                                    <input class="form-check-input" type="checkbox" name="agree_accuracy" id="agree_accuracy" required>
+                                                    <label class="form-check-label" for="agree_accuracy">
+                                                        I confirm that all information provided is accurate and up-to-date
+                                                    </label>
+                                                </div>
+                                                
+                                                <div class="form-check mb-3">
+                                                    <input class="form-check-input" type="checkbox" name="agree_marketing" id="agree_marketing">
+                                                    <label class="form-check-label" for="agree_marketing">
+                                                        I agree to receive marketing communications and updates about my listing <span class="text-muted">(optional)</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Section -->
+                            <div class="card mb-4">
+                                <div class="card-body text-center">
+                                    <div class="row g-3">
+                                        <div class="col-sm-6">
+                                            <button type="button" class="btn btn-outline-secondary btn-lg w-100">
+                                                <i class="fas fa-save me-2"></i>Save as Draft
+                                            </button>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <button type="submit" class="btn btn-primary btn-lg w-100" id="submitBtn" disabled>
+                                                <i class="fas fa-paper-plane me-2"></i>Submit for Review
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <small class="text-muted">
+                                            Please agree to all required terms and conditions above to submit your listing
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Navigation for Step 8 -->
+                            <div class="form-navigation">
+                                <button type="button" class="btn btn-outline-secondary btn-step" id="prevStep8">
+                                    <i class="fas fa-arrow-left me-2"></i>Previous
+                                </button>
+                                <div></div>
+                            </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!--/.body content-->
+            </div>
+            <!--/.main content-->
+            <footer class="footer-content">
+                <div class="align-items-center d-flex footer-text gap-3 justify-content-between">
+                    <div class="copy">© 2022 ListOn - All Rights Reserved</div>
+                    <div class="credit">Developed by: <a href="#">ListOn</a> 🌺💚</div>
+                </div>
+            </footer>
+            <!--/.footer content-->
+            <div class="overlay"></div>
+        </div>
+        <!--/.wrapper-->
+    </div>
+    
+    <!-- Global script(used by all pages) -->
+    <script src="assets/plugins/jQuery/jquery.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/plugins/metisMenu/metisMenu.min.js"></script>
+    <script src="assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <!-- Third Party Scripts(used by this page) -->
+    <script src="assets/plugins/jquery-fancyfileuploader/fancy-file-uploader/jquery.ui.widget.js"></script>
+    <script src="assets/plugins/jquery-fancyfileuploader/fancy-file-uploader/jquery.fileupload.js"></script>
+    <script src="assets/plugins/jquery-fancyfileuploader/fancy-file-uploader/jquery.iframe-transport.js"></script>
+    <script src="assets/plugins/jquery-fancyfileuploader/fancy-file-uploader/jquery.fancy-fileupload.js"></script>
+    <!-- Page Scripts(used by all page) -->
+    <script src="assets/dist/js/app.min.js"></script>
+    
+    <script>
+        let descriptionEditor;
+        
+        $(document).ready(function() {
+            // Initialize CKEditor
+            ClassicEditor
+                .create(document.querySelector('#descriptionEditor'), {
+                    toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'outdent', 'indent', '|', 'blockQuote', 'insertTable', 'undo', 'redo'],
+                    heading: {
+                        options: [
+                            { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                            { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                            { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
+                        ]
+                    }
+                })
+                .then(editor => {
+                    descriptionEditor = editor;
+                    editor.model.document.on('change:data', () => {
+                        const data = editor.getData();
+                        $('#listingDescription').val(data);
+                        
+                        // Auto-update meta description if empty
+                        if (!$('#metaDescription').val() && data) {
+                            const textOnly = data.replace(/<[^>]*>/g, '');
+                            const metaDesc = textOnly.substring(0, 160);
+                            $('#metaDescription').val(metaDesc);
+                            $('#metaDescCount').text(metaDesc.length);
+                            $('#previewDescription').text(metaDesc);
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+
+            // Category search functionality
+            $('#categorySearch').on('input', function() {
+                const searchTerm = $(this).val().toLowerCase();
+                $('.category-card').each(function() {
+                    const categoryText = $(this).text().toLowerCase();
+                    if (categoryText.includes(searchTerm)) {
+                        $(this).removeClass('hidden').parent().show();
+                    } else {
+                        $(this).addClass('hidden').parent().hide();
+                    }
+                });
+            });
+
+            // Category selection functionality
+            $('.category-card').on('click', function() {
+                // Remove selected class from all cards
+                $('.category-card').removeClass('selected');
+                // Add selected class to clicked card
+                $(this).addClass('selected');
+                
+                const category = $(this).data('category');
+                $('#selectedCategory').val(category);
+                
+                // Hide all dynamic sections
+                $('.dynamic-section').removeClass('active');
+                
+                // Show relevant section based on category
+                if (category) {
+                    $('#' + category + '-fields').addClass('active');
+                    updateSubcategories(category);
+                }
+                
+                console.log('Selected category:', category);
+            });
+
+            // Enhanced media upload functionality
+            setupMediaUpload('mainImages', 'mainImagesPreview', 'mainImagesZone', ['image/jpeg', 'image/png', 'image/jpg'], 10);
+            setupMediaUpload('images360', 'images360Preview', 'images360Zone', ['image/jpeg', 'image/png', 'image/jpg'], 5);
+            setupMediaUpload('videos', 'videosPreview', 'videosZone', ['video/mp4', 'video/avi', 'video/quicktime'], 3);
+            setupMediaUpload('logo', 'logoPreview', 'logoZone', ['image/jpeg', 'image/png', 'image/jpg'], 1);
+            setupMediaUpload('menu', 'menuPreview', 'menuZone', ['application/pdf', 'image/jpeg', 'image/png'], 5);
+
+            // Amenity selection functionality
+            $('.amenity-item').on('click', function() {
+                const checkbox = $(this).find('input[type="checkbox"]');
+                checkbox.prop('checked', !checkbox.prop('checked'));
+                $(this).toggleClass('selected', checkbox.prop('checked'));
+            });
+
+            // Accessibility selection functionality
+            $('.accessibility-item').on('click', function() {
+                const checkbox = $(this).find('input[type="checkbox"]');
+                checkbox.prop('checked', !checkbox.prop('checked'));
+                $(this).toggleClass('selected', checkbox.prop('checked'));
+            });
+
+            // Short description character counter
+            $('textarea[name="short_description"]').on('input', function() {
+                const length = $(this).val().length;
+                $('#shortDescCount').text(length);
+            });
+
+            // Media upload setup function
+            function setupMediaUpload(inputId, previewId, zoneId, acceptedTypes, maxFiles) {
+                const input = document.getElementById(inputId);
+                const preview = document.getElementById(previewId);
+                const zone = document.getElementById(zoneId);
+                
+                // Drag and drop functionality
+                zone.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    zone.classList.add('dragover');
+                });
+                
+                zone.addEventListener('dragleave', function(e) {
+                    e.preventDefault();
+                    zone.classList.remove('dragover');
+                });
+                
+                zone.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    zone.classList.remove('dragover');
+                    
+                    const files = Array.from(e.dataTransfer.files);
+                    handleFileSelection(files, input, preview, acceptedTypes, maxFiles);
+                });
+                
+                // File input change
+                input.addEventListener('change', function(e) {
+                    const files = Array.from(e.target.files);
+                    handleFileSelection(files, input, preview, acceptedTypes, maxFiles);
+                });
+            }
+            
+            function handleFileSelection(files, input, preview, acceptedTypes, maxFiles) {
+                // Filter valid files
+                const validFiles = files.filter(file => acceptedTypes.includes(file.type));
+                
+                if (validFiles.length !== files.length) {
+                    alert('Some files were rejected due to invalid file type.');
+                }
+                
+                // Limit number of files
+                const limitedFiles = validFiles.slice(0, maxFiles);
+                
+                if (limitedFiles.length !== validFiles.length) {
+                    alert(`Only ${maxFiles} files are allowed. Extra files were removed.`);
+                }
+                
+                // Create file list for input
+                const dt = new DataTransfer();
+                limitedFiles.forEach(file => dt.items.add(file));
+                input.files = dt.files;
+                
+                // Update preview
+                updatePreview(limitedFiles, preview, input);
+            }
+            
+            function updatePreview(files, preview, input) {
+                preview.innerHTML = '';
+                
+                Array.from(files).forEach((file, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'media-preview-item';
+                    
+                    if (file.type.startsWith('image/')) {
+                        const img = document.createElement('img');
+                        img.src = URL.createObjectURL(file);
+                        img.onload = () => URL.revokeObjectURL(img.src);
+                        item.appendChild(img);
+                    } else if (file.type.startsWith('video/')) {
+                        const video = document.createElement('video');
+                        video.src = URL.createObjectURL(file);
+                        video.style.width = '100%';
+                        video.style.height = '120px';
+                        video.style.objectFit = 'cover';
+                        video.controls = true;
+                        item.appendChild(video);
+                    } else {
+                        const icon = document.createElement('div');
+                        icon.innerHTML = `<i class="fas fa-file-pdf" style="font-size: 3rem; color: #dc3545;"></i><br><small>${file.name}</small>`;
+                        icon.style.textAlign = 'center';
+                        icon.style.padding = '20px';
+                        item.appendChild(icon);
+                    }
+                    
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'remove-btn';
+                    removeBtn.innerHTML = '×';
+                    removeBtn.onclick = () => removeFile(index, input, preview);
+                    item.appendChild(removeBtn);
+                    
+                    preview.appendChild(item);
+                });
+            }
+            
+            function removeFile(index, input, preview) {
+                const dt = new DataTransfer();
+                const files = Array.from(input.files);
+                
+                files.forEach((file, i) => {
+                    if (i !== index) dt.items.add(file);
+                });
+                
+                input.files = dt.files;
+                updatePreview(Array.from(input.files), preview, input);
+            }
+            
+            // Update subcategories based on main category
+            function updateSubcategories(category) {
+                const subcategories = {
+                    'restaurant': [
+                        'Fine Dining Restaurant',
+                        'Casual Dining',
+                        'Fast Food',
+                        'Cafe/Coffee Shop',
+                        'Bar/Pub',
+                        'Food Truck',
+                        'Bakery',
+                        'Ice Cream Shop'
+                    ],
+                    'accommodation': [
+                        'Luxury Hotel',
+                        'Budget Hotel',
+                        'Resort',
+                        'Hostel',
+                        'Guesthouse',
+                        'Bed & Breakfast',
+                        'Apartment',
+                        'Villa'
+                    ],
+                    'religious': [
+                        'Hindu Temple',
+                        'Buddhist Temple/Monastery',
+                        'Christian Church',
+                        'Islamic Mosque',
+                        'Sikh Gurdwara',
+                        'Jewish Synagogue',
+                        'Shrine',
+                        'Meditation Center'
+                    ],
+                    'historical': [
+                        'Ancient Monument',
+                        'Palace/Fort',
+                        'Museum',
+                        'Archaeological Site',
+                        'Heritage Building',
+                        'Memorial',
+                        'Cultural Center',
+                        'Art Gallery'
+                    ],
+                    'public': [
+                        'Public Toilet',
+                        'Public Park',
+                        'Library',
+                        'Hospital/Clinic',
+                        'Government Office',
+                        'Police Station',
+                        'Fire Station',
+                        'Post Office'
+                    ],
+                    'entertainment': [
+                        'Cinema/Theater',
+                        'Night Club',
+                        'Gaming Center',
+                        'Sports Complex',
+                        'Amusement Park',
+                        'Zoo/Aquarium',
+                        'Concert Hall',
+                        'Recreation Center'
+                    ],
+                    'shopping': [
+                        'Shopping Mall',
+                        'Department Store',
+                        'Boutique',
+                        'Market/Bazaar',
+                        'Supermarket',
+                        'Specialty Store',
+                        'Electronics Store',
+                        'Bookstore'
+                    ],
+                    'services': [
+                        'Bank/ATM',
+                        'Beauty Salon',
+                        'Repair Shop',
+                        'Professional Office',
+                        'Consulting Firm',
+                        'Real Estate Office',
+                        'Insurance Office',
+                        'Travel Agency'
+                    ]
+                };
+                
+                const select = $('#subcategorySelect');
+                select.empty().append('<option value="">Select sub-category</option>');
+                
+                if (subcategories[category]) {
+                    subcategories[category].forEach(function(subcategory) {
+                        select.append(`<option value="${subcategory}">${subcategory}</option>`);
+                    });
+                }
+            }
+            
+            // SEO functionality
+            $('#listingTitle').on('input', function() {
+                const title = $(this).val();
+                $('#previewTitle').text(title || 'Your SEO Title Will Appear Here');
+                
+                // Auto-generate URL slug
+                const slug = title.toLowerCase()
+                    .replace(/[^a-z0-9\s-]/g, '')
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-')
+                    .trim('-');
+                $('#urlSlug').val(slug);
+                $('#previewUrl').text(`https://yoursite.com/listing/${slug || 'your-url-slug'}`);
+            });
+            
+            $('#seoTitle').on('input', function() {
+                const title = $(this).val();
+                $('#seoTitleCount').text(title.length);
+                $('#previewTitle').text(title || 'Your SEO Title Will Appear Here');
+            });
+            
+            $('#metaDescription').on('input', function() {
+                const description = $(this).val();
+                $('#metaDescCount').text(description.length);
+                $('#previewDescription').text(description || 'Your meta description will appear here. Make it compelling to encourage clicks from search results.');
+            });
+            
+            $('#listingDescription').on('input', function() {
+                const description = $(this).val();
+                if (!$('#metaDescription').val() && description) {
+                    const metaDesc = description.substring(0, 160);
+                    $('#metaDescription').val(metaDesc);
+                    $('#metaDescCount').text(metaDesc.length);
+                    $('#previewDescription').text(metaDesc);
+                }
+            });
+            
+            // Operating hours functionality
+            $('#always_open').on('change', function() {
+                if ($(this).is(':checked')) {
+                    $('#operating-hours-section').hide();
+                } else {
+                    $('#operating-hours-section').show();
+                }
+            });
+            
+            // Day closed checkboxes
+            $('input[name$="_closed"]').on('change', function() {
+                const day = $(this).attr('name').replace('_closed', '');
+                const openInput = $(`input[name="${day}_open"]`);
+                const closeInput = $(`input[name="${day}_close"]`);
+                
+                if ($(this).is(':checked')) {
+                    openInput.prop('disabled', true).val('');
+                    closeInput.prop('disabled', true).val('');
+                } else {
+                    openInput.prop('disabled', false);
+                    closeInput.prop('disabled', false);
+                }
+            });
+            
+            // Form validation
+            $('#listingForm').on('submit', function(e) {
+                let isValid = true;
+                let errorMessage = '';
+                
+                // Check if category is selected
+                if (!$('#selectedCategory').val()) {
+                    isValid = false;
+                    errorMessage += 'Please select a category.\n';
+                }
+                
+                // Check required fields
+                const requiredFields = [
+                    { field: 'input[name="title"]', message: 'Place name is required.' },
+                    { field: 'select[name="subcategory"]', message: 'Sub-category is required.' },
+                    { field: 'textarea[name="description"]', message: 'Description is required.' },
+                    { field: 'input[name="country"]', message: 'Country is required.' },
+                    { field: 'input[name="city"]', message: 'City is required.' },
+                    { field: 'textarea[name="address"]', message: 'Address is required.' }
+                ];
+                
+                requiredFields.forEach(function(item) {
+                    const field = $(item.field);
+                    if (!field.val() || field.val().trim() === '') {
+                        isValid = false;
+                        errorMessage += item.message + '\n';
+                        field.addClass('is-invalid');
+                    } else {
+                        field.removeClass('is-invalid');
+                    }
+                });
+                
+                // Check description length
+                const description = $('textarea[name="description"]').val();
+                if (description && description.length < 50) {
+                    isValid = false;
+                    errorMessage += 'Description must be at least 50 characters long.\n';
+                }
+                
+                // Check if at least one image is uploaded
+                const imageInput = $('input[name="images[]"]')[0];
+                if (!imageInput.files || imageInput.files.length === 0) {
+                    isValid = false;
+                    errorMessage += 'Please upload at least one image.\n';
+                }
+                
+                if (!isValid) {
+                    e.preventDefault();
+                    alert('Please fix the following errors:\n\n' + errorMessage);
+                    
+                    // Scroll to first error
+                    const firstError = $('.is-invalid').first();
+                    if (firstError.length) {
+                        $('html, body').animate({
+                            scrollTop: firstError.offset().top - 100
+                        }, 500);
+                    }
+                }
+            });
+            
+            // Initialize file uploaders - Commented out to fix navigation issue
+            /*
+            $('.fileUp').fancyFileUpload({
+                params: {
+                    action: 'fileuploader'
+                },
+                maxfilesize: 10000000, // 10MB default
+                edit: true,
+                dragdrop: true,
+                theme: 'dark',
+                maxfiles: 10
+            });
+            
+            // Different file size limits for different upload types
+            $('input[name="images_360[]"]').fancyFileUpload({
+                params: {
+                    action: 'fileuploader'
+                },
+                maxfilesize: 20000000, // 20MB for 360 images
+                edit: true,
+                dragdrop: true,
+                theme: 'dark',
+                maxfiles: 5
+            });
+            
+            $('input[name="videos[]"]').fancyFileUpload({
+                params: {
+                    action: 'fileuploader'
+                },
+                maxfilesize: 100000000, // 100MB for videos
+                edit: true,
+                dragdrop: true,
+                theme: 'dark',
+                maxfiles: 3
+            });
+            */
+            
+            // Auto-save draft functionality (optional)
+            let autoSaveTimer;
+            $('input, textarea, select').on('change input', function() {
+                clearTimeout(autoSaveTimer);
+                autoSaveTimer = setTimeout(function() {
+                    // Auto-save logic here
+                    console.log('Auto-saving draft...');
+                }, 30000); // Auto-save after 30 seconds of inactivity
+            });
+            
+            // Initialize tooltips
+            $('[data-bs-toggle="tooltip"]').tooltip();
+            
+            // Website options functionality
+            $('input[name="need_website"]').on('change', function() {
+                const value = $(this).val();
+                $('#website_creation_section').hide();
+                $('#existing_website_section').hide();
+                
+                if (value === 'yes') {
+                    $('#website_creation_section').show();
+                } else if (value === 'existing') {
+                    $('#existing_website_section').show();
+                }
+            });
+            
+            // Terms and conditions validation
+            function checkTermsAgreement() {
+                const requiredTerms = ['agree_terms', 'agree_listing_policy', 'agree_accuracy'];
+                let allAgreed = true;
+                
+                requiredTerms.forEach(function(termId) {
+                    if (!$('#' + termId).is(':checked')) {
+                        allAgreed = false;
+                    }
+                });
+                
+                $('#submitBtn').prop('disabled', !allAgreed);
+            }
+            
+            // Check terms agreement on change
+            $('input[name="agree_terms"], input[name="agree_listing_policy"], input[name="agree_accuracy"]').on('change', checkTermsAgreement);
+            
+            // Initial check
+            checkTermsAgreement();
+            
+            // Multi-step form functionality
+            let currentStep = 1;
+            const totalSteps = 8;
+            
+            // Step navigation functions
+            function showStep(stepNumber) {
+                // Hide all steps
+                $('.form-step').removeClass('active');
+                
+                // Show current step
+                $(`#step-${stepNumber}`).addClass('active');
+                
+                // Update progress bar
+                const progressPercent = (stepNumber / totalSteps) * 100;
+                $('#progressBar').css('width', progressPercent + '%');
+                
+                // Update step counter
+                $('#stepCounter').text(`Step ${stepNumber} of ${totalSteps}`);
+                
+                // Update step indicators
+                $('.step-indicator').removeClass('active completed');
+                for (let i = 1; i <= totalSteps; i++) {
+                    const indicator = $(`.step-indicator[data-step="${i}"]`);
+                    if (i < stepNumber) {
+                        indicator.addClass('completed');
+                    } else if (i === stepNumber) {
+                        indicator.addClass('active');
+                    }
+                }
+                
+                // Scroll to top
+                $('html, body').animate({
+                    scrollTop: $('.step-progress').offset().top - 100
+                }, 300);
+                
+                currentStep = stepNumber;
+            }
+            
+            function validateStep(stepNumber) {
+                let isValid = true;
+                let errorMessage = '';
+                
+                // Remove previous validation errors
+                $(`#step-${stepNumber} .form-control, #step-${stepNumber} .form-select`).removeClass('is-invalid');
+                
+                switch(stepNumber) {
+                    case 1:
+                        if (!$('#selectedCategory').val()) {
+                            isValid = false;
+                            errorMessage += 'Please select a category.\n';
+                        }
+                        break;
+                        
+                    case 2:
+                        const requiredStep2 = [
+                            { field: 'input[name="title"]', message: 'Place name is required.' },
+                            { field: 'select[name="subcategory"]', message: 'Sub-category is required.' },
+                            { field: 'textarea[name="description"]', message: 'Description is required.' }
+                        ];
+                        
+                        requiredStep2.forEach(function(item) {
+                            const field = $(item.field);
+                            if (!field.val() || field.val().trim() === '') {
+                                isValid = false;
+                                errorMessage += item.message + '\n';
+                                field.addClass('is-invalid');
+                            }
+                        });
+                        
+                        // Check description length
+                        const description = $('textarea[name="description"]').val();
+                        if (description && description.length < 50) {
+                            isValid = false;
+                            errorMessage += 'Description must be at least 50 characters long.\n';
+                        }
+                        break;
+                        
+                    case 3:
+                        const requiredStep3 = [
+                            { field: 'select[name="country"]', message: 'Country is required.' },
+                            { field: 'input[name="state"]', message: 'State/Province is required.' },
+                            { field: 'input[name="city"]', message: 'City is required.' },
+                            { field: 'textarea[name="address"]', message: 'Address is required.' }
+                        ];
+                        
+                        requiredStep3.forEach(function(item) {
+                            const field = $(item.field);
+                            if (!field.val() || field.val().trim() === '') {
+                                isValid = false;
+                                errorMessage += item.message + '\n';
+                                field.addClass('is-invalid');
+                            }
+                        });
+                        break;
+                        
+                    case 5:
+                        // Check if at least one image is uploaded
+                        const imageInput = $('input[name="images[]"]')[0];
+                        if (!imageInput.files || imageInput.files.length === 0) {
+                            isValid = false;
+                            errorMessage += 'Please upload at least one image.\n';
+                        }
+                        break;
+                }
+                
+                if (!isValid) {
+                    alert('Please fix the following errors:\n\n' + errorMessage);
+                    
+                    // Scroll to first error
+                    const firstError = $(`#step-${stepNumber} .is-invalid`).first();
+                    if (firstError.length) {
+                        $('html, body').animate({
+                            scrollTop: firstError.offset().top - 100
+                        }, 500);
+                    }
+                }
+                
+                return isValid;
+            }
+            
+            // Next button handlers
+            $('#nextStep1').on('click', function(e) {
+                e.preventDefault();
+                console.log('Next Step 1 clicked');
+                if (validateStep(1)) {
+                    showStep(2);
+                }
+            });
+            
+            $('#nextStep2').on('click', function(e) {
+                e.preventDefault();
+                if (validateStep(2)) {
+                    showStep(3);
+                }
+            });
+            
+            $('#nextStep3').on('click', function(e) {
+                e.preventDefault();
+                if (validateStep(3)) {
+                    showStep(4);
+                }
+            });
+            
+            $('#nextStep4').on('click', function(e) {
+                e.preventDefault();
+                showStep(5);
+            });
+            
+            $('#nextStep5').on('click', function(e) {
+                e.preventDefault();
+                if (validateStep(5)) {
+                    showStep(6);
+                }
+            });
+            
+            $('#nextStep6').on('click', function(e) {
+                e.preventDefault();
+                showStep(7);
+            });
+            
+            $('#nextStep7').on('click', function(e) {
+                e.preventDefault();
+                showStep(8);
+            });
+            
+            // Previous button handlers
+            $('#prevStep2').on('click', function(e) {
+                e.preventDefault();
+                showStep(1);
+            });
+            
+            $('#prevStep3').on('click', function(e) {
+                e.preventDefault();
+                showStep(2);
+            });
+            
+            $('#prevStep4').on('click', function(e) {
+                e.preventDefault();
+                showStep(3);
+            });
+            
+            $('#prevStep5').on('click', function(e) {
+                e.preventDefault();
+                showStep(4);
+            });
+            
+            $('#prevStep6').on('click', function(e) {
+                e.preventDefault();
+                showStep(5);
+            });
+            
+            $('#prevStep7').on('click', function(e) {
+                e.preventDefault();
+                showStep(6);
+            });
+            
+            $('#prevStep8').on('click', function(e) {
+                e.preventDefault();
+                showStep(7);
+            });
+            
+            // Step indicator click handlers
+            $('.step-indicator').on('click', function(e) {
+                e.preventDefault();
+                const targetStep = parseInt($(this).data('step'));
+                
+                // Allow navigation to completed steps or the next step
+                if (targetStep <= currentStep + 1) {
+                    // Validate current step before moving forward
+                    if (targetStep > currentStep) {
+                        if (validateStep(currentStep)) {
+                            showStep(targetStep);
+                        }
+                    } else {
+                        showStep(targetStep);
+                    }
+                }
+            });
+            
+            // Initialize first step
+            showStep(1);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1291 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="assets/images/favicon.png">
+    <title>Add Listing - 360Nepal - Discover Every Angle, Every Story</title>
+    <link href="assets/plugins/aos/aos.min.css" rel="stylesheet">
+    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/plugins/fontawesome/css/all.min.css" rel="stylesheet">
+    <link href="assets/plugins/OwlCarousel2/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="assets/plugins/OwlCarousel2/css/owl.theme.default.min.css" rel="stylesheet">
+    <link href="assets/plugins/jquery-fancyfileuploader/fancy-file-uploader/fancy_fileupload.css" rel="stylesheet">
+    <link href="assets/plugins/ion.rangeSlider/ion.rangeSlider.min.css" rel="stylesheet">
+    <link href="assets/plugins/magnific-popup/magnific-popup.css" rel="stylesheet">
+    <link href="assets/plugins/select2/select2.min.css" rel="stylesheet">
+    <link href="assets/plugins/select2-bootstrap-5/select2-bootstrap-5-theme.min.css" rel="stylesheet">
+    <!-- CKEditor CDN -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
+    <!-- Custom style for this template -->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/custom.css" rel="stylesheet">
+    <link href="assets/css/footer.css" rel="stylesheet">
+    <style>
+        /* Multi-step Form Styles */
+        .form-step {
+            display: none;
+        }
+        .form-step.active {
+            display: block;
+        }
+        .step-progress {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .progress-bar-container {
+            position: relative;
+            height: 4px;
+            background: #e9ecef;
+            border-radius: 2px;
+            margin: 1rem 0;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--bs-primary);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        .step-indicators {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        .step-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+        }
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e9ecef;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .step-indicator.completed .step-number {
+            background: var(--bs-success);
+            color: white;
+        }
+        .step-indicator.active .step-number {
+            background: var(--bs-primary);
+            color: white;
+        }
+        .step-title {
+            font-size: 12px;
+            text-align: center;
+            color: #6c757d;
+            font-weight: 500;
+        }
+        .step-indicator.active .step-title {
+            color: var(--bs-primary);
+            font-weight: 600;
+        }
+        .step-indicator.completed .step-title {
+            color: var(--bs-success);
+        }
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid #e9ecef;
+            margin-top: 2rem;
+        }
+        .btn-step {
+            min-width: 120px;
+        }
+        
+        .category-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--bs-primary);
+        }
+        .category-card {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .category-card:hover {
+            border-color: var(--bs-primary);
+            box-shadow: 0 4px 15px rgba(0,123,255,0.1);
+            transform: translateY(-2px);
+        }
+        .category-card.selected {
+            border-color: var(--bs-primary);
+            background-color: rgba(0,123,255,0.05);
+        }
+        .category-card.hidden {
+            display: none;
+        }
+        .dynamic-section {
+            display: none;
+        }
+        .dynamic-section.active {
+            display: block;
+        }
+        .seo-preview {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .seo-title {
+            color: #1a0dab;
+            font-size: 18px;
+            text-decoration: none;
+            font-weight: normal;
+        }
+        .seo-url {
+            color: #006621;
+            font-size: 14px;
+        }
+        .seo-description {
+            color: #545454;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        .amenity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+        }
+        .form-check-custom {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 0.5rem;
+            border: 1px solid #e9ecef;
+        }
+        .form-check-custom:hover {
+            background: #e9ecef;
+        }
+        
+        /* Enhanced Media Gallery Styles */
+        .media-upload-zone {
+            border: 2px dashed #dee2e6;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .media-upload-zone:hover {
+            border-color: var(--bs-primary);
+            background: rgba(0,123,255,0.05);
+        }
+        .media-upload-zone.dragover {
+            border-color: var(--bs-success);
+            background: rgba(25,135,84,0.1);
+        }
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--bs-primary);
+            margin-bottom: 1rem;
+        }
+        .media-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .media-preview-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #dee2e6;
+        }
+        .media-preview-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+        .media-preview-item .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(220,53,69,0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        /* Category Search Styles */
+        .category-search {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        .category-search input {
+            padding-left: 2.5rem;
+        }
+        .category-search .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+        
+        /* Enhanced Form Field Styles */
+        .form-group-enhanced {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        .form-group-enhanced .form-label {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 0.5rem;
+        }
+        .form-group-enhanced .form-control:focus {
+            border-color: var(--bs-primary);
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+        }
+        
+        /* Amenities Section Styles */
+        .amenities-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .amenity-category {
+            margin-bottom: 1.5rem;
+        }
+        .amenity-category h6 {
+            color: var(--bs-primary);
+            border-bottom: 2px solid var(--bs-primary);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .amenity-item {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .amenity-item:hover {
+            border-color: var(--bs-primary);
+            background: rgba(0,123,255,0.05);
+        }
+        .amenity-item.selected {
+            border-color: var(--bs-primary);
+            background: rgba(0,123,255,0.1);
+        }
+        
+        /* Accessibility Features Styles */
+        .accessibility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .accessibility-item {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .accessibility-item:hover {
+            border-color: var(--bs-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,123,255,0.1);
+        }
+        .accessibility-item.selected {
+            border-color: var(--bs-success);
+            background: rgba(25,135,84,0.1);
+        }
+        .accessibility-icon {
+            font-size: 2rem;
+            color: var(--bs-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* CKEditor Custom Styles */
+        .ck-editor__editable {
+            min-height: 200px;
+        }
+        
+        /* Enhanced Button Styles */
+        .btn-enhanced {
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-enhanced:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Page specific styles */
+        .add-listing-page {
+            padding-top: 100px; /* Account for fixed navbar */
+            min-height: 100vh;
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- start navbar -->
+    <nav class="custom-navbar navbar navbar-expand-lg navbar-fixed navbar-transfarent">
+        <div class="container">
+            <a class="navbar-brand m-0" href="index.html">
+                <img class="logo-white" src="assets/images/logo-white.png" alt="">
+                <img class="logo-dark" src="assets/images/logo.gif" alt="">
+            </a>
+            <div class="d-flex order-lg-2">
+                <!-- start button -->
+                <a href="signin.html" class="d-flex align-items-center justify-content-center p-0 btn-user position-relative" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" data-bs-title="Favourite">
+                    <i class="fa-solid fa-heart"></i>
+                    <span class="align-items-center bg-primary d-flex end-0 fs-11 justify-content-center nav-count position-absolute rounded-circle text-white">0</span>
+                </a>
+                <!-- end /. button -->
+                <!-- start button -->
+                <a href="sign-in.html" class="d-flex align-items-center justify-content-center p-0 btn-user" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" data-bs-title="Sign In">
+                    <i class="fa-solid fa-user-plus"></i>
+                </a>
+                <!-- end /. button -->
+                <!-- start button -->
+                <button type="button" id="themeToggleBtn" class="align-items-center bg-transparent border-0 btn-user d-flex justify-content-center p-0">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <!-- end /. button -->
+                <!-- start button -->
+                <a href="add-listing.html" class="btn btn-primary d-none d-sm-flex fw-medium gap-2 hstack rounded-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                    </svg>
+                    <div class="vr d-none d-sm-inline-block"></div>
+                    <span class="d-none d-sm-inline-block">Add Listing</span>
+                </a>
+                <!-- end /. button -->
+                <!-- start navbar toggle button -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span id="nav-icon" class="">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </button>
+                <!-- end /. navbar toggle button -->
+            </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav m-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html" aria-current="page">
+                            Home
+                        </a>                       
+                    </li>                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="typcn typcn-weather-stormy top-menu-icon"></i>Dashboard
+                        </a>                       
+                    </li>                 
+                    <li class="nav-item">
+                        <a class="nav-link" href="listings-grid-1-left.html">Business</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="blog-archive.html">Blogs</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            About
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="nav-item dropdown">
+                                <a class="dropdown-item" href="about.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">About</a>                                
+                            </li>
+                           <li><a class="dropdown-item" href="contact.html">Contact</a></li>
+                            <li><a class="dropdown-item" href="pricing.html">Pricing</a></li>                           
+                            <li class="nav-item dropdown">
+                                <a class="dropdown-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Help Center</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="faq.html">Faq Page</a></li>
+                                    <li><a class="dropdown-item" href="terms-conditions.html">Terms & Conditions</a></li>
+                                </ul>
+                            </li>              
+                        </ul>
+                    </li>
+                </ul>
+                <div class="d-sm-none">
+                    <!-- start button -->
+                    <a href="add-listing.html" class="btn btn-primary d-flex gap-2 hstack justify-content-center rounded-3">
+                        <div class="vr d-none d-sm-inline-block"></div>
+                        <span>Add Listing</span>
+                    </a>
+                    <!-- end /. button -->
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- end /. navbar -->
+
+    <!-- Main Content -->
+    <div class="add-listing-page">
+        <div class="container">
+            <!-- Progress Indicator -->
+            <div class="step-progress">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">Add New Listing</h5>
+                    <span class="badge bg-primary" id="stepCounter">Step 1 of 8</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="progressBar" style="width: 12.5%;"></div>
+                </div>
+                <div class="step-indicators">
+                    <div class="step-indicator active" data-step="1">
+                        <div class="step-number">1</div>
+                        <div class="step-title">Category</div>
+                    </div>
+                    <div class="step-indicator" data-step="2">
+                        <div class="step-number">2</div>
+                        <div class="step-title">Basic Info</div>
+                    </div>
+                    <div class="step-indicator" data-step="3">
+                        <div class="step-number">3</div>
+                        <div class="step-title">Location</div>
+                    </div>
+                    <div class="step-indicator" data-step="4">
+                        <div class="step-number">4</div>
+                        <div class="step-title">Contact</div>
+                    </div>
+                    <div class="step-indicator" data-step="5">
+                        <div class="step-number">5</div>
+                        <div class="step-title">Media</div>
+                    </div>
+                    <div class="step-indicator" data-step="6">
+                        <div class="step-number">6</div>
+                        <div class="step-title">Features</div>
+                    </div>
+                    <div class="step-indicator" data-step="7">
+                        <div class="step-number">7</div>
+                        <div class="step-title">Settings</div>
+                    </div>
+                    <div class="step-indicator" data-step="8">
+                        <div class="step-number">8</div>
+                        <div class="step-title">Review</div>
+                    </div>
+                </div>
+            </div>
+
+            <form id="listingForm" method="POST" enctype="multipart/form-data">
+                <!-- Step 1: Category Selection -->
+                <div class="form-step active" id="step-1">
+                    <div class="card mb-4">
+                    <div class="card-header position-relative">
+                        <h6 class="fs-17 fw-semi-bold mb-0">
+                            <i class="fas fa-layer-group me-2 text-primary"></i>
+                            Select Place Category
+                        </h6>
+                        <p class="text-muted mb-0 mt-2">Choose the type of place you want to list</p>
+                    </div>
+                    <div class="card-body">
+                        <!-- Category Search -->
+                        <div class="category-search">
+                            <div class="position-relative">
+                                <input type="text" class="form-control" id="categorySearch" placeholder="Search categories...">
+                                <i class="fas fa-search search-icon"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="row g-3" id="categoryGrid">
+                            <div class="col-md-3 col-sm-6">
+                                <div class="category-card" data-category="restaurant">
+                                    <div class="category-icon">
+                                        <i class="fas fa-utensils"></i>
+                                    </div>
+                                    <h6 class="fw-medium mb-2">Restaurants & Cafes</h6>
+                                    <p class="text-muted small mb-0">Dining establishments, cafes, bars, food courts</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="category-card" data-category="accommodation">
+                                    <div class="category-icon">
+                                        <i class="fas fa-bed"></i>
+                                    </div>
+                                    <h6 class="fw-medium mb-2">Hotels & Lodging</h6>
+                                    <p class="text-muted small mb-0">Hotels, resorts, hostels, guesthouses</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="category-card" data-category="religious">
+                                    <div class="category-icon">
+                                        <i class="fas fa-place-of-worship"></i>
+                                    </div>
+                                    <h6 class="fw-medium mb-2">Religious Places</h6>
+                                    <p class="text-muted small mb-0">Temples, churches, mosques, monasteries</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="category-card" data-category="historical">
+                                    <div class="category-icon">
+                                        <i class="fas fa-landmark"></i>
+                                    </div>
+                                    <h6 class="fw-medium mb-2">Historical Sites</h6>
+                                    <p class="text-muted small mb-0">Monuments, museums, heritage sites</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="category-card" data-category="public">
+                                    <div class="category-icon">
+                                        <i class="fas fa-restroom"></i>
+                                    </div>
+                                    <h6 class="fw-medium mb-2">Public Facilities</h6>
+                                    <p class="text-muted small mb-0">Public toilets, parks, libraries, hospitals</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="category-card" data-category="entertainment">
+                                    <div class="category-icon">
+                                        <i class="fas fa-theater-masks"></i>
+                                    </div>
+                                    <h6 class="fw-medium mb-2">Entertainment</h6>
+                                    <p class="text-muted small mb-0">Cinemas, theaters, clubs, gaming centers</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="category-card" data-category="shopping">
+                                    <div class="category-icon">
+                                        <i class="fas fa-shopping-bag"></i>
+                                    </div>
+                                    <h6 class="fw-medium mb-2">Shopping</h6>
+                                    <p class="text-muted small mb-0">Malls, markets, stores, boutiques</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="category-card" data-category="services">
+                                    <div class="category-icon">
+                                        <i class="fas fa-tools"></i>
+                                    </div>
+                                    <h6 class="fw-medium mb-2">Services</h6>
+                                    <p class="text-muted small mb-0">Banks, salons, repair shops, offices</p>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="selectedCategory" name="category" required>
+                    </div>
+                </div>
+                
+                <!-- Navigation for Step 1 -->
+                <div class="form-navigation">
+                    <div></div>
+                    <button type="button" class="btn btn-primary btn-step" id="nextStep1">
+                        Next: Basic Info <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                </div>
+                </div>
+
+                <!-- Step 2: Basic Information -->
+                <div class="form-step" id="step-2">
+                    <div class="card mb-4">
+                    <div class="card-header position-relative">
+                        <h6 class="fs-17 fw-semi-bold mb-0">
+                            <i class="fas fa-info-circle me-2 text-primary"></i>
+                            Basic Information
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-4">
+                            <div class="col-sm-8">
+                                <div class="form-group-enhanced">
+                                    <label class="form-label required">Place Name/Title</label>
+                                    <input type="text" class="form-control" name="title" id="listingTitle" placeholder="Enter the name of your place" required>
+                                    <div class="form-text">This will be the main title displayed in search results</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group-enhanced">
+                                    <label class="form-label required">Sub-Category</label>
+                                    <select class="form-select" name="subcategory" id="subcategorySelect" required>
+                                        <option value="">Select sub-category</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group-enhanced">
+                                    <label class="form-label">Business/Brand Name</label>
+                                    <input type="text" class="form-control" name="brand_name" placeholder="Official business or brand name">
+                                    <div class="form-text">If different from place name</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group-enhanced">
+                                    <label class="form-label">Establishment Year</label>
+                                    <input type="number" class="form-control" name="establishment_year" placeholder="e.g., 2010" min="1900" max="2024">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group-enhanced">
+                                    <label class="form-label required">Description</label>
+                                    <div id="descriptionEditor"></div>
+                                    <div class="form-text">Provide a detailed description of your place (minimum 50 characters)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation for Step 2 -->
+                <div class="form-navigation">
+                    <button type="button" class="btn btn-outline-secondary btn-step" id="prevStep2">
+                        <i class="fas fa-arrow-left me-2"></i> Previous
+                    </button>
+                    <button type="button" class="btn btn-primary btn-step" id="nextStep2">
+                        Next: Location <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                </div>
+                </div>
+
+                <!-- Step 3: Location -->
+                <div class="form-step" id="step-3">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h6 class="fs-17 fw-semi-bold mb-0">
+                                <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                                Location Information
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-4">
+                                <div class="col-sm-6">
+                                    <div class="form-group-enhanced">
+                                        <label class="form-label required">Address</label>
+                                        <input type="text" class="form-control" name="address" placeholder="Street address" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group-enhanced">
+                                        <label class="form-label required">City</label>
+                                        <input type="text" class="form-control" name="city" placeholder="City name" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group-enhanced">
+                                        <label class="form-label">State/Province</label>
+                                        <input type="text" class="form-control" name="state" placeholder="State or Province">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group-enhanced">
+                                        <label class="form-label">ZIP/Postal Code</label>
+                                        <input type="text" class="form-control" name="zip" placeholder="ZIP or Postal Code">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group-enhanced">
+                                        <label class="form-label required">Country</label>
+                                        <select class="form-select" name="country" required>
+                                            <option value="">Select Country</option>
+                                            <option value="NP" selected>Nepal</option>
+                                            <option value="IN">India</option>
+                                            <option value="US">United States</option>
+                                            <option value="GB">United Kingdom</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <button type="button" class="btn btn-outline-secondary btn-step" id="prevStep3">
+                            <i class="fas fa-arrow-left me-2"></i> Previous
+                        </button>
+                        <button type="button" class="btn btn-primary btn-step" id="nextStep3">
+                            Next: Contact <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Contact Information -->
+                <div class="form-step" id="step-4">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h6 class="fs-17 fw-semi-bold mb-0">
+                                <i class="fas fa-phone me-2 text-primary"></i>
+                                Contact Information
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-4">
+                                <div class="col-sm-6">
+                                    <div class="form-group-enhanced">
+                                        <label class="form-label">Phone Number</label>
+                                        <input type="tel" class="form-control" name="phone" placeholder="+977-1-234-5678">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group-enhanced">
+                                        <label class="form-label">Email Address</label>
+                                        <input type="email" class="form-control" name="email" placeholder="contact@example.com">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group-enhanced">
+                                        <label class="form-label">Website</label>
+                                        <input type="url" class="form-control" name="website" placeholder="https://www.example.com">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group-enhanced">
+                                        <label class="form-label">Social Media</label>
+                                        <input type="text" class="form-control" name="social" placeholder="Facebook, Instagram, etc.">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <button type="button" class="btn btn-outline-secondary btn-step" id="prevStep4">
+                            <i class="fas fa-arrow-left me-2"></i> Previous
+                        </button>
+                        <button type="button" class="btn btn-primary btn-step" id="nextStep4">
+                            Next: Media <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 5: Media Upload -->
+                <div class="form-step" id="step-5">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h6 class="fs-17 fw-semi-bold mb-0">
+                                <i class="fas fa-images me-2 text-primary"></i>
+                                Media Gallery
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="media-upload-zone" id="mediaUploadZone">
+                                <div class="upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <h5>Upload Images</h5>
+                                <p class="text-muted">Drag and drop images here or click to browse</p>
+                                <input type="file" id="mediaInput" name="media[]" multiple accept="image/*" style="display: none;">
+                                <button type="button" class="btn btn-primary" onclick="document.getElementById('mediaInput').click()">
+                                    Choose Files
+                                </button>
+                            </div>
+                            <div class="media-preview-grid" id="mediaPreviewGrid"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <button type="button" class="btn btn-outline-secondary btn-step" id="prevStep5">
+                            <i class="fas fa-arrow-left me-2"></i> Previous
+                        </button>
+                        <button type="button" class="btn btn-primary btn-step" id="nextStep5">
+                            Next: Features <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 6: Features & Amenities -->
+                <div class="form-step" id="step-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h6 class="fs-17 fw-semi-bold mb-0">
+                                <i class="fas fa-star me-2 text-primary"></i>
+                                Features & Amenities
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="amenities-section">
+                                <div class="amenity-category">
+                                    <h6>General Amenities</h6>
+                                    <div class="amenity-grid">
+                                        <div class="form-check-custom">
+                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="wifi" id="wifi">
+                                            <label class="form-check-label" for="wifi">
+                                                <i class="fas fa-wifi me-2"></i> Free WiFi
+                                            </label>
+                                        </div>
+                                        <div class="form-check-custom">
+                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="parking" id="parking">
+                                            <label class="form-check-label" for="parking">
+                                                <i class="fas fa-parking me-2"></i> Parking Available
+                                            </label>
+                                        </div>
+                                        <div class="form-check-custom">
+                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="ac" id="ac">
+                                            <label class="form-check-label" for="ac">
+                                                <i class="fas fa-snowflake me-2"></i> Air Conditioning
+                                            </label>
+                                        </div>
+                                        <div class="form-check-custom">
+                                            <input class="form-check-input" type="checkbox" name="amenities[]" value="wheelchair" id="wheelchair">
+                                            <label class="form-check-label" for="wheelchair">
+                                                <i class="fas fa-wheelchair me-2"></i> Wheelchair Accessible
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <button type="button" class="btn btn-outline-secondary btn-step" id="prevStep6">
+                            <i class="fas fa-arrow-left me-2"></i> Previous
+                        </button>
+                        <button type="button" class="btn btn-primary btn-step" id="nextStep6">
+                            Next: Settings <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 7: Settings -->
+                <div class="form-step" id="step-7">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h6 class="fs-17 fw-semi-bold mb-0">
+                                <i class="fas fa-cog me-2 text-primary"></i>
+                                Listing Settings
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-4">
+                                <div class="col-sm-6">
+                                    <div class="form-group-enhanced">
+                                        <label class="form-label">Listing Status</label>
+                                        <select class="form-select" name="status">
+                                            <option value="active">Active</option>
+                                            <option value="draft">Draft</option>
+                                            <option value="pending">Pending Review</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group-enhanced">
+                                        <label class="form-label">Featured Listing</label>
+                                        <select class="form-select" name="featured">
+                                            <option value="0">No</option>
+                                            <option value="1">Yes</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <button type="button" class="btn btn-outline-secondary btn-step" id="prevStep7">
+                            <i class="fas fa-arrow-left me-2"></i> Previous
+                        </button>
+                        <button type="button" class="btn btn-primary btn-step" id="nextStep7">
+                            Next: Review <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 8: Review & Submit -->
+                <div class="form-step" id="step-8">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h6 class="fs-17 fw-semi-bold mb-0">
+                                <i class="fas fa-check-circle me-2 text-primary"></i>
+                                Review & Submit
+                            </h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                Please review all information before submitting your listing.
+                            </div>
+                            <div id="reviewContent">
+                                <!-- Review content will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <button type="button" class="btn btn-outline-secondary btn-step" id="prevStep8">
+                            <i class="fas fa-arrow-left me-2"></i> Previous
+                        </button>
+                        <button type="submit" class="btn btn-success btn-step">
+                            <i class="fas fa-paper-plane me-2"></i> Submit Listing
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- start footer -->
+    <footer class="modern-footer">
+        <div class="container">
+            <!-- Logo and Tagline Section -->
+            <div class="footer-logo-section">
+                <img src="assets/images/logo-white.png" alt="360Nepal Logo" class="footer-main-logo">
+                <p class="footer-tagline">
+d thriving in Nepal's rich cultural landscape.
+                </p>
+            </div>
+
+            <!-- Main Footer Content -->
+            <div class="footer-sections">
+                <div class="row g-4">
+                    <!-- Quick Links Section -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-section">
+                            <h4>Quick Links</h4>
+                            <ul class="footer-links">
+                                <li><a href="index.html"><i class="fas fa-home"></i>Home</a></li>
+                                <li><a href="about.html"><i class="fas fa-info-circle"></i>About Us</a></li>
+                                <li><a href="listings-grid-1-left.html"><i class="fas fa-briefcase"></i>Business Listings</a></li>
+                                <li><a href="blog.html"><i class="fas fa-blog"></i>Blog</a></li>
+                                <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
+                                <li><a href="pricing.html"><i class="fas fa-tags"></i>Pricing</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Categories Section -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-section">
+                            <h4>Categories</h4>
+                            <ul class="footer-links">
+                                <li><a href="listings-map-grid-1.html"><i class="fas fa-utensils"></i>Restaurants</a></li>
+                                <li><a href="listings-map-grid-1.html"><i class="fas fa-hotel"></i>Hotels</a></li>
+                                <li><a href="listings-map-grid-1.html"><i class="fas fa-shopping-bag"></i>Shopping</a></li>
+                                <li><a href="listings-map-grid-1.html"><i class="fas fa-heartbeat"></i>Health & Wellness</a></li>
+                                <li><a href="listings-map-grid-1.html"><i class="fas fa-palette"></i>Arts & Culture</a></li>
+                                <li><a href="listings-map-grid-1.html"><i class="fas fa-mountain"></i>Adventure</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-section">
+                            <h4>Contact Info</h4>
+                            <div class="footer-contact-info">
+                                <div class="contact-item">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <div class="contact-details">
+                                        <h6>Address</h6>
+                                        <p>Kathmandu, Nepal<br>Thamel District</p>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div class="contact-details">
+                                        <h6>Phone</h6>
+                                        <p>+977-1-234-5678</p>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div class="contact-details">
+                                        <h6>Email</h6>
+                                        <p>info@360nepal.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Newsletter Section -->
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-section">
+                            <div class="newsletter-section">
+                                <h5>Stay Updated</h5>
+                                <p>Subscribe to our newsletter for the latest updates and travel insights.</p>
+                                <form class="newsletter-form" id="newsletterForm">
+                                    <input type="email" class="newsletter-input" placeholder="Enter your email" required>
+                                    <button type="submit" class="newsletter-btn">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </button>
+                                </form>
+                                <div class="social-links">
+                                    <a href="#" class="social-link facebook" aria-label="Facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                    <a href="#" class="social-link twitter" aria-label="Twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                    <a href="#" class="social-link instagram" aria-label="Instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                    <a href="#" class="social-link youtube" aria-label="YouTube">
+                                        <i class="fab fa-youtube"></i>
+                                    </a>
+                                    <a href="#" class="social-link whatsapp" aria-label="WhatsApp">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="container">
+                <!-- Footer Background -->
+                <div class="footer-skyline">
+                    <img src="assets/images/footer_back.png" alt="Footer Background" class="skyline-image">
+                </div>
+                
+                <div class="footer-bottom-content">
+                    <p class="footer-copyright">
+                        © 2024 360Nepal. All rights reserved. Made with ❤️ in Nepal.
+                    </p>
+                    <div class="footer-nav-links">
+                        <a href="terms-conditions.html">Terms & Conditions</a>
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Cookie Policy</a>
+                        <a href="faq.html">FAQ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+    <!-- end /. footer -->
+
+    <!-- Optional JavaScript -->
+    <script src="assets/plugins/jQuery/jquery.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/plugins/aos/aos.min.js"></script>
+    <script src="assets/plugins/OwlCarousel2/owl.carousel.min.js"></script>
+    <script src="assets/plugins/jquery-fancyfileuploader/fancy-file-uploader/jquery.ui.widget.js"></script>
+    <script src="assets/plugins/jquery-fancyfileuploader/fancy-file-uploader/jquery.fileupload.js"></script>
+    <script src="assets/plugins/jquery-fancyfileuploader/fancy-file-uploader/jquery.iframe-transport.js"></script>
+    <script src="assets/plugins/jquery-fancyfileuploader/fancy-file-uploader/jquery.fancy-fileupload.js"></script>
+    <script src="assets/plugins/select2/select2.min.js"></script>
+    <!-- Custom script for this template -->
+    <script src="assets/js/script.js"></script>
+    
+    <script>
+        // Multi-step form functionality
+        let currentStep = 1;
+        const totalSteps = 8;
+        let descriptionEditor;
+
+        // Initialize CKEditor
+        ClassicEditor
+            .create(document.querySelector('#descriptionEditor'))
+            .then(editor => {
+                descriptionEditor = editor;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        // Category selection functionality
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove selected class from all cards
+                document.querySelectorAll('.category-card').forEach(c => c.classList.remove('selected'));
+                // Add selected class to clicked card
+                this.classList.add('selected');
+                // Set hidden input value
+                document.getElementById('selectedCategory').value = this.dataset.category;
+                // Update subcategory options
+                updateSubcategories(this.dataset.category);
+            });
+        });
+
+        // Category search functionality
+        document.getElementById('categorySearch').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            document.querySelectorAll('.category-card').forEach(card => {
+                const cardText = card.textContent.toLowerCase();
+                if (cardText.includes(searchTerm)) {
+                    card.parentElement.style.display = 'block';
+                } else {
+                    card.parentElement.style.display = 'none';
+                }
+            });
+        });
+
+        // Update subcategories based on selected category
+        function updateSubcategories(category) {
+            const subcategorySelect = document.getElementById('subcategorySelect');
+            subcategorySelect.innerHTML = '<option value="">Select sub-category</option>';
+            
+            const subcategories = {
+                restaurant: ['Fine Dining', 'Casual Dining', 'Fast Food', 'Cafe', 'Bar', 'Food Truck'],
+                accommodation: ['Hotel', 'Resort', 'Hostel', 'Guesthouse', 'Apartment', 'Villa'],
+                religious: ['Temple', 'Church', 'Mosque', 'Monastery', 'Shrine', 'Pilgrimage Site'],
+                historical: ['Monument', 'Museum', 'Heritage Site', 'Archaeological Site', 'Palace', 'Fort'],
+                public: ['Hospital', 'School', 'Library', 'Park', 'Government Office', 'Public Toilet'],
+                entertainment: ['Cinema', 'Theater', 'Club', 'Gaming Center', 'Amusement Park', 'Sports Complex'],
+                shopping: ['Mall', 'Market', 'Store', 'Boutique', 'Supermarket', 'Specialty Shop'],
+                services: ['Bank', 'Salon', 'Repair Shop', 'Office', 'Clinic', 'Pharmacy']
+            };
+
+            if (subcategories[category]) {
+                subcategories[category].forEach(sub => {
+                    const option = document.createElement('option');
+                    option.value = sub.toLowerCase().replace(' ', '_');
+                    option.textContent = sub;
+                    subcategorySelect.appendChild(option);
+                });
+            }
+        }
+
+        // Step navigation functions
+        function updateStepIndicators(step) {
+            document.querySelectorAll('.step-indicator').forEach((indicator, index) => {
+                indicator.classList.remove('active', 'completed');
+                if (index + 1 < step) {
+                    indicator.classList.add('completed');
+                } else if (index + 1 === step) {
+                    indicator.classList.add('active');
+                }
+            });
+        }
+
+        function updateProgressBar(step) {
+            const progress = (step / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('stepCounter').textContent = `Step ${step} of ${totalSteps}`;
+        }
+
+        function showStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+            // Show current step
+            document.getElementById(`step-${step}`).classList.add('active');
+            // Update indicators and progress
+            updateStepIndicators(step);
+            updateProgressBar(step);
+            currentStep = step;
+        }
+
+        // Next step buttons
+        document.getElementById('nextStep1').addEventListener('click', function() {
+            if (document.getElementById('selectedCategory').value) {
+                showStep(2);
+            } else {
+                alert('Please select a category first.');
+            }
+        });
+
+        document.getElementById('nextStep2').addEventListener('click', function() {
+            if (document.querySelector('[name="title"]').value && descriptionEditor.getData()) {
+                showStep(3);
+            } else {
+                alert('Please fill in the required fields.');
+            }
+        });
+
+        // Previous step buttons
+        document.getElementById('prevStep2').addEventListener('click', () => showStep(1));
+        document.getElementById('prevStep3').addEventListener('click', () => showStep(2));
+        document.getElementById('prevStep4').addEventListener('click', () => showStep(3));
+        document.getElementById('prevStep5').addEventListener('click', () => showStep(4));
+        document.getElementById('prevStep6').addEventListener('click', () => showStep(5));
+        document.getElementById('prevStep7').addEventListener('click', () => showStep(6));
+        document.getElementById('prevStep8').addEventListener('click', () => showStep(7));
+
+        // Continue with remaining next step buttons
+        document.getElementById('nextStep3').addEventListener('click', () => showStep(4));
+        document.getElementById('nextStep4').addEventListener('click', () => showStep(5));
+        document.getElementById('nextStep5').addEventListener('click', () => showStep(6));
+        document.getElementById('nextStep6').addEventListener('click', () => showStep(7));
+        document.getElementById('nextStep7').addEventListener('click', () => showStep(8));
+
+        // Media upload functionality
+        const mediaUploadZone = document.getElementById('mediaUploadZone');
+        const mediaInput = document.getElementById('mediaInput');
+        const mediaPreviewGrid = document.getElementById('mediaPreviewGrid');
+
+        mediaUploadZone.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('dragover');
+        });
+
+        mediaUploadZone.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+        });
+
+        mediaUploadZone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            handleFiles(files);
+        });
+
+        mediaInput.addEventListener('change', function() {
+            handleFiles(this.files);
+        });
+
+        function handleFiles(files) {
+            Array.from(files).forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const previewItem = document.createElement('div');
+                        previewItem.className = 'media-preview-item';
+                        previewItem.innerHTML = `
+                            <img src="${e.target.result}" alt="Preview">
+                            <button type="button" class="remove-btn" onclick="this.parentElement.remove()">×</button>
+                        `;
+                        mediaPreviewGrid.appendChild(previewItem);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // Form submission
+        document.getElementById('listingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Listing submitted successfully! (This is a demo)');
+        });
+
+        // Initialize AOS
+        AOS.init();
+    </script>
+
+</body>
+
+</html>
+                    Discover Every Angle, Every Story. Your ultimate guide to exploring, connecting, an

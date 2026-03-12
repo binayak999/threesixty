@@ -1,0 +1,97 @@
+/* Global overrides - custom styles can go here */
+/* Main theme styles are loaded via link in layout */
+
+/* Header sticky on inner pages: stays in flow, sticks to top when you scroll (fixed only on home) */
+.custom-navbar.navbar.navbar-relative {
+  position: sticky;
+  top: 0;
+  left: auto;
+  width: 100%;
+  transform: none;
+  z-index: 1030;
+}
+
+/* Dual range slider for price filter (matches ion.rangeSlider visual style) */
+.price-range-wrapper {
+  position: relative;
+  height: 20px;
+  margin: 8px 0;
+}
+
+.price-range-track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: #e9ecef;
+  border-radius: 3px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.price-range-fill {
+  position: absolute;
+  height: 100%;
+  background: var(--bs-primary, #0d6efd);
+  border-radius: 3px;
+}
+
+.price-range-input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+  outline: none;
+  top: 0;
+  left: 0;
+  margin: 0;
+}
+
+.price-range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--bs-primary, #0d6efd);
+  cursor: pointer;
+  pointer-events: all;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.price-range-input::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--bs-primary, #0d6efd);
+  cursor: pointer;
+  pointer-events: all;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  border: 2px solid var(--bs-primary, #0d6efd);
+}
+
+.price-range-input::-webkit-slider-runnable-track {
+  background: transparent;
+}
+
+.price-range-input::-moz-range-track {
+  background: transparent;
+}
+
+/* Fix search-bar native <select> elements: style.css expects Select2 to add left padding
+   and border-radius for the custom icon overlay. Without Select2 in React, we apply it directly.
+   Also override the focus rule in style.css that would shrink padding back to 1rem. */
+.search-bar .search-select.has-icon .form-select {
+  padding-left: 3rem;
+  border-radius: 30px;
+}
+
+.search-bar .search-select.has-icon .form-select:focus {
+  padding-left: 3rem;
+}

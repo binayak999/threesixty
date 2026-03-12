@@ -1,0 +1,183 @@
+/* Multi-step Form Styles - match add-listing.html */
+.add-listing-form .form-step {
+  display: none;
+}
+.add-listing-form .form-step.active {
+  display: block;
+}
+.add-listing-form .step-progress {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+.add-listing-form .progress-bar-container {
+  position: relative;
+  height: 4px;
+  background: #e9ecef;
+  border-radius: 2px;
+  margin: 1rem 0;
+}
+.add-listing-form .progress-bar-fill {
+  height: 100%;
+  background: var(--bs-primary);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+.add-listing-form .step-indicators {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+.add-listing-form .step-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+}
+.add-listing-form .step-number {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e9ecef;
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+.add-listing-form .step-indicator.completed .step-number {
+  background: var(--bs-success);
+  color: white;
+}
+.add-listing-form .step-indicator.active .step-number {
+  background: var(--bs-primary);
+  color: white;
+}
+.add-listing-form .step-title {
+  font-size: 12px;
+  text-align: center;
+  color: #6c757d;
+  font-weight: 500;
+}
+.add-listing-form .step-indicator.active .step-title {
+  color: var(--bs-primary);
+  font-weight: 600;
+}
+.add-listing-form .step-indicator.completed .step-title {
+  color: var(--bs-success);
+}
+.add-listing-form .form-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+  border-top: 1px solid #e9ecef;
+  margin-top: 2rem;
+}
+.add-listing-form .btn-step {
+  min-width: 120px;
+}
+
+.add-listing-form .category-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--bs-primary);
+}
+.add-listing-form .category-card {
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+.add-listing-form .category-card:hover {
+  border-color: var(--bs-primary);
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.1);
+  transform: translateY(-2px);
+}
+.add-listing-form .category-card.selected {
+  border-color: var(--bs-primary);
+  background-color: rgba(0, 123, 255, 0.05);
+}
+.add-listing-form .category-search {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+.add-listing-form .category-search input {
+  padding-left: 2.5rem;
+}
+.add-listing-form .category-search .search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+}
+
+.add-listing-form .form-group-enhanced {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+.add-listing-form .form-group-enhanced .form-label {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+.add-listing-form .form-group-enhanced .form-control:focus {
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+.add-listing-form .form-label.required::after,
+.add-listing-form label.required::after {
+  content: " *";
+  color: #dc3545;
+}
+
+.add-listing-form .media-upload-zone {
+  border: 2px dashed #dee2e6;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  background: #f8f9fa;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.add-listing-form .media-upload-zone:hover {
+  border-color: var(--bs-primary);
+  background: rgba(0, 123, 255, 0.05);
+}
+.add-listing-form .upload-icon {
+  font-size: 3rem;
+  color: var(--bs-primary);
+  margin-bottom: 1rem;
+}
+.add-listing-form .media-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.add-listing-form .amenity-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.5rem;
+}
+.add-listing-form .form-check-custom {
+  background: #f8f9fa;
+  border-radius: 6px;
+  padding: 0.5rem;
+  border: 1px solid #e9ecef;
+}
+.add-listing-form .form-check-custom:hover {
+  background: #e9ecef;
+}

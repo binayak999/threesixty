@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Valley Section - ListOn Dashboard</title>
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/dist/img/favicon.png">
+    <!-- Global Styles(used by all pages) -->
+    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="assets/plugins/fontawesome/css/all.min.css" rel="stylesheet">
+    <!-- Magnific Popup for lightbox -->
+    <link href="assets/plugins/magnific-Popup/magnific-popup.css" rel="stylesheet">
+    <!-- Pannellum CSS for 360° images -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+    <!-- App css -->
+    <link href="assets/dist/css/app.min.css" rel="stylesheet">
+    <!-- Start Your Custom Style Now -->
+    <link href="assets/dist/css/style.css" rel="stylesheet">
+    <style>
+        .valley-section {
+            padding: 2rem 0;
+        }
+        
+        .listing-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 2rem;
+        }
+        
+        .listing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .listing-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .listing-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .listing-subtitle {
+            opacity: 0.9;
+            margin: 0.5rem 0 0 0;
+        }
+        
+        .media-tabs {
+            border-bottom: 2px solid #f8f9fa;
+        }
+        
+        .media-tabs .nav-link {
+            border: none;
+            color: #6c757d;
+            font-weight: 500;
+            padding: 1rem 1.5rem;
+            border-radius: 0;
+            position: relative;
+        }
+        
+        .media-tabs .nav-link.active {
+            color: #667eea;
+            background: none;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .media-gallery {
+            padding: 2rem;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .gallery-item img, .gallery-item video {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        
+        .gallery-item-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-item-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-360-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff6b6b;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .gallery-type-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .video-thumbnail {
+            position: relative;
+        }
+        
+        .video-play-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #667eea;
+            transition: all 0.3s ease;
+        }
+        
+        .video-play-btn:hover {
+            background: white;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        
+        .media-count {
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .empty-gallery {
+            text-align: center;
+            padding: 3rem;
+            color: #6c757d;
+        }
+        
+        .empty-gallery i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        /* 360 Viewer Modal */
+        .viewer-360-modal .modal-dialog {
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+        
+        .viewer-360-container {
+            height: 70vh;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+            
+            .listing-header {
+                padding: 1rem;
+            }
+            
+            .media-gallery {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="fixed sidebar-mini">
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="sidebar-brand">
+                    <img class="sidebar-brand_icon" src="assets/dist/img/mini-logo.png" alt="">
+                    <span class="sidebar-brand_text">List<span>On</span></span>
+                </a>
+            </div>
+            <!--/.sidebar header-->
+            <div class="sidebar-body">
+                <nav class="sidebar-nav">
+                    <ul class="metismenu">
+                        <li class="nav-label">
+                            <span class="nav-label_text">Main Menu</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-three-dots nav-label_ellipsis m-auto" viewBox="0 0 16 16">
+                                <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
+                            </svg>
+                        </li>
+                        <li>
+                            <a href="dashboard.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-speedometer" viewBox="0 0 16 16">
+                                    <path d="M8 2a.5.5 0 0 1 .5.5V4a.5.5 0 0 1-1 0V2.5A.5.5 0 0 1 8 2M3.732 3.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 8a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 8m9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5m.754-4.246a.389.389 0 0 0-.527-.02L7.547 7.31A.91.91 0 1 0 8.85 8.569l3.434-4.297a.389.389 0 0 0-.029-.518z" />
+                                    <path fill-rule="evenodd" d="M6.664 15.889A8 8 0 1 1 9.336.11a8 8 0 0 1-2.672 15.78zm-4.665-4.283A11.945 11.945 0 0 1 8 10c2.186 0 4.236.585 6.001 1.606a7 7 0 1 0-12.002 0z" />
+                                </svg>
+                                <span class="ms-2">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="mm-active">
+                            <a href="valley-section.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mountain" viewBox="0 0 16 16">
+                                    <path d="M4.343 8.607 2 9.125a.5.5 0 0 1-.518-.518l.518-2.343a.5.5 0 0 1 .518-.518L4.86 6.264a.5.5 0 0 1 .518.518l-.518 2.343a.5.5 0 0 1-.518.518z"/>
+                                    <path d="M6.5 1a.5.5 0 0 1 .5.5v1.293l4.646 4.647a.5.5 0 0 1 0 .707L8.5 11.293V12.5a.5.5 0 0 1-1 0v-1.293L4.354 8.061a.5.5 0 0 1 0-.707L7.5 4.207V2.5a.5.5 0 0 1 .5-.5z"/>
+                                </svg>
+                                <span class="ms-2">Valley Section</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="add-listing.html">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-add" viewBox="0 0 16 16">
+                                    <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h4a.5.5 0 1 0 0-1h-4a.5.5 0 0 1-.5-.5V7.207l5-5 6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z" />
+                                    <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-3.5-2a.5.5 0 0 0-.5.5v1h-1a.5.5 0 0 0 0 1h1v1a.5.5 0 1 0 1 0v-1h1a.5.5 0 1 0 0-1h-1v-1a.5.5 0 0 0-.5-.5" />
+                                </svg>
+                                <span class="ms-2">Add listing</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="card p-4 shadow-none m-4 help-box alert" role="alert">
+                    <button type="button" class="btn-close end-0 me-3 mt-3 position-absolute top-0" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <div class="text-center"><img src="assets/dist/img/predictive_analytics.png" alt="" height="120" class="mb-3">
+                        <h6 class="mb-1">Monthly Sales Report</h6>
+                        <p class="fs-12">Your monthly sales report is ready for download!</p>
+                        <div class="d-grid"><a class="btn btn-primary" href="#" target="_blank">Purchase</a></div>
+                    </div>
+                </div>
+            </div><!-- sidebar-body -->
+        </nav>
+        
+        <!-- Page Content  -->
+        <div class="content-wrapper">
+            <div class="main-content">
+                <!-- Star navbar -->
+                <nav class="navbar-custom-menu navbar navbar-expand-xl m-0 navbar-transfarent">
+                    <div class="sidebar-toggle">
+                        <div class="sidebar-toggle-icon" id="sidebarCollapse">
+                            sidebar toggle<span></span>
+                        </div>
+                    </div>
+                    <!--/.sidebar toggle icon-->
+                    <!-- Collapse -->
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <!-- Toggler -->
+                        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-expanded="true" aria-label="Toggle navigation"><span></span> <span></span></button>
+                        <!-- Start search -->
+                        <form class="search" action="#" method="get">
+                            <div class="search__inner">
+                                <input type="text" class="search__text" placeholder="Search (Ctrl+/)">
+                                <svg data-sa-action="search-close" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search search__helper" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                                </svg>
+                                <span class="search-shortcode">(Ctrl+/)</span>
+                            </div>
+                        </form>
+                        <!-- End /. search -->
+                    </div>
+                    <div class="navbar-icon d-flex">
+                        <ul class="navbar-nav flex-row align-items-center">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" id="btnFullscreen">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-fullscreen" viewBox="0 0 16 16">
+                                        <path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5M.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5" />
+                                    </svg>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown user-menu user-menu-custom">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="profile-element d-flex align-items-center flex-shrink-0 p-0 text-start">
+                                        <div class="avatar online">
+                                            <img src="assets/dist/img/avatar/01.jpg" class="img-fluid rounded-circle" alt="">
+                                        </div>
+                                        <div class="profile-text">
+                                            <h6 class="m-0 fw-medium fs-14">Naeem Khan</h6>
+                                            <span>example@gmail.com</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-header d-sm-none">
+                                        <a href="" class="header-arrow"><i class="icon ion-md-arrow-back"></i></a>
+                                    </div>
+                                    <div class="user-header">
+                                        <div class="img-user">
+                                            <img src="assets/dist/img/avatar/01.jpg" alt="">
+                                        </div><!-- img-user -->
+                                        <h6>Naeem Khan</h6>
+                                        <span>example@gmail.com</span>
+                                    </div><!-- user-header -->
+                                    <a href="../sign-in.html" class="dropdown-item">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" />
+                                            <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                                        </svg>
+                                        Sign Out</a>
+                                </div>
+                                <!--/.dropdown-menu -->
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <!-- End /. navbar -->
+                
+                <div class="body-content">
+                    <div class="decoration blur-2"></div>
+                    <div class="decoration blur-3"></div>
+                    <div class="container-xxl valley-section">
+                        <!-- Page Header -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h2 class="mb-1">Valley Heritage Sites</h2>
+                                        <p class="text-muted mb-0">Explore the magnificent Durbar Squares of Kathmandu Valley</p>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <span class="badge bg-primary">2 Listings</span>
+                                        <span class="badge bg-success">Active</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Listing 1: Kathmandu Durbar Square -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card listing-card">
+                                    <div class="listing-header">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <h3 class="listing-title">Kathmandu Durbar Square</h3>
+                                                <p class="listing-subtitle">Historic royal palace complex in the heart of Kathmandu</p>
+                                            </div>
+                                            <div class="d-flex gap-2">
+                                                <span class="media-count">2 Images</span>
+                                                <span class="media-count">0 Videos</span>
+                                                <span class="media-count">1 360°</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card-body p-0">
+                                        <!-- Media Tabs -->
+                                        <ul class="nav nav-tabs media-tabs" id="kathmandu-tabs" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" id="kathmandu-images-tab" data-bs-toggle="tab" data-bs-target="#kathmandu-images" type="button" role="tab">
+                                                    <i class="fas fa-images me-2"></i>Images
+                                                </button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="kathmandu-videos-tab" data-bs-toggle="tab" data-bs-target="#kathmandu-videos" type="button" role="tab">
+                                                    <i class="fas fa-video me-2"></i>Videos
+                                                </button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="kathmandu-360-tab" data-bs-toggle="tab" data-bs-target="#kathmandu-360" type="button" role="tab">
+                                                    <i class="fas fa-globe me-2"></i>360° Images
+                                                </button>
+                                            </li>
+                                        </ul>
+                                        
+                                        <!-- Media Content -->
+                                        <div class="tab-content" id="kathmandu-tabContent">
+                                            <!-- Images Tab -->
+                                            <div class="tab-pane fade show active" id="kathmandu-images" role="tabpanel">
+                                                <div class="media-gallery">
+                                                    <div class="gallery-grid" id="kathmandu-images-grid">
+                                                        <div class="gallery-item" data-src="assets/dist/img/valley/kathmandu-durbar-square/images/temple-view-1.jpg">
+                                                            <img src="assets/dist/img/valley/kathmandu-durbar-square/images/temple-view-1.jpg" alt="Temple View">
+                                                            <span class="gallery-type-badge badge bg-success">IMG</span>
+                                                            <div class="gallery-item-overlay">
+                                                                <i class="fas fa-search-plus text-white fs-2"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="gallery-item" data-src="assets/dist/img/valley/kathmandu-durbar-square/images/courtyard-1.jpg">
+                                                            <img src="assets/dist/img/valley/kathmandu-durbar-square/images/courtyard-1.jpg" alt="Courtyard View">
+                                                            <span class="gallery-type-badge badge bg-success">IMG</span>
+                                                            <div class="gallery-item-overlay">
+                                                                <i class="fas fa-search-plus text-white fs-2"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Videos Tab -->
+                                            <div class="tab-pane fade" id="kathmandu-videos" role="tabpanel">
+                                                <div class="media-gallery">
+                                                    <div class="empty-gallery">
+                                                        <i class="fas fa-video"></i>
+                                                        <h5>No Videos Available</h5>
+                                                        <p>Videos for Kathmandu Durbar Square will be displayed here.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- 360° Images Tab -->
+                                            <div class="tab-pane fade" id="kathmandu-360" role="tabpanel">
+                                                <div class="media-gallery">
+                                                    <div class="gallery-grid">
+                                                        <div class="gallery-item is-360" data-360-image="https://pannellum.org/images/alma.jpg">
+                                                            <img src="assets/dist/img/valley/kathmandu-durbar-square/images/temple-view-1.jpg" alt="360° Temple View">
+                                                            <div class="gallery-360-indicator">360°</div>
+                                                            <div class="gallery-item-overlay">
+                                                                <i class="fas fa-globe text-white fs-2"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Listing 2: Bhaktapur Durbar Square -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card listing-card">
+                                    <div class="listing-header">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <h3 class="listing-title">Bhaktapur Durbar Square</h3>
+                                                <p class="listing-subtitle">Medieval royal palace complex showcasing Newari architecture</p>
+                                            </div>
+                                            <div class="d-flex gap-2">
+                                                <span class="media-count">2 Images</span>
+                                                <span class="media-count">0 Videos</span>
+                                                <span class="media-count">1 360°</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="card-body p-0">
+                                        <!-- Media Tabs -->
+                                        <ul class="nav nav-tabs media-tabs" id="bhaktapur-tabs" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" id="bhaktapur-images-tab" data-bs-toggle="tab" data-bs-target="#bhaktapur-images" type="button" role="tab">
+                                                    <i class="fas fa-images me-2"></i>Images
+                                                </button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="bhaktapur-videos-tab" data-bs-toggle="tab" data-bs-target="#bhaktapur-videos" type="button" role="tab">
+                                                    <i class="fas fa-video me-2"></i>Videos
+                                                </button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="bhaktapur-360-tab" data-bs-toggle="tab" data-bs-target="#bhaktapur-360" type="button" role="tab">
+                                                    <i class="fas fa-globe me-2"></i>360° Images
+                                                </button>
+                                            </li>
+                                        </ul>
+                                        
+                                        <!-- Media Content -->
+                                        <div class="tab-content" id="bhaktapur-tabContent">
+                                            <!-- Images Tab -->
+                                            <div class="tab-pane fade show active" id="bhaktapur-images" role="tabpanel">
+                                                <div class="media-gallery">
+                                                    <div class="gallery-grid" id="bhaktapur-images-grid">
+                                                
+<div class="gallery-item" data-src="assets/dist/img/valley/bhaktapur-durbar-square/images/palace-view-1.jpg">
+                                                            <img src="assets/dist/img/valley/bhaktapur-durbar-square/images/palace-view-1.jpg" alt="Palace View">
+                                                            <span class="gallery-type-badge badge bg-success">IMG</span>
+                                                            <div class="gallery-item-overlay">
+                                                                <i class="fas fa-search-plus text-white fs-2"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="gallery-item" data-src="assets/dist/img/valley/bhaktapur-durbar-square/images/square-view-1.jpg">
+                                                            <img src="assets/dist/img/valley/bhaktapur-durbar-square/images/square-view-1.jpg" alt="Square View">
+                                                            <span class="gallery-type-badge badge bg-success">IMG</span>
+                                                            <div class="gallery-item-overlay">
+                                                                <i class="fas fa-search-plus text-white fs-2"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Videos Tab -->
+                                            <div class="tab-pane fade" id="bhaktapur-videos" role="tabpanel">
+                                                <div class="media-gallery">
+                                                    <div class="empty-gallery">
+                                                        <i class="fas fa-video"></i>
+                                                        <h5>No Videos Available</h5>
+                                                        <p>Videos for Bhaktapur Durbar Square will be displayed here.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- 360° Images Tab -->
+                                            <div class="tab-pane fade" id="bhaktapur-360" role="tabpanel">
+                                                <div class="media-gallery">
+                                                    <div class="gallery-grid">
+                                                        <div class="gallery-item is-360" data-360-image="https://pannellum.org/images/alma.jpg">
+                                                            <img src="assets/dist/img/valley/bhaktapur-durbar-square/images/palace-view-1.jpg" alt="360° Palace View">
+                                                            <div class="gallery-360-indicator">360°</div>
+                                                            <div class="gallery-item-overlay">
+                                                                <i class="fas fa-globe text-white fs-2"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--/.body content-->
+            </div>
+            <!--/.main content-->
+            <footer class="footer-content">
+                <div class="align-items-center d-flex footer-text gap-3 justify-content-between">
+                    <div class="copy">© 2022 ListOn - All Rights Reserved</div>
+                    <div class="credit">Developed by: <a href="#">ListOn</a> 🌺💚</div>
+                </div>
+            </footer>
+            <!--/.footer content-->
+            <div class="overlay"></div>
+        </div>
+        <!--/.wrapper-->
+    </div>
+
+    <!-- 360° Viewer Modal -->
+    <div class="modal fade viewer-360-modal" id="viewer360Modal" tabindex="-1" aria-labelledby="viewer360ModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewer360ModalLabel">360° View</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div id="panorama" class="viewer-360-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global script(used by all pages) -->
+    <script src="assets/plugins/jQuery/jquery.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/plugins/metisMenu/metisMenu.min.js"></script>
+    <script src="assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <!-- Magnific Popup for lightbox -->
+    <script src="assets/plugins/magnific-Popup/jquery.magnific-popup.min.js"></script>
+    <!-- Pannellum JS for 360° images -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    <!-- Page Scripts(used by all page) -->
+    <script src="assets/dist/js/app.min.js"></script>
+    <!-- Page Active Scripts(used by this page) -->
+    <script src="assets/dist/js/dashboard.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Initialize Magnific Popup for image gallery
+            $('.gallery-item:not(.is-360)').magnificPopup({
+                type: 'image',
+                gallery: {
+                    enabled: true,
+                    navigateByImgClick: true,
+                    preload: [0,1]
+                },
+                image: {
+                    titleSrc: function(item) {
+                        return item.el.find('img').attr('alt');
+                    }
+                },
+                callbacks: {
+                    buildControls: function() {
+                        this.contentContainer.append(this.arrowLeft.add(this.arrowRight));
+                    }
+                }
+            });
+
+            // Handle 360° image clicks
+            $('.gallery-item.is-360').on('click', function() {
+                const imageUrl = $(this).data('360-image');
+                const title = $(this).find('img').attr('alt');
+                
+                $('#viewer360ModalLabel').text(title);
+                $('#viewer360Modal').modal('show');
+                
+                // Initialize Pannellum viewer
+                setTimeout(function() {
+                    pannellum.viewer('panorama', {
+                        type: 'equirectangular',
+                        panorama: imageUrl,
+                        autoLoad: true,
+                        showControls: true,
+                        showFullscreenCtrl: true,
+                        showZoomCtrl: true,
+                        mouseZoom: true,
+                        compass: true,
+                        northOffset: 0,
+                        pitch: 0,
+                        yaw: 0,
+                        hfov: 100
+                    });
+                }, 300);
+            });
+
+            // Clean up 360° viewer when modal is closed
+            $('#viewer360Modal').on('hidden.bs.modal', function() {
+                $('#panorama').empty();
+            });
+
+            // Update media counts dynamically
+            function updateMediaCounts() {
+                // Kathmandu counts
+                const kathmanduImages = $('#kathmandu-images-grid .gallery-item').length;
+                const kathmanduVideos = $('#kathmandu-videos .gallery-item').length;
+                const kathmandu360 = $('#kathmandu-360 .gallery-item.is-360').length;
+                
+                // Bhaktapur counts
+                const bhaktapurImages = $('#bhaktapur-images-grid .gallery-item').length;
+                const bhaktapurVideos = $('#bhaktapur-videos .gallery-item').length;
+                const bhaktapur360 = $('#bhaktapur-360 .gallery-item.is-360').length;
+                
+                // Update display (this would be dynamic in a real application)
+                console.log('Media counts updated:', {
+                    kathmandu: { images: kathmanduImages, videos: kathmanduVideos, '360': kathmandu360 },
+                    bhaktapur: { images: bhaktapurImages, videos: bhaktapurVideos, '360': bhaktapur360 }
+                });
+            }
+
+            // Initialize media counts
+            updateMediaCounts();
+
+            // Add smooth scrolling between listings
+            $('a[href^="#"]').on('click', function(e) {
+                e.preventDefault();
+                const target = $(this.getAttribute('href'));
+                if (target.length) {
+                    $('html, body').animate({
+                        scrollTop: target.offset().top - 100
+                    }, 800);
+                }
+            });
+
+            // Add loading animation for images
+            $('.gallery-item img').on('load', function() {
+                $(this).parent().addClass('loaded');
+            });
+
+            // Handle tab switching with smooth transitions
+            $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
+                const target = $(e.target.getAttribute('data-bs-target'));
+                target.find('.gallery-grid').addClass('fade-in');
+                
+                setTimeout(function() {
+                    target.find('.gallery-grid').removeClass('fade-in');
+                }, 300);
+            });
+        });
+
+        // Sample data structure for dynamic content (would come from backend)
+        const valleyListings = {
+            'kathmandu-durbar-square': {
+                name: 'Kathmandu Durbar Square',
+                description: 'Historic royal palace complex in the heart of Kathmandu',
+                images: [
+                    {
+                        src: 'assets/dist/img/valley/kathmandu-durbar-square/images/temple-view-1.jpg',
+                        alt: 'Temple View',
+                        title: 'Ancient Temple Architecture'
+                    },
+                    {
+                        src: 'assets/dist/img/valley/kathmandu-durbar-square/images/courtyard-1.jpg',
+                        alt: 'Courtyard View',
+                        title: 'Royal Courtyard'
+                    }
+                ],
+                videos: [],
+                images360: [
+                    {
+                        src: 'https://pannellum.org/images/alma.jpg',
+                        thumbnail: 'assets/dist/img/valley/kathmandu-durbar-square/images/temple-view-1.jpg',
+                        alt: '360° Temple View',
+                        title: 'Panoramic Temple View'
+                    }
+                ]
+            },
+            'bhaktapur-durbar-square': {
+                name: 'Bhaktapur Durbar Square',
+                description: 'Medieval royal palace complex showcasing Newari architecture',
+                images: [
+                    {
+                        src: 'assets/dist/img/valley/bhaktapur-durbar-square/images/palace-view-1.jpg',
+                        alt: 'Palace View',
+                        title: 'Royal Palace Complex'
+                    },
+                    {
+                        src: 'assets/dist/img/valley/bhaktapur-durbar-square/images/square-view-1.jpg',
+                        alt: 'Square View',
+                        title: 'Historic Square'
+                    }
+                ],
+                videos: [],
+                images360: [
+                    {
+                        src: 'https://pannellum.org/images/alma.jpg',
+                        thumbnail: 'assets/dist/img/valley/bhaktapur-durbar-square/images/palace-view-1.jpg',
+                        alt: '360° Palace View',
+                        title: 'Panoramic Palace View'
+                    }
+                ]
+            }
+        };
+
+        // Function to dynamically load media content (for future use)
+        function loadMediaContent(listingId, mediaType) {
+            const listing = valleyListings[listingId];
+            if (!listing) return;
+
+            const container = $(`#${listingId}-${mediaType}-grid`);
+            const mediaItems = listing[mediaType] || [];
+
+            container.empty();
+
+            if (mediaItems.length === 0) {
+                container.parent().html(`
+                    <div class="empty-gallery">
+                        <i class="fas fa-${mediaType === 'images' ? 'images' : mediaType === 'videos' ? 'video' : 'globe'}"></i>
+                        <h5>No ${mediaType.charAt(0).toUpperCase() + mediaType.slice(1)} Available</h5>
+                        <p>${mediaType.charAt(0).toUpperCase() + mediaType.slice(1)} for ${listing.name} will be displayed here.</p>
+                    </div>
+                `);
+                return;
+            }
+
+            mediaItems.forEach(item => {
+                let itemHtml = '';
+                if (mediaType === 'images360') {
+                    itemHtml = `
+                        <div class="gallery-item is-360" data-360-image="${item.src}">
+                            <img src="${item.thumbnail}" alt="${item.alt}">
+                            <div class="gallery-360-indicator">360°</div>
+                            <div class="gallery-item-overlay">
+                                <i class="fas fa-globe text-white fs-2"></i>
+                            </div>
+                        </div>
+                    `;
+                } else if (mediaType === 'images') {
+                    itemHtml = `
+                        <div class="gallery-item" data-src="${item.src}">
+                            <img src="${item.src}" alt="${item.alt}">
+                            <span class="gallery-type-badge badge bg-success">IMG</span>
+                            <div class="gallery-item-overlay">
+                                <i class="fas fa-search-plus text-white fs-2"></i>
+                            </div>
+                        </div>
+                    `;
+                }
+                container.append(itemHtml);
+            });
+        }
+    </script>
+</body>
+
+</html>
