@@ -2,11 +2,8 @@
 
 import { useEffect } from "react";
 
-const STYLES = [
-  "/assets/dashboard/plugins/metisMenu/metisMenu.min.css",
-  "/assets/dashboard/dist/css/app.min.css",
-  "/assets/dashboard/dist/css/style.css",
-];
+/** Dashboard uses the same static assets as frontend; only one extra CSS for sidebar/navbar. */
+const STYLES = ["/assets/css/dashboard.css"];
 
 export default function DashboardStyles() {
   useEffect(() => {
