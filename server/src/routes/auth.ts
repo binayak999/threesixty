@@ -7,9 +7,31 @@ const router = Router();
 const ROLES = ['user', 'admin', 'superadmin'] as const;
 type UserRole = (typeof ROLES)[number];
 
+const SESSION_COOKIE_NAME = 'auth_session';
+const SESSION_MAX_AGE_DAYS = 7;
+
+function sessionCookieValue(payload: { id: string; email: string; name: string; role: UserRole }): string {
+  return Buffer.from(JSON.stringify(payload), 'utf8').toString('base64url');
+}
+
+function setSessionCookie(res: Response, payload: { id: string; email: string; name: string; role: UserRole }): void {
+  const value = sessionCookieValue(payload);
+  const maxAge = 60 * 60 * 24 * SESSION_MAX_AGE_DAYS;
+  const secure = process.env.NODE_ENV === 'production';
+  const parts = [
+    `${SESSION_COOKIE_NAME}=${value}`,
+    'Path=/',
+    'HttpOnly',
+    'SameSite=Lax',
+    `Max-Age=${maxAge}`,
+  ];
+  if (secure) parts.push('Secure');
+  res.setHeader('Set-Cookie', parts.join('; '));
+}
+
 function getSessionFromCookie(cookieHeader: string | undefined): { id: string; email: string; name: string; role: UserRole } | null {
   if (!cookieHeader) return null;
-  const match = cookieHeader.match(/\bauth_session=([^;]+)/);
+  const match = cookieHeader.match(new RegExp(`\\b${SESSION_COOKIE_NAME}=([^;]+)`));
   const value = match?.[1]?.trim();
   if (!value) return null;
   try {
@@ -40,6 +62,17 @@ router.get('/session', (_req: Request, res: Response): void => {
   }
 });
 
+/** POST /api/auth/sign-out – clear auth_session cookie so session is dropped. */
+router.post('/sign-out', (_req: Request, res: Response): void => {
+  const secure = process.env.NODE_ENV === 'production';
+  const parts = [
+    `${SESSION_COOKIE_NAME}=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0`,
+  ];
+  if (secure) parts.push('Secure');
+  res.setHeader('Set-Cookie', parts.join('; '));
+  res.status(200).json({ ok: true });
+});
+
 router.post('/sign-in', async (req: Request, res: Response): Promise<void> => {
   try {
     const { email, password } = req.body ?? {};
@@ -63,13 +96,15 @@ router.post('/sign-in', async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
+    const sessionUser = {
+      id: String(user._id),
+      email: user.email ?? '',
+      name: user.name ?? user.email ?? '',
+      role: user.role as UserRole,
+    };
+    setSessionCookie(res, sessionUser);
     res.status(200).json({
-      user: {
-        id: String(user._id),
-        email: user.email,
-        name: user.name,
-        role: user.role,
-      },
+      user: sessionUser,
     });
   } catch (err) {
     console.error('Sign-in error:', err);
