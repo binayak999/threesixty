@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSessionUser } from "@/app/api/auth/session/route";
+import { getSessionUser } from "@/lib/sessionUser";
 
 const API_URL = process.env.API_URL || "http://localhost:4000";
 

@@ -83,7 +83,7 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
 router.post('/upload', upload.array('files', 20) as unknown as express.RequestHandler, async (req: Request, res: Response): Promise<void> => {
   try {
     const typeFromForm = (req.body?.type as string) || 'file';
-    const userId = (req.body?.userId as string) || undefined;
+    const userId = (req.body?.userId as string) || (req.query?.userId as string) || undefined;
     const files = (req.files as Express.Multer.File[]) || [];
     const created: Array<{
       id: string; url: string; urlMedium?: string; urlLow?: string; type: string;

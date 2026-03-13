@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import type { SessionUser } from "@/app/api/auth/session/route";
+import type { SessionUser } from "@/lib/sessionUser";
 import { clearSessionCache } from "@/lib/authSessionCache";
 
 type NavItem =

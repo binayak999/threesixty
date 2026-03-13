@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import type { UserRole } from "@/app/api/auth/session/route";
+import type { UserRole } from "@/lib/sessionUser";
 
 const ADMIN_ROLES: UserRole[] = ["admin", "superadmin"];
 
