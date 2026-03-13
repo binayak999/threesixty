@@ -7,7 +7,7 @@ import axios from "axios";
  * - FormData: Content-Type is cleared so axios/browser sets multipart/form-data with boundary.
  */
 export const apiClient = axios.create({
-  baseURL: "",
+  baseURL: process.env.API_URL || "http://localhost:4000",
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
