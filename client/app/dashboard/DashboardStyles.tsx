@@ -3,9 +3,9 @@
 import { useEffect } from "react";
 
 const STYLES = [
-  "/dashboard/assets/plugins/metisMenu/metisMenu.min.css",
-  "/dashboard/assets/dist/css/app.min.css",
-  "/dashboard/assets/dist/css/style.css",
+  "/assets/dashboard/plugins/metisMenu/metisMenu.min.css",
+  "/assets/dashboard/dist/css/app.min.css",
+  "/assets/dashboard/dist/css/style.css",
 ];
 
 export default function DashboardStyles() {
