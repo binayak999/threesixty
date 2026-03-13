@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SignInForm from "./SignInForm";
@@ -22,7 +23,9 @@ export default function SignInPage() {
                   <p className="text-body-secondary small mb-4">
                     Welcome back. Sign in to access your account.
                   </p>
-                  <SignInForm />
+                  <Suspense fallback={<div className="py-3 text-muted small">Loading…</div>}>
+                    <SignInForm />
+                  </Suspense>
                   <p className="mt-4 mb-0 text-center small text-body-secondary">
                     Don&apos;t have an account?{" "}
                     <Link href="/sign-up" className="fw-medium text-decoration-none">
