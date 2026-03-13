@@ -97,9 +97,11 @@ router.post('/sign-in', async (req: Request, res: Response): Promise<void> => {
       role: sessionUser.role,
     });
     setSessionCookie(res, token);
+    const redirectTo = ROLES.indexOf(sessionUser.role) >= ROLES.indexOf('admin') ? '/dashboard' : '/';
     res.status(200).json({
       user: sessionUser,
       token,
+      redirectTo,
     });
   } catch (err) {
     console.error('Sign-in error:', err);

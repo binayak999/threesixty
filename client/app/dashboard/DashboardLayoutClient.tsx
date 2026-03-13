@@ -17,7 +17,7 @@ export default function DashboardLayoutClient({
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/auth/session")
+    fetch("/api/auth/session", { credentials: "include" })
       .then((res) => res.json())
       .then((data: { user: SessionUser | null }) => {
         if (cancelled) return;

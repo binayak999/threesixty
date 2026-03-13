@@ -16,7 +16,7 @@ export default function DashboardGuard({
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/auth/session")
+    fetch("/api/auth/session", { credentials: "include" })
       .then((res) => res.json())
       .then((data: { user: { role: UserRole } | null }) => {
         if (cancelled) return;

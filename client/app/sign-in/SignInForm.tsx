@@ -22,13 +22,17 @@ export default function SignInForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
+        credentials: "include",
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
         setError(data.message || "Sign in failed. Please try again.");
         return;
       }
-      const target = redirect && redirect.startsWith("/") ? redirect : (data.redirectTo || "/");
+      const target =
+        redirect && redirect.startsWith("/")
+          ? redirect
+          : (data.redirectTo ?? "/");
       router.push(target);
       router.refresh();
     } catch {
