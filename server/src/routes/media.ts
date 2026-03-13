@@ -1,4 +1,4 @@
-import { Router, Request, Response } from 'express';
+import express, { Router, Request, Response } from 'express';
 import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
@@ -78,7 +78,7 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
   }
 });
 
-router.post('/upload', upload.array('files', 20), async (req: Request, res: Response): Promise<void> => {
+router.post('/upload', upload.array('files', 20) as unknown as express.RequestHandler, async (req: Request, res: Response): Promise<void> => {
   try {
     const typeFromForm = (req.body?.type as string) || 'file';
     const userId = (req.body?.userId as string) || undefined;

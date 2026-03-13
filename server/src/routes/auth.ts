@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import User from '../models/User';
+import { signSession, verifySession } from '../lib/jwt';
 
 const router = Router();
 
@@ -10,16 +11,11 @@ type UserRole = (typeof ROLES)[number];
 const SESSION_COOKIE_NAME = 'auth_session';
 const SESSION_MAX_AGE_DAYS = 7;
 
-function sessionCookieValue(payload: { id: string; email: string; name: string; role: UserRole }): string {
-  return Buffer.from(JSON.stringify(payload), 'utf8').toString('base64url');
-}
-
-function setSessionCookie(res: Response, payload: { id: string; email: string; name: string; role: UserRole }): void {
-  const value = sessionCookieValue(payload);
+function setSessionCookie(res: Response, token: string): void {
   const maxAge = 60 * 60 * 24 * SESSION_MAX_AGE_DAYS;
   const secure = process.env.NODE_ENV === 'production';
   const parts = [
-    `${SESSION_COOKIE_NAME}=${value}`,
+    `${SESSION_COOKIE_NAME}=${token}`,
     'Path=/',
     'HttpOnly',
     'SameSite=Lax',
@@ -32,24 +28,16 @@ function setSessionCookie(res: Response, payload: { id: string; email: string; n
 function getSessionFromCookie(cookieHeader: string | undefined): { id: string; email: string; name: string; role: UserRole } | null {
   if (!cookieHeader) return null;
   const match = cookieHeader.match(new RegExp(`\\b${SESSION_COOKIE_NAME}=([^;]+)`));
-  const value = match?.[1]?.trim();
-  if (!value) return null;
-  try {
-    const payload = JSON.parse(
-      Buffer.from(value, 'base64url').toString('utf8')
-    ) as { id?: string; email?: string; name?: string; role?: string };
-    if (!payload?.email || !payload?.role) return null;
-    const role = payload.role as UserRole;
-    if (!ROLES.includes(role)) return null;
-    return {
-      id: payload.id ?? '',
-      email: payload.email,
-      name: payload.name ?? payload.email,
-      role,
-    };
-  } catch {
-    return null;
-  }
+  const token = match?.[1]?.trim();
+  if (!token) return null;
+  const payload = verifySession(token);
+  if (!payload) return null;
+  return {
+    id: payload.sub,
+    email: payload.email,
+    name: payload.name ?? payload.email,
+    role: payload.role as UserRole,
+  };
 }
 
 /** GET /api/auth/session – return current user from auth_session cookie (same contract as Next.js API route). */
@@ -102,9 +90,16 @@ router.post('/sign-in', async (req: Request, res: Response): Promise<void> => {
       name: user.name ?? user.email ?? '',
       role: user.role as UserRole,
     };
-    setSessionCookie(res, sessionUser);
+    const token = signSession({
+      sub: sessionUser.id,
+      email: sessionUser.email,
+      name: sessionUser.name,
+      role: sessionUser.role,
+    });
+    setSessionCookie(res, token);
     res.status(200).json({
       user: sessionUser,
+      token,
     });
   } catch (err) {
     console.error('Sign-in error:', err);

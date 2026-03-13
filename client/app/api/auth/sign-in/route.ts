@@ -25,6 +25,7 @@ export async function POST(request: Request) {
     const data = (await res.json().catch(() => ({}))) as {
       message?: string;
       user?: { id: string; email: string; name: string; role: string };
+      token?: string;
     };
 
     if (!res.ok) {
@@ -42,15 +43,18 @@ export async function POST(request: Request) {
       );
     }
 
-    const payload = {
-      id: user.id,
-      email: user.email,
-      name: user.name ?? user.email,
-      role: user.role,
-    };
-    const sessionValue = Buffer.from(JSON.stringify(payload), "utf8").toString(
-      "base64url"
-    );
+    const sessionValue =
+      typeof data.token === "string"
+        ? data.token
+        : Buffer.from(
+            JSON.stringify({
+              id: user.id,
+              email: user.email,
+              name: user.name ?? user.email,
+              role: user.role,
+            }),
+            "utf8"
+          ).toString("base64url");
 
     const cookieStore = await cookies();
     cookieStore.set("auth_session", sessionValue, {
