@@ -4,6 +4,7 @@ import { useRef, useState, useEffect, useCallback } from "react";
 import type { AddListingFormState } from "../types";
 import { MediaGalleryManager, type MediaGalleryManagerRef, type MediaItem } from "@/components/MediaGalleryManager";
 import { getMediaUrl } from "@/lib/mediaUrl";
+import { apiClient } from "@/lib/apiClient";
 
 export default function Step5Media({
   form,
@@ -18,8 +19,8 @@ export default function Step5Media({
 
   const fetchMedia = useCallback(async () => {
     try {
-      const res = await fetch("/api/media");
-      const data = await res.json();
+      const res = await apiClient.get<{ items?: MediaItem[]; data?: MediaItem[] }>("/api/media");
+      const data = res.data;
       const items: MediaItem[] = Array.isArray(data?.items) ? data.items : (data?.data ?? []);
       setMediaCache((prev) => {
         const next = { ...prev };

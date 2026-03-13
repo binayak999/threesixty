@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { getMediaUrl as resolveMediaUrl } from "@/lib/mediaUrl";
+import { apiClient } from "@/lib/apiClient";
 import type { BlogItem, BlogCategory, BlogUser, BlogMediaRef } from "../types";
 
 function getMediaUrlFromRef(m: BlogMediaRef["media"]): string | null {
@@ -23,10 +24,10 @@ export default function ViewBlogPage() {
       setLoading(false);
       return;
     }
-    fetch(`/api/blogs/${id}`)
-      .then((res) => res.json())
-      .then((json) => {
-        if (json?.data) setBlog(json.data);
+    apiClient
+      .get<{ data?: BlogItem }>(`/api/blogs/${id}`)
+      .then((res) => {
+        if (res.data?.data) setBlog(res.data.data);
         else setError("Blog not found");
       })
       .catch(() => setError("Failed to load blog"))

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { apiClient } from "@/lib/apiClient";
 import type { CategoryType } from "./types";
 import { slugify } from "./types";
 import "../../add-listing/add-listing.css";
@@ -55,11 +56,11 @@ export default function CategoryForm({
   // Fetch categories of same type for parent dropdown
   useEffect(() => {
     if (!categoryType) return;
-    fetch(`/api/categories?type=${categoryType}`)
-      .then((res) => res.json())
-      .then((json) => {
-        if (json?.data && Array.isArray(json.data)) {
-          setParentOptions(json.data.map((c: { _id: string; name: string }) => ({ _id: c._id, name: c.name })));
+    apiClient
+      .get<{ data?: { _id: string; name: string }[] }>(`/api/categories?type=${categoryType}`)
+      .then((res) => {
+        if (res.data?.data && Array.isArray(res.data.data)) {
+          setParentOptions(res.data.data.map((c) => ({ _id: c._id, name: c.name })));
         }
       })
       .catch(() => {});
@@ -68,11 +69,12 @@ export default function CategoryForm({
   useEffect(() => {
     if (mode === "edit" && categoryId) {
       setLoading(true);
-      fetch(`/api/categories/${categoryId}`)
-        .then((res) => res.json())
-        .then((json) => {
+      apiClient
+        .get<{ data?: Record<string, unknown> }>(`/api/categories/${categoryId}`)
+        .then((res) => {
+          const json = res.data;
           if (json?.data) {
-            const c = json.data;
+            const c = json.data as Record<string, unknown> & { name: string; slug: string; description?: string; order?: number; parent?: { _id: string } | string };
             const parentId = c.parent?._id ?? c.parent ?? "";
             const seo = (c as { seo?: { metaTitle?: string; metaDescription?: string; metaKeywords?: string[]; ogImage?: string; noIndex?: boolean } }).seo;
             setForm({
@@ -130,25 +132,14 @@ export default function CategoryForm({
             : undefined,
       };
       if (mode === "edit" && categoryId) {
-        const res = await fetch(`/api/categories/${categoryId}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const json = await res.json();
-        if (!res.ok) throw new Error(json?.message || "Update failed");
+        await apiClient.put(`/api/categories/${categoryId}`, payload);
       } else {
-        const res = await fetch("/api/categories", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...payload, type: categoryType }),
-        });
-        const json = await res.json();
-        if (!res.ok) throw new Error(json?.message || "Create failed");
+        await apiClient.post("/api/categories", { ...payload, type: categoryType });
       }
       onSuccess();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Request failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Request failed");
     } finally {
       setSaving(false);
     }

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import DataTable, { DataTableColumn } from "../components/DataTable";
+import { apiClient } from "@/lib/apiClient";
 
 export interface ReviewListingRef {
   _id: string;
@@ -36,9 +37,8 @@ export default function DashboardReviewsPage() {
 
   const fetchReviews = async () => {
     try {
-      const res = await fetch("/api/reviews");
-      const json = await res.json();
-      if (json?.data) setReviews(json.data);
+      const res = await apiClient.get<{ data?: ReviewItem[] }>("/api/reviews");
+      if (res.data?.data) setReviews(res.data.data);
       else setReviews([]);
     } catch {
       setReviews([]);
@@ -53,28 +53,22 @@ export default function DashboardReviewsPage() {
 
   const handleApprove = async (id: string, isApproved: boolean) => {
     try {
-      const res = await fetch(`/api/reviews/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ isApproved }),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Update failed");
+      await apiClient.put(`/api/reviews/${id}`, { isApproved });
       await fetchReviews();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Update failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Update failed");
     }
   };
 
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this review?")) return;
     try {
-      const res = await fetch(`/api/reviews/${id}`, { method: "DELETE" });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Delete failed");
+      await apiClient.delete(`/api/reviews/${id}`);
       await fetchReviews();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Delete failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Delete failed");
     }
   };
 

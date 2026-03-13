@@ -6,15 +6,16 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import BlogForm from "../BlogForm";
 import type { BlogCategory } from "../types";
+import { apiClient } from "@/lib/apiClient";
 
 export default function AddBlogPage() {
   const router = useRouter();
   const [categories, setCategories] = useState<BlogCategory[]>([]);
 
   useEffect(() => {
-    fetch("/api/categories?type=blog")
-      .then((res) => res.json())
-      .then((json) => json?.data && setCategories(json.data))
+    apiClient
+      .get<{ data?: BlogCategory[] }>("/api/categories?type=blog")
+      .then((res) => res.data?.data && setCategories(res.data.data))
       .catch(() => {});
   }, []);
 

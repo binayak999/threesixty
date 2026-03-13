@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import DataTable, { DataTableColumn } from "../components/DataTable";
+import { apiClient } from "@/lib/apiClient";
 
 export interface AmenityItem {
   _id: string;
@@ -20,9 +21,8 @@ export default function AmenitiesPage() {
 
   const fetchItems = async () => {
     try {
-      const res = await fetch("/api/amenities");
-      const json = await res.json();
-      if (json?.data) setItems(json.data);
+      const res = await apiClient.get<{ data?: AmenityItem[] }>("/api/amenities");
+      if (res.data?.data) setItems(res.data.data);
       else setItems([]);
     } catch {
       setItems([]);
@@ -38,12 +38,11 @@ export default function AmenitiesPage() {
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this amenity?")) return;
     try {
-      const res = await fetch(`/api/amenities/${id}`, { method: "DELETE" });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Delete failed");
+      await apiClient.delete(`/api/amenities/${id}`);
       await fetchItems();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Delete failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Delete failed");
     }
   };
 

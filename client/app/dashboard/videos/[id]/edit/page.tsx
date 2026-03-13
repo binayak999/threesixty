@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { MediaGalleryManager, type MediaGalleryManagerRef } from "@/components/MediaGalleryManager";
 import { getMediaUrl } from "@/lib/mediaUrl";
+import { apiClient } from "@/lib/apiClient";
 import "../../../add-listing/add-listing.css";
 
 export default function EditVideoPage() {
@@ -25,9 +26,10 @@ export default function EditVideoPage() {
 
   useEffect(() => {
     if (!id) return;
-    fetch(`/api/videos/${id}`)
-      .then((res) => res.json())
-      .then((json) => {
+    apiClient
+      .get<{ data?: { title?: string; youtubeLink?: string; thumbnail?: { _id: string; url?: string; type?: string } | string; status?: string } }>(`/api/videos/${id}`)
+      .then((res) => {
+        const json = res.data;
         if (json?.data) {
           const d = json.data;
           const thumb = typeof d.thumbnail === "object" && d.thumbnail ? d.thumbnail : null;
@@ -56,22 +58,17 @@ export default function EditVideoPage() {
     }
     setSaving(true);
     try {
-      const res = await fetch(`/api/videos/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: form.title.trim(),
-          youtubeLink: form.youtubeLink.trim(),
-          thumbnail: form.thumbnailId || undefined,
-          status: form.status,
-        }),
+      await apiClient.put(`/api/videos/${id}`, {
+        title: form.title.trim(),
+        youtubeLink: form.youtubeLink.trim(),
+        thumbnail: form.thumbnailId || undefined,
+        status: form.status,
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Update failed");
       router.push("/dashboard/videos");
       router.refresh();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Request failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Request failed");
     } finally {
       setSaving(false);
     }

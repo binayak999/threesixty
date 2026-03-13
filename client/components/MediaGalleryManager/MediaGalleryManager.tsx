@@ -3,6 +3,7 @@
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { getMediaUrl } from "@/lib/mediaUrl";
+import { apiClient } from "@/lib/apiClient";
 import type { MediaGalleryManagerProps, MediaGalleryManagerRef, MediaItem, MediaType } from "./types";
 import "./MediaGalleryManager.css";
 
@@ -17,9 +18,8 @@ const MEDIA_TYPES: { key: MediaType; label: string; icon: string; accept: string
 
 async function defaultFetch(): Promise<MediaItem[]> {
   try {
-    const res = await fetch("/api/media", { credentials: "include" });
-    const data = await res.json();
-    return Array.isArray(data?.items) ? data.items : [];
+    const res = await apiClient.get<{ items?: MediaItem[] }>("/api/media");
+    return Array.isArray(res.data?.items) ? res.data.items : [];
   } catch {
     return [];
   }
@@ -30,12 +30,8 @@ async function defaultUpload(files: File[], type: MediaType): Promise<MediaItem[
   files.forEach((f) => formData.append("files", f));
   formData.set("type", type);
   try {
-    const res = await fetch("/api/media/upload", {
-      method: "POST",
-      body: formData,
-    });
-    const data = await res.json();
-    return Array.isArray(data?.items) ? data.items : [];
+    const res = await apiClient.post<{ items?: MediaItem[] }>("/api/media/upload", formData);
+    return Array.isArray(res.data?.items) ? res.data.items : [];
   } catch {
     return [];
   }
@@ -222,21 +218,20 @@ const MediaGalleryManager = forwardRef<MediaGalleryManagerRef, MediaGalleryManag
       setImportError("");
       setImportingUrl(true);
       try {
-        const res = await fetch("/api/media/import-url", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ url }),
-        });
-        const data = await res.json().catch(() => ({}));
-        const item = (data as { item?: MediaItem }).item;
-        if (!res.ok || !item) {
-          setImportError((data as { message?: string }).message || "Import failed.");
+        const res = await apiClient.post<{ item?: MediaItem; message?: string }>(
+          "/api/media/import-url",
+          { url }
+        );
+        const item = res.data?.item;
+        if (!item) {
+          setImportError(res.data?.message || "Import failed.");
           return;
         }
         setItems((prev) => [item, ...prev]);
         setImportUrl("");
-      } catch {
-        setImportError("Import failed.");
+      } catch (err: unknown) {
+        const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+        setImportError(msg || "Import failed.");
       } finally {
         setImportingUrl(false);
       }

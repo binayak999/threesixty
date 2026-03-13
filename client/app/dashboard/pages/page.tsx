@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getMediaUrl } from "@/lib/mediaUrl";
 import DataTable, { DataTableColumn } from "../components/DataTable";
+import { apiClient } from "@/lib/apiClient";
 
 interface MediaRef {
   _id: string;
@@ -54,8 +55,10 @@ export default function PagesPage() {
     try {
       setLoading(true);
       const searchParam = searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : "";
-      const res = await fetch(`/api/pages?page=${pageNum}&limit=${DEFAULT_LIMIT}${searchParam}`);
-      const json = await res.json();
+      const res = await apiClient.get<{ data?: PageRow[]; pagination?: typeof pagination }>(
+        `/api/pages?page=${pageNum}&limit=${DEFAULT_LIMIT}${searchParam}`
+      );
+      const json = res.data;
       if (json?.data) setItems(json.data);
       else setItems([]);
       if (json?.pagination) setPagination(json.pagination);
@@ -75,12 +78,11 @@ export default function PagesPage() {
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this page?")) return;
     try {
-      const res = await fetch(`/api/pages/${id}`, { method: "DELETE" });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Delete failed");
+      await apiClient.delete(`/api/pages/${id}`);
       await fetchItems(page, search);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Delete failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Delete failed");
     }
   };
 

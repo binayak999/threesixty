@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { MediaGalleryManager, type MediaGalleryManagerRef } from "@/components/MediaGalleryManager";
 import { getMediaUrl } from "@/lib/mediaUrl";
+import { apiClient } from "@/lib/apiClient";
 import type { BlogItem, BlogCategory, BlogMediaRef } from "./types";
 import { slugify, INITIAL_BLOG_FORM } from "./types";
 
@@ -48,9 +49,10 @@ export default function BlogForm({ mode, blogId, categories, onSuccess }: BlogFo
   useEffect(() => {
     if (mode === "edit" && blogId) {
       setLoading(true);
-      fetch(`/api/blogs/${blogId}`)
-        .then((res) => res.json())
-        .then((json) => {
+      apiClient
+        .get<{ data?: BlogItem }>(`/api/blogs/${blogId}`)
+        .then((res) => {
+          const json = res.data;
           if (json?.data) {
             const b: BlogItem = json.data;
             const medias = b.medias || [];
@@ -142,25 +144,14 @@ export default function BlogForm({ mode, blogId, categories, onSuccess }: BlogFo
             : undefined,
       };
       if (mode === "edit" && blogId) {
-        const res = await fetch(`/api/blogs/${blogId}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const json = await res.json();
-        if (!res.ok) throw new Error(json?.message || "Update failed");
+        await apiClient.put(`/api/blogs/${blogId}`, payload);
       } else {
-        const res = await fetch("/api/blogs", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const json = await res.json();
-        if (!res.ok) throw new Error(json?.message || "Create failed");
+        await apiClient.post("/api/blogs", payload);
       }
       onSuccess();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Request failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Request failed");
     } finally {
       setSaving(false);
     }

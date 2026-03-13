@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { apiClient } from "@/lib/apiClient";
 
 export default function SignInForm() {
   const router = useRouter();
@@ -18,25 +19,18 @@ export default function SignInForm() {
     setError("");
     setLoading(true);
     try {
-      const res = await fetch("/api/auth/sign-in", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-        credentials: "include",
+      const { data } = await apiClient.post<{ redirectTo?: string }>("/api/auth/sign-in", {
+        email,
+        password,
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        setError(data.message || "Sign in failed. Please try again.");
-        return;
-      }
       const target =
-        redirect && redirect.startsWith("/")
-          ? redirect
-          : (data.redirectTo ?? "/");
+        redirect && redirect.startsWith("/") ? redirect : (data?.redirectTo ?? "/");
       router.push(target);
       router.refresh();
-    } catch {
-      setError("Something went wrong. Please try again.");
+    } catch (err: unknown) {
+      const msg =
+        (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Sign in failed. Please try again.");
     } finally {
       setLoading(false);
     }

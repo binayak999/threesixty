@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { getMediaUrl } from "@/lib/mediaUrl";
 import { MediaGalleryManager, type MediaGalleryManagerRef } from "@/components/MediaGalleryManager";
+import { apiClient } from "@/lib/apiClient";
 
 interface ReviewMedia {
   _id?: string;
@@ -65,10 +66,10 @@ export default function ListingReviews({
 
   const fetchReviews = useCallback(() => {
     setLoading(true);
-    fetch(`/api/reviews?listingId=${encodeURIComponent(listingId)}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.data && Array.isArray(data.data)) setReviews(data.data);
+    apiClient
+      .get<{ data?: ReviewItem[] }>(`/api/reviews?listingId=${encodeURIComponent(listingId)}`)
+      .then((res) => {
+        if (res.data?.data && Array.isArray(res.data.data)) setReviews(res.data.data);
       })
       .catch(() => setReviews([]))
       .finally(() => setLoading(false));
@@ -79,9 +80,9 @@ export default function ListingReviews({
   }, [fetchReviews]);
 
   useEffect(() => {
-    fetch("/api/auth/session")
-      .then((r) => r.json())
-      .then((data: { user?: unknown }) => setIsLoggedIn(!!data?.user))
+    apiClient
+      .get<{ user?: unknown }>("/api/auth/session")
+      .then((res) => setIsLoggedIn(!!res.data?.user))
       .catch(() => setIsLoggedIn(false));
   }, []);
 
@@ -105,19 +106,16 @@ export default function ListingReviews({
       return;
     }
     setSubmitting(true);
-    fetch("/api/reviews", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+    apiClient
+      .post<{ success?: boolean; message?: string }>("/api/reviews", {
         listingId,
         rating,
         comment: comment.trim(),
         reviewMedias: reviewMediaIds.length > 0 ? reviewMediaIds : undefined,
-      }),
-    })
-      .then(async (res) => {
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok) throw new Error(data?.message || "Failed to submit review");
+      })
+      .then((res) => {
+        const data = res.data;
+        if (!data?.success) throw new Error(data?.message || "Failed to submit review");
         return data;
       })
       .then(() => {
@@ -127,7 +125,10 @@ export default function ListingReviews({
         setReviewMediaIds([]);
         fetchReviews();
       })
-      .catch((err) => setError(err instanceof Error ? err.message : "Failed to submit"))
+      .catch((err: unknown) => {
+        const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+        setError(msg || (err instanceof Error ? err.message : "Failed to submit"));
+      })
       .finally(() => setSubmitting(false));
   };
 

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { apiClient } from "@/lib/apiClient";
 import "../../add-listing/add-listing.css";
 
 const slugify = (s: string) =>
@@ -23,21 +24,16 @@ export default function AddAmenityPage() {
     setError(null);
     setSaving(true);
     try {
-      const res = await fetch("/api/amenities", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.name.trim(),
-          icon: form.icon.trim() || "fa-check",
-          slug: form.slug.trim() || slugify(form.name),
-        }),
+      await apiClient.post("/api/amenities", {
+        name: form.name.trim(),
+        icon: form.icon.trim() || "fa-check",
+        slug: form.slug.trim() || slugify(form.name),
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Create failed");
       router.push("/dashboard/amenities");
       router.refresh();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Request failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Request failed");
     } finally {
       setSaving(false);
     }

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { apiClient } from "@/lib/apiClient";
 
 const QUICK_LINKS = [
   { href: "/", label: "Home", icon: "fa-home" },
@@ -40,12 +41,11 @@ export default function Footer() {
   const [categories, setCategories] = useState<CategoryItem[]>([]);
 
   useEffect(() => {
-    fetch("/api/categories?type=listing&parentOnly=1&publishedOnly=1")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.success && Array.isArray(data.data)) {
-          setCategories(data.data);
-        }
+    apiClient
+      .get<{ success?: boolean; data?: CategoryItem[] }>("/api/categories?type=listing&parentOnly=1&publishedOnly=1")
+      .then((res) => {
+        const data = res.data;
+        if (data?.success && Array.isArray(data.data)) setCategories(data.data);
       })
       .catch(() => {});
   }, []);

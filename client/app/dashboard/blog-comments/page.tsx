@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import DataTable, { DataTableColumn } from "../components/DataTable";
+import { apiClient } from "@/lib/apiClient";
 
 interface BlogCommentBlogRef {
   _id: string;
@@ -35,9 +36,8 @@ export default function DashboardBlogCommentsPage() {
 
   const fetchComments = async () => {
     try {
-      const res = await fetch("/api/blog-comments");
-      const json = await res.json();
-      if (json?.data) setComments(json.data);
+      const res = await apiClient.get<{ data?: BlogCommentItem[] }>("/api/blog-comments");
+      if (res.data?.data) setComments(res.data.data);
       else setComments([]);
     } catch {
       setComments([]);
@@ -68,12 +68,11 @@ export default function DashboardBlogCommentsPage() {
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this comment?")) return;
     try {
-      const res = await fetch(`/api/blog-comments/${id}`, { method: "DELETE" });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Delete failed");
+      await apiClient.delete(`/api/blog-comments/${id}`);
       await fetchComments();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Delete failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Delete failed");
     }
   };
 

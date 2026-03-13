@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { apiClient } from "@/lib/apiClient";
 
 export default function ForgotPasswordForm() {
   const [email, setEmail] = useState("");
@@ -15,19 +16,12 @@ export default function ForgotPasswordForm() {
     setSuccess(false);
     setLoading(true);
     try {
-      const res = await fetch("/api/auth/forgot-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        setError(data.message || "Request failed. Please try again.");
-        return;
-      }
+      await apiClient.post("/api/auth/forgot-password", { email });
       setSuccess(true);
-    } catch {
-      setError("Something went wrong. Please try again.");
+    } catch (err: unknown) {
+      const msg =
+        (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Request failed. Please try again.");
     } finally {
       setLoading(false);
     }

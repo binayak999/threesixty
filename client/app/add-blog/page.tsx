@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BlogForm from "@/app/dashboard/blogs/BlogForm";
 import type { BlogCategory } from "@/app/dashboard/blogs/types";
+import { apiClient } from "@/lib/apiClient";
 import "@/app/dashboard/add-listing/add-listing.css";
 
 export default function AddBlogPublicPage() {
@@ -17,12 +18,12 @@ export default function AddBlogPublicPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/auth/session").then((res) => res.json()),
-      fetch("/api/categories?type=blog").then((res) => res.json()),
+      apiClient.get<{ user?: unknown }>("/api/auth/session"),
+      apiClient.get<{ data?: BlogCategory[] }>("/api/categories?type=blog"),
     ])
-      .then(([session, cats]) => {
-        if (session?.user) setAllowed(true);
-        if (cats?.data) setCategories(cats.data);
+      .then(([sessionRes, catsRes]) => {
+        if (sessionRes.data?.user) setAllowed(true);
+        if (catsRes.data?.data) setCategories(catsRes.data.data);
       })
       .catch(() => {})
       .finally(() => setChecking(false));

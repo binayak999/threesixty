@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import DataTable, { DataTableColumn } from "../components/DataTable";
+import { apiClient } from "@/lib/apiClient";
 import type { BlogItem, BlogCategory, BlogUser } from "./types";
 
 const DEFAULT_LIMIT = 10;
@@ -42,8 +43,10 @@ export default function DashboardBlogsPage() {
     try {
       setLoading(true);
       const searchParam = searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : "";
-      const res = await fetch(`/api/blogs?page=${pageNum}&limit=${DEFAULT_LIMIT}${searchParam}`);
-      const json = await res.json();
+      const res = await apiClient.get<{ data?: BlogItem[]; pagination?: typeof pagination }>(
+        `/api/blogs?page=${pageNum}&limit=${DEFAULT_LIMIT}${searchParam}`
+      );
+      const json = res.data;
       if (json?.data) setBlogs(json.data);
       else setBlogs([]);
       if (json?.pagination) setPagination(json.pagination);
@@ -63,12 +66,11 @@ export default function DashboardBlogsPage() {
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this blog post?")) return;
     try {
-      const res = await fetch(`/api/blogs/${id}`, { method: "DELETE" });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Delete failed");
+      await apiClient.delete(`/api/blogs/${id}`);
       await fetchBlogs(page, search);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Delete failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Delete failed");
     }
   };
 
@@ -78,18 +80,13 @@ export default function DashboardBlogsPage() {
     setTogglingId(id);
     setError(null);
     try {
-      const res = await fetch(`/api/blogs/${id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ isFeatured: next }),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Update failed");
+      await apiClient.patch(`/api/blogs/${id}`, { isFeatured: next });
       setBlogs((prev) =>
         prev.map((b) => (b._id === id ? { ...b, isFeatured: next } : b))
       );
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to update featured");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Failed to update featured");
     } finally {
       setTogglingId(null);
     }

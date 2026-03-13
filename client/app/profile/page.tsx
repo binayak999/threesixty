@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { apiClient } from "@/lib/apiClient";
 
 interface SessionUser {
   id: string;
@@ -34,20 +35,20 @@ export default function ProfilePage() {
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    fetch("/api/auth/session")
-      .then((res) => res.json())
-      .then((data: { user?: SessionUser }) => {
-        if (data?.user) {
-          setUser(data.user);
-          if (data.user.role === "user") {
-            return fetch("/api/profile/limits").then((r) => r.json());
+    apiClient
+      .get<{ user?: SessionUser }>("/api/auth/session")
+      .then((res) => {
+        if (res.data?.user) {
+          setUser(res.data.user);
+          if (res.data.user.role === "user") {
+            return apiClient.get<{ success?: boolean; data?: ProfileLimitsData }>("/api/profile/limits");
           }
         } else {
           router.replace("/sign-in?redirect=/profile");
         }
       })
-      .then((json: { success?: boolean; data?: ProfileLimitsData }) => {
-        if (json?.success && json?.data) setLimits(json.data);
+      .then((limitsRes) => {
+        if (limitsRes?.data?.success && limitsRes?.data?.data) setLimits(limitsRes.data.data);
       })
       .catch(() => router.replace("/sign-in?redirect=/profile"))
       .finally(() => setChecking(false));

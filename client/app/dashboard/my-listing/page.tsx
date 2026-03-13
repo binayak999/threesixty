@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import DataTable, { DataTableColumn } from "../components/DataTable";
+import { apiClient } from "@/lib/apiClient";
 
 export interface ListingUser {
   _id: string;
@@ -43,9 +44,8 @@ export default function MyListingPage() {
 
   const fetchListings = async () => {
     try {
-      const res = await fetch("/api/listings?all=1");
-      const json = await res.json();
-      if (json?.data) setListings(json.data);
+      const res = await apiClient.get<{ data?: ListingItem[] }>("/api/listings?all=1");
+      if (res.data?.data) setListings(res.data.data);
       else setListings([]);
     } catch {
       setListings([]);

@@ -8,9 +8,14 @@ import { getSessionFromCookie } from '../lib/session';
 
 const router = Router();
 const UPLOAD_DIR = path.join(process.cwd(), 'uploads');
-// Prefer relative paths so the frontend can request /uploads/... from same origin (Next.js/Nginx proxy).
+// Always return relative URLs so the frontend loads images from same origin (e.g. /uploads/xxx → proxied to backend).
 const USE_RELATIVE_URLS = process.env.MEDIA_USE_RELATIVE_URLS !== 'false';
 const BASE_URL = USE_RELATIVE_URLS ? '' : (process.env.API_BASE_URL || process.env.BASE_URL || 'http://localhost:4000');
+
+function toResponseUrl(urlPath: string | undefined): string {
+  if (!urlPath) return '';
+  return USE_RELATIVE_URLS ? urlPath : (BASE_URL ? `${BASE_URL}${urlPath}` : urlPath);
+}
 
 if (!fs.existsSync(UPLOAD_DIR)) {
   fs.mkdirSync(UPLOAD_DIR, { recursive: true });
@@ -66,9 +71,9 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
     const list = await Media.find({ user: userId }).sort({ createdAt: -1 }).lean();
     const items = list.map((doc) => ({
       id: String(doc._id),
-      url: doc.url.startsWith('http') ? doc.url : (BASE_URL ? `${BASE_URL}${doc.url}` : doc.url),
-      urlMedium: doc.urlMedium ? (BASE_URL ? `${BASE_URL}${doc.urlMedium}` : doc.urlMedium) : undefined,
-      urlLow: doc.urlLow ? (BASE_URL ? `${BASE_URL}${doc.urlLow}` : doc.urlLow) : undefined,
+      url: doc.url.startsWith('http') ? doc.url : toResponseUrl(doc.url),
+      urlMedium: doc.urlMedium ? toResponseUrl(doc.urlMedium) : undefined,
+      urlLow: doc.urlLow ? toResponseUrl(doc.urlLow) : undefined,
       type: doc.type,
       filename: doc.filename,
       mimeType: doc.mimeType,
@@ -87,7 +92,11 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
 router.post('/upload', upload.array('files', 20) as unknown as express.RequestHandler, async (req: Request, res: Response): Promise<void> => {
   try {
     const typeFromForm = (req.body?.type as string) || 'file';
-    const userId = (req.body?.userId as string) || (req.query?.userId as string) || undefined;
+    const userId =
+      (req.body?.userId as string) ||
+      (req.query?.userId as string) ||
+      getSessionFromCookie(req.headers.cookie)?.id ||
+      undefined;
     const files = (req.files as Express.Multer.File[]) || [];
     const created: Array<{
       id: string; url: string; urlMedium?: string; urlLow?: string; type: string;
@@ -113,9 +122,9 @@ router.post('/upload', upload.array('files', 20) as unknown as express.RequestHa
       });
       created.push({
         id: String(media._id),
-        url: BASE_URL ? `${BASE_URL}${urlPath}` : urlPath,
-        urlMedium: media.urlMedium ? (BASE_URL ? `${BASE_URL}${media.urlMedium}` : media.urlMedium) : undefined,
-        urlLow: media.urlLow ? (BASE_URL ? `${BASE_URL}${media.urlLow}` : media.urlLow) : undefined,
+        url: toResponseUrl(urlPath),
+        urlMedium: media.urlMedium ? toResponseUrl(media.urlMedium) : undefined,
+        urlLow: media.urlLow ? toResponseUrl(media.urlLow) : undefined,
         type,
         filename: media.filename,
         mimeType: media.mimeType,

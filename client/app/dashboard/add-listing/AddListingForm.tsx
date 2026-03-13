@@ -7,6 +7,7 @@ import {
   DAYS,
   INITIAL_FORM_STATE,
 } from "./types";
+import { apiClient } from "@/lib/apiClient";
 import Step1Category from "./steps/Step1Category";
 import Step2BasicInfo from "./steps/Step2BasicInfo";
 import Step3Location from "./steps/Step3Location";
@@ -154,10 +155,10 @@ export default function AddListingForm({ mode = "create", listingId, onSuccess }
   const isEdit = mode === "edit" && listingId;
 
   useEffect(() => {
-    fetch("/api/auth/session")
-      .then((r) => r.json())
-      .then((data: { user?: { role?: string } }) => {
-        const role = data?.user?.role;
+    apiClient
+      .get<{ user?: { role?: string } }>("/api/auth/session")
+      .then((res) => {
+        const role = res.data?.user?.role;
         setIsAdmin(!!role && ADMIN_ROLES.includes(role));
       })
       .catch(() => {});
@@ -167,9 +168,10 @@ export default function AddListingForm({ mode = "create", listingId, onSuccess }
     if (!listingId) return;
     let cancelled = false;
     setLoadingEdit(true);
-    fetch(`/api/listings/${listingId}`)
-      .then((res) => res.json())
-      .then((json) => {
+    apiClient
+      .get<{ data?: ListingApiResponse }>(`/api/listings/${listingId}`)
+      .then((res) => {
+        const json = res.data;
         if (cancelled || !json?.data) return;
         const listing = json.data as ListingApiResponse;
         setForm(mapListingToForm(listing));
@@ -310,30 +312,21 @@ export default function AddListingForm({ mode = "create", listingId, onSuccess }
     setError("");
     try {
       if (isEdit) {
-        const res = await fetch(`/api/listings/${listingId}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            ...buildPayload(),
-            slug: editingSlug,
-          }),
-        });
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok) {
-          setError(data.message || "Failed to update listing.");
-          return;
-        }
-        if (data.success && onSuccess) {
+        const res = await apiClient.put<{ success?: boolean; message?: string }>(
+          `/api/listings/${listingId}`,
+          { ...buildPayload(), slug: editingSlug }
+        );
+        const data = res.data;
+        if (data?.success && onSuccess) {
           onSuccess();
           return;
         }
         setSuccess(true);
       } else {
         const slug = slugify(form.title) + "-" + Date.now();
-        const res = await fetch("/api/listings/create", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
+        const res = await apiClient.post<{ success?: boolean; message?: string }>(
+          "/api/listings/create",
+          {
             ...buildPayload(),
             slug,
             shortDescription: form.shortDescription || undefined,
@@ -347,21 +340,22 @@ export default function AddListingForm({ mode = "create", listingId, onSuccess }
               twitter: form.twitter || undefined,
               linkedin: form.linkedin || undefined,
             },
-          }),
-        });
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok) {
-          setError(data.message || "Failed to create listing.");
+          }
+        );
+        const data = res.data;
+        if (!data?.success) {
+          setError(data?.message || "Failed to create listing.");
           return;
         }
-        if (data.success && onSuccess) {
+        if (onSuccess) {
           onSuccess();
           return;
         }
         setSuccess(true);
       }
-    } catch {
-      setError("Something went wrong. Please try again.");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Something went wrong. Please try again.");
     } finally {
       setSubmitting(false);
     }

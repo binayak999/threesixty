@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { MediaGalleryManager, type MediaGalleryManagerRef } from "@/components/MediaGalleryManager";
+import { apiClient } from "@/lib/apiClient";
 import {
   SettingsFormState,
   INITIAL_SETTINGS,
@@ -67,9 +68,10 @@ export default function SettingsForm() {
   const footerBgRef = useRef<MediaGalleryManagerRef | null>(null);
 
   useEffect(() => {
-    fetch("/api/settings")
-      .then((res) => res.json())
-      .then((json) => {
+    apiClient
+      .get<{ success?: boolean; data?: Record<string, string> }>("/api/settings")
+      .then((res) => {
+        const json = res.data;
         if (json?.success && json?.data) {
           setForm((prev) => ({ ...prev, ...json.data }));
         }
@@ -92,19 +94,12 @@ export default function SettingsForm() {
     setSaving(true);
     setMessage(null);
     try {
-      const res = await fetch("/api/settings", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (res.ok) {
-        setMessage({ type: "success", text: data.message || "Settings saved." });
-      } else {
-        setMessage({ type: "error", text: data.message || "Failed to save settings." });
-      }
-    } catch {
-      setMessage({ type: "error", text: "Failed to save settings." });
+      const res = await apiClient.put<{ message?: string }>("/api/settings", form);
+      setMessage({ type: "success", text: res.data?.message || "Settings saved." });
+    } catch (err: unknown) {
+      const msg =
+        (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setMessage({ type: "error", text: msg || "Failed to save settings." });
     } finally {
       setSaving(false);
     }

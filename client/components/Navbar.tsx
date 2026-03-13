@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getSessionCache, setSessionCache } from "@/lib/authSessionCache";
+import { apiClient } from "@/lib/apiClient";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -38,9 +39,10 @@ export default function Navbar() {
       setIsLoggedIn(cached.isLoggedIn);
       setUserRole(cached.userRole);
     }
-    fetch("/api/auth/session")
-      .then((res) => res.json())
-      .then((data: { user?: { role?: string } }) => {
+    apiClient
+      .get<{ user?: { role?: string } }>("/api/auth/session")
+      .then((res) => {
+        const data = res.data;
         const loggedIn = Boolean(data?.user);
         const role = data?.user?.role ?? null;
         setIsLoggedIn(loggedIn);

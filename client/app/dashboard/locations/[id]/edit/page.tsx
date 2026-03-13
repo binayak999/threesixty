@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import { apiClient } from "@/lib/apiClient";
 import "../../../add-listing/add-listing.css";
 
 const slugify = (s: string) =>
@@ -51,10 +52,10 @@ export default function EditLocationPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/countries")
-      .then((res) => res.json())
-      .then((json) => {
-        if (json?.data && Array.isArray(json.data)) setCountries(json.data);
+    apiClient
+      .get<{ data?: CountryOption[] }>("/api/countries")
+      .then((res) => {
+        if (res.data?.data && Array.isArray(res.data.data)) setCountries(res.data.data);
       })
       .catch(() => {});
   }, []);
@@ -64,10 +65,10 @@ export default function EditLocationPage() {
       setRegions([]);
       return;
     }
-    fetch(`/api/locations?countryRef=${encodeURIComponent(form.countryRef)}&limit=500`)
-      .then((res) => res.json())
-      .then((json) => {
-        if (json?.data && Array.isArray(json.data)) setRegions(json.data);
+    apiClient
+      .get<{ data?: RegionOption[] }>(`/api/locations?countryRef=${encodeURIComponent(form.countryRef)}&limit=500`)
+      .then((res) => {
+        if (res.data?.data && Array.isArray(res.data.data)) setRegions(res.data.data);
         else setRegions([]);
       })
       .catch(() => setRegions([]));
@@ -83,24 +84,27 @@ export default function EditLocationPage() {
 
   useEffect(() => {
     if (!id) return;
-    fetch(`/api/locations/${id}`)
-      .then((res) => res.json())
-      .then((json) => {
+    apiClient
+      .get<{ data?: Record<string, unknown> }>(`/api/locations/${id}`)
+      .then((res) => {
+        const json = res.data;
         if (json?.data) {
-          const d = json.data;
-          const countryId = typeof d.countryRef === "object" && d.countryRef?._id ? d.countryRef._id : d.countryRef ?? "";
+          const d = json.data as Record<string, unknown>;
+          const countryId = typeof d.countryRef === "object" && d.countryRef && typeof (d.countryRef as { _id?: string })._id === "string"
+            ? (d.countryRef as { _id: string })._id
+            : (d.countryRef as string) ?? "";
           setForm({
-            name: d.name ?? "",
-            slug: d.slug ?? "",
-            address: d.address ?? "",
-            city: d.city ?? "",
-            region: d.region ?? "",
+            name: (d.name as string) ?? "",
+            slug: (d.slug as string) ?? "",
+            address: (d.address as string) ?? "",
+            city: (d.city as string) ?? "",
+            region: (d.region as string) ?? "",
             countryRef: countryId,
-            country: d.country ?? "",
+            country: (d.country as string) ?? "",
             regionRef: "",
             latitude: d.latitude != null ? String(d.latitude) : "",
             longitude: d.longitude != null ? String(d.longitude) : "",
-            description: d.description ?? "",
+            description: (d.description as string) ?? "",
             isActive: d.isActive !== false,
           });
         }
@@ -114,29 +118,24 @@ export default function EditLocationPage() {
     setError(null);
     setSaving(true);
     try {
-      const res = await fetch(`/api/locations/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.name.trim(),
-          slug: form.slug.trim() || slugify(form.name),
-          address: form.address.trim() || undefined,
-          city: form.city.trim() || undefined,
-          region: form.region.trim() || undefined,
-          countryRef: form.countryRef || undefined,
-          country: form.country.trim() || undefined,
-          latitude: form.latitude ? Number(form.latitude) : undefined,
-          longitude: form.longitude ? Number(form.longitude) : undefined,
-          description: form.description.trim() || undefined,
-          isActive: form.isActive,
-        }),
+      await apiClient.put(`/api/locations/${id}`, {
+        name: form.name.trim(),
+        slug: form.slug.trim() || slugify(form.name),
+        address: form.address.trim() || undefined,
+        city: form.city.trim() || undefined,
+        region: form.region.trim() || undefined,
+        countryRef: form.countryRef || undefined,
+        country: form.country.trim() || undefined,
+        latitude: form.latitude ? Number(form.latitude) : undefined,
+        longitude: form.longitude ? Number(form.longitude) : undefined,
+        description: form.description.trim() || undefined,
+        isActive: form.isActive,
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Update failed");
       router.push("/dashboard/locations");
       router.refresh();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Request failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Request failed");
     } finally {
       setSaving(false);
     }

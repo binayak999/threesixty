@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import { apiClient } from "@/lib/apiClient";
 import "../../../add-listing/add-listing.css";
 
 const slugify = (s: string) =>
@@ -23,11 +24,11 @@ export default function EditAmenityPage() {
 
   useEffect(() => {
     if (!id) return;
-    fetch(`/api/amenities/${id}`)
-      .then((res) => res.json())
-      .then((json) => {
-        if (json?.data) {
-          const d = json.data;
+    apiClient
+      .get<{ data?: { name?: string; icon?: string; slug?: string } }>(`/api/amenities/${id}`)
+      .then((res) => {
+        if (res.data?.data) {
+          const d = res.data.data;
           setForm({ name: d.name ?? "", icon: d.icon ?? "fa-check", slug: d.slug ?? "" });
         }
       })
@@ -40,21 +41,16 @@ export default function EditAmenityPage() {
     setError(null);
     setSaving(true);
     try {
-      const res = await fetch(`/api/amenities/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.name.trim(),
-          icon: form.icon.trim() || "fa-check",
-          slug: form.slug.trim() || slugify(form.name),
-        }),
+      await apiClient.put(`/api/amenities/${id}`, {
+        name: form.name.trim(),
+        icon: form.icon.trim() || "fa-check",
+        slug: form.slug.trim() || slugify(form.name),
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Update failed");
       router.push("/dashboard/amenities");
       router.refresh();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Request failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Request failed");
     } finally {
       setSaving(false);
     }

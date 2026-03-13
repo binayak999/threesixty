@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { UserRole } from "@/lib/sessionUser";
+import { apiClient } from "@/lib/apiClient";
 
 const ADMIN_ROLES: UserRole[] = ["admin", "superadmin"];
 
@@ -16,11 +17,11 @@ export default function DashboardGuard({
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/auth/session", { credentials: "include" })
-      .then((res) => res.json())
-      .then((data: { user: { role: UserRole } | null }) => {
+    apiClient
+      .get<{ user: { role: UserRole } | null }>("/api/auth/session")
+      .then((res) => {
         if (cancelled) return;
-        const user = data?.user;
+        const user = res.data?.user;
         if (!user) {
           router.replace("/sign-in?redirect=/dashboard");
           return;

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { SearchableSelect } from "@/components/SearchableSelect";
+import { apiClient } from "@/lib/apiClient";
 import type { AddListingFormState } from "../types";
 
 interface AmenityOption {
@@ -22,10 +23,10 @@ export default function Step6Features({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/amenities")
-      .then((res) => res.json())
-      .then((json) => {
-        if (json?.data && Array.isArray(json.data)) setAmenities(json.data);
+    apiClient
+      .get<{ data?: AmenityOption[] }>("/api/amenities")
+      .then((res) => {
+        if (res.data?.data && Array.isArray(res.data.data)) setAmenities(res.data.data);
       })
       .catch(() => {})
       .finally(() => setLoading(false));

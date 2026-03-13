@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { SearchableSelect } from "@/components/SearchableSelect";
+import { apiClient } from "@/lib/apiClient";
 import type { AddListingFormState } from "../types";
 
 interface LocationOption {
@@ -40,12 +41,12 @@ export default function Step3Location({
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/locations?limit=500").then((res) => res.json()),
-      fetch("/api/countries").then((res) => res.json()),
+      apiClient.get<{ data?: LocationOption[] }>("/api/locations?limit=500"),
+      apiClient.get<{ data?: CountryOption[] }>("/api/countries"),
     ])
-      .then(([locJson, countryJson]) => {
-        if (locJson?.data && Array.isArray(locJson.data)) setLocations(locJson.data);
-        if (countryJson?.data && Array.isArray(countryJson.data)) setCountries(countryJson.data);
+      .then(([locRes, countryRes]) => {
+        if (locRes.data?.data && Array.isArray(locRes.data.data)) setLocations(locRes.data.data);
+        if (countryRes.data?.data && Array.isArray(countryRes.data.data)) setCountries(countryRes.data.data);
       })
       .catch(() => {})
       .finally(() => setLoading(false));
@@ -60,13 +61,13 @@ export default function Step3Location({
       return;
     }
     Promise.all([
-      fetch(`/api/locations?countryRef=${encodeURIComponent(countryRefId)}&distinct=region`).then((res) => res.json()),
-      fetch(`/api/locations?countryRef=${encodeURIComponent(countryRefId)}&distinct=city`).then((res) => res.json()),
+      apiClient.get<{ data?: string[] }>(`/api/locations?countryRef=${encodeURIComponent(countryRefId)}&distinct=region`),
+      apiClient.get<{ data?: string[] }>(`/api/locations?countryRef=${encodeURIComponent(countryRefId)}&distinct=city`),
     ])
-      .then(([regionJson, cityJson]) => {
-        if (regionJson?.data && Array.isArray(regionJson.data)) setProvinces(regionJson.data);
+      .then(([regionRes, cityRes]) => {
+        if (regionRes.data?.data && Array.isArray(regionRes.data.data)) setProvinces(regionRes.data.data);
         else setProvinces([]);
-        if (cityJson?.data && Array.isArray(cityJson.data)) setCities(cityJson.data);
+        if (cityRes.data?.data && Array.isArray(cityRes.data.data)) setCities(cityRes.data.data);
         else setCities([]);
       })
       .catch(() => {
@@ -88,11 +89,11 @@ export default function Step3Location({
       return;
     }
     let cancelled = false;
-    fetch(`/api/locations/${id}`)
-      .then((res) => res.json())
-      .then((json) => {
-        if (cancelled || !json?.data) return;
-        setCurrentLocation(json.data as LocationOption);
+    apiClient
+      .get<{ data?: LocationOption }>(`/api/locations/${id}`)
+      .then((res) => {
+        if (cancelled || !res.data?.data) return;
+        setCurrentLocation(res.data.data as LocationOption);
       })
       .catch(() => setCurrentLocation(null));
     return () => {

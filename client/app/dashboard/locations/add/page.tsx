@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { apiClient } from "@/lib/apiClient";
 import "../../add-listing/add-listing.css";
 
 const slugify = (s: string) =>
@@ -48,10 +49,10 @@ export default function AddLocationPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/countries")
-      .then((res) => res.json())
-      .then((json) => {
-        if (json?.data && Array.isArray(json.data)) setCountries(json.data);
+    apiClient
+      .get<{ data?: CountryOption[] }>("/api/countries")
+      .then((res) => {
+        if (res.data?.data && Array.isArray(res.data.data)) setCountries(res.data.data);
       })
       .catch(() => {});
   }, []);
@@ -61,10 +62,10 @@ export default function AddLocationPage() {
       setRegions([]);
       return;
     }
-    fetch(`/api/locations?countryRef=${encodeURIComponent(form.countryRef)}&limit=500`)
-      .then((res) => res.json())
-      .then((json) => {
-        if (json?.data && Array.isArray(json.data)) setRegions(json.data);
+    apiClient
+      .get<{ data?: RegionOption[] }>(`/api/locations?countryRef=${encodeURIComponent(form.countryRef)}&limit=500`)
+      .then((res) => {
+        if (res.data?.data && Array.isArray(res.data.data)) setRegions(res.data.data);
         else setRegions([]);
       })
       .catch(() => setRegions([]));
@@ -75,29 +76,24 @@ export default function AddLocationPage() {
     setError(null);
     setSaving(true);
     try {
-      const res = await fetch("/api/locations", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.name.trim(),
-          slug: form.slug.trim() || slugify(form.name),
-          address: form.address.trim() || undefined,
-          city: form.city.trim() || undefined,
-          region: form.region.trim() || undefined,
-          countryRef: form.countryRef || undefined,
-          country: form.country.trim() || undefined,
-          latitude: form.latitude ? Number(form.latitude) : undefined,
-          longitude: form.longitude ? Number(form.longitude) : undefined,
-          description: form.description.trim() || undefined,
-          isActive: form.isActive,
-        }),
+      await apiClient.post("/api/locations", {
+        name: form.name.trim(),
+        slug: form.slug.trim() || slugify(form.name),
+        address: form.address.trim() || undefined,
+        city: form.city.trim() || undefined,
+        region: form.region.trim() || undefined,
+        countryRef: form.countryRef || undefined,
+        country: form.country.trim() || undefined,
+        latitude: form.latitude ? Number(form.latitude) : undefined,
+        longitude: form.longitude ? Number(form.longitude) : undefined,
+        description: form.description.trim() || undefined,
+        isActive: form.isActive,
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Create failed");
       router.push("/dashboard/locations");
       router.refresh();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Request failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Request failed");
     } finally {
       setSaving(false);
     }

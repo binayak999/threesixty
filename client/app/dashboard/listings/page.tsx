@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import DataTable, { DataTableColumn } from "../components/DataTable";
+import { apiClient } from "@/lib/apiClient";
 import type { ListingItem, ListingCategory, ListingUser } from "./types";
 
 const DEFAULT_LIMIT = 10;
@@ -42,8 +43,10 @@ export default function DashboardListingsPage() {
     try {
       setLoading(true);
       const searchParam = searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : "";
-      const res = await fetch(`/api/listings?all=1&page=${pageNum}&limit=${DEFAULT_LIMIT}${searchParam}`);
-      const json = await res.json();
+      const res = await apiClient.get<{ data?: ListingItem[]; pagination?: typeof pagination }>(
+        `/api/listings?all=1&page=${pageNum}&limit=${DEFAULT_LIMIT}${searchParam}`
+      );
+      const json = res.data;
       if (json?.data) setListings(json.data);
       else setListings([]);
       if (json?.pagination) setPagination(json.pagination);
@@ -63,12 +66,11 @@ export default function DashboardListingsPage() {
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this listing?")) return;
     try {
-      const res = await fetch(`/api/listings/${id}`, { method: "DELETE" });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Delete failed");
+      await apiClient.delete(`/api/listings/${id}`);
       await fetchListings(page, search);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Delete failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Delete failed");
     }
   };
 
@@ -78,18 +80,13 @@ export default function DashboardListingsPage() {
     setTogglingId(id);
     setError(null);
     try {
-      const res = await fetch(`/api/listings/${id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ isFeatured: next }),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Update failed");
+      await apiClient.patch(`/api/listings/${id}`, { isFeatured: next });
       setListings((prev) =>
         prev.map((l) => (l._id === id ? { ...l, isFeatured: next } : l))
       );
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to update featured");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Failed to update featured");
     } finally {
       setTogglingId(null);
     }

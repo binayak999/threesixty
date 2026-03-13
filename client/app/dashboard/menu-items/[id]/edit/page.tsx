@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import { apiClient } from "@/lib/apiClient";
 import "../../../add-listing/add-listing.css";
 
 interface ListingOption {
@@ -22,19 +23,20 @@ export default function EditMenuItemPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/listings?all=1")
-      .then((res) => res.json())
-      .then((json) => {
-        if (json?.data && Array.isArray(json.data)) setListings(json.data);
+    apiClient
+      .get<{ data?: ListingOption[] }>("/api/listings?all=1")
+      .then((res) => {
+        if (res.data?.data && Array.isArray(res.data.data)) setListings(res.data.data);
       })
       .catch(() => {});
   }, []);
 
   useEffect(() => {
     if (!id) return;
-    fetch(`/api/menu-items/${id}`)
-      .then((res) => res.json())
-      .then((json) => {
+    apiClient
+      .get<{ data?: { listing?: { _id: string } | string; title?: string; detail?: string; price?: number; label?: string } }>(`/api/menu-items/${id}`)
+      .then((res) => {
+        const json = res.data;
         if (json?.data) {
           const d = json.data;
           const listingId = typeof d.listing === "object" && d.listing ? (d.listing as { _id: string })._id : (d.listing as string) ?? "";
@@ -61,23 +63,18 @@ export default function EditMenuItemPage() {
     }
     setSaving(true);
     try {
-      const res = await fetch(`/api/menu-items/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          listing: form.listing,
-          title: form.title.trim(),
-          detail: form.detail.trim() || undefined,
-          price,
-          label: form.label.trim() || undefined,
-        }),
+      await apiClient.put(`/api/menu-items/${id}`, {
+        listing: form.listing,
+        title: form.title.trim(),
+        detail: form.detail.trim() || undefined,
+        price,
+        label: form.label.trim() || undefined,
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Update failed");
       router.push("/dashboard/menu-items");
       router.refresh();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Request failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Request failed");
     } finally {
       setSaving(false);
     }

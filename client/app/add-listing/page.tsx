@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AddListingForm from "@/app/dashboard/add-listing/AddListingForm";
+import { apiClient } from "@/lib/apiClient";
 import "@/app/dashboard/add-listing/add-listing.css";
 
 export default function AddListingPublicPage() {
@@ -14,14 +15,11 @@ export default function AddListingPublicPage() {
   const [allowed, setAllowed] = useState(false);
 
   useEffect(() => {
-    fetch("/api/auth/session")
-      .then((res) => res.json())
-      .then((data: { user: unknown }) => {
-        if (data?.user) {
-          setAllowed(true);
-        } else {
-          router.replace("/sign-in?redirect=/add-listing");
-        }
+    apiClient
+      .get<{ user: unknown }>("/api/auth/session")
+      .then((res) => {
+        if (res.data?.user) setAllowed(true);
+        else router.replace("/sign-in?redirect=/add-listing");
       })
       .catch(() => router.replace("/sign-in?redirect=/add-listing"))
       .finally(() => setChecking(false));

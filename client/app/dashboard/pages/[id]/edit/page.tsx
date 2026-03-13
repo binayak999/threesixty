@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { MediaGalleryManager, type MediaGalleryManagerRef } from "@/components/MediaGalleryManager";
 import { getMediaUrl } from "@/lib/mediaUrl";
+import { apiClient } from "@/lib/apiClient";
 import "../../../add-listing/add-listing.css";
 
 const initialSeo = {
@@ -33,27 +34,28 @@ export default function EditPagePage() {
 
   useEffect(() => {
     if (!id) return;
-    fetch(`/api/pages/${id}`)
-      .then((res) => res.json())
-      .then((json) => {
+    apiClient
+      .get<{ data?: { title?: string; slug?: string; banner?: { _id: string; url?: string; type?: string } | string; seo?: Record<string, unknown> } }>(`/api/pages/${id}`)
+      .then((res) => {
+        const json = res.data;
         if (json?.data) {
           const d = json.data;
           const banner = typeof d.banner === "object" && d.banner ? d.banner : null;
           const bannerId = banner ? (banner as { _id: string })._id : (d.banner as string) ?? "";
           const bannerUrl = banner ? (banner as { url?: string }).url : undefined;
           const bannerType = banner ? (banner as { type?: string }).type ?? "image" : "image";
-          const seo = d.seo && typeof d.seo === "object" ? d.seo : {};
+          const seo = d.seo && typeof d.seo === "object" ? (d.seo as Record<string, unknown>) : {};
           setForm({
             title: d.title ?? "",
             slug: d.slug ?? "",
             bannerId,
             bannerPreview: bannerUrl ? { url: bannerUrl, type: bannerType } : undefined,
             seo: {
-              metaTitle: seo.metaTitle ?? "",
-              metaDescription: seo.metaDescription ?? "",
-              metaKeywords: Array.isArray(seo.metaKeywords) ? seo.metaKeywords.join(", ") : "",
-              ogImage: seo.ogImage ?? "",
-              noIndex: !!seo.noIndex,
+              metaTitle: (seo.metaTitle as string) ?? "",
+              metaDescription: (seo.metaDescription as string) ?? "",
+              metaKeywords: Array.isArray(seo.metaKeywords) ? (seo.metaKeywords as string[]).join(", ") : "",
+              ogImage: (seo.ogImage as string) ?? "",
+              noIndex: !!(seo.noIndex as boolean),
             },
           });
         }
@@ -91,22 +93,17 @@ export default function EditPagePage() {
               noIndex: form.seo.noIndex || undefined,
             }
           : undefined;
-      const res = await fetch(`/api/pages/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: form.title.trim(),
-          slug: slugNorm,
-          banner: form.bannerId || null,
-          seo: seoPayload,
-        }),
+      await apiClient.put(`/api/pages/${id}`, {
+        title: form.title.trim(),
+        slug: slugNorm,
+        banner: form.bannerId || null,
+        seo: seoPayload,
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Update failed");
       router.push("/dashboard/pages");
       router.refresh();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Request failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Request failed");
     } finally {
       setSaving(false);
     }

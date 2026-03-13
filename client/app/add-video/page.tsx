@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { MediaGalleryManager, type MediaGalleryManagerRef } from "@/components/MediaGalleryManager";
 import { getMediaUrl } from "@/lib/mediaUrl";
+import { apiClient } from "@/lib/apiClient";
 import "@/app/dashboard/add-listing/add-listing.css";
 
 export default function AddVideoPublicPage() {
@@ -24,10 +25,10 @@ export default function AddVideoPublicPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/auth/session")
-      .then((res) => res.json())
-      .then((data: { user: unknown }) => {
-        if (data?.user) setAllowed(true);
+    apiClient
+      .get<{ user: unknown }>("/api/auth/session")
+      .then((res) => {
+        if (res.data?.user) setAllowed(true);
         else router.replace("/sign-in?redirect=/add-video");
       })
       .catch(() => router.replace("/sign-in?redirect=/add-video"))
@@ -43,20 +44,16 @@ export default function AddVideoPublicPage() {
     }
     setSaving(true);
     try {
-      const res = await fetch("/api/videos", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: form.title.trim(),
-          youtubeLink: form.youtubeLink.trim(),
-          thumbnail: form.thumbnailId || undefined,
-        }),
+      await apiClient.post("/api/videos", {
+        title: form.title.trim(),
+        youtubeLink: form.youtubeLink.trim(),
+        thumbnail: form.thumbnailId || undefined,
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Create failed");
       router.push("/profile");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Request failed");
+    } catch (err: unknown) {
+      const msg =
+        (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Request failed");
     } finally {
       setSaving(false);
     }

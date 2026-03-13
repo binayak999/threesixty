@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { apiClient } from "@/lib/apiClient";
 import type { ReviewItem, ReviewListingRef, ReviewUserRef } from "../page";
 
 export default function ViewReviewPage() {
@@ -17,10 +18,10 @@ export default function ViewReviewPage() {
       setLoading(false);
       return;
     }
-    fetch(`/api/reviews/${id}`)
-      .then((res) => res.json())
-      .then((json) => {
-        if (json?.data) setReview(json.data);
+    apiClient
+      .get<{ data?: ReviewItem }>(`/api/reviews/${id}`)
+      .then((res) => {
+        if (res.data?.data) setReview(res.data.data);
         else setError("Review not found");
       })
       .catch(() => setError("Failed to load review"))

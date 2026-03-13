@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { apiClient } from "@/lib/apiClient";
 
 interface BlogPost {
   _id: string;
@@ -45,28 +46,28 @@ export default function BlogPostContent({ slug }: { slug: string }) {
   const [form, setForm] = useState({ authorName: "", authorEmail: "", content: "" });
 
   useEffect(() => {
-    fetch(`/api/blogs/slug/${encodeURIComponent(slug)}`)
-      .then((res) => res.json())
-      .then((json) => {
+    apiClient
+      .get<{ data?: BlogPost }>(`/api/blogs/slug/${encodeURIComponent(slug)}`)
+      .then((res) => {
+        const json = res.data;
         if (json?.data) {
           setBlog(json.data);
-          return fetch(`/api/blog-comments?blogId=${json.data._id}&approvedOnly=1`);
+          return apiClient.get<{ data?: BlogCommentType[] }>(`/api/blog-comments?blogId=${json.data._id}&approvedOnly=1`);
         }
         setError("Blog not found");
         return null;
       })
-      .then((r) => (r ? r.json() : null))
-      .then((json) => {
-        if (json?.data) setComments(json.data);
+      .then((r) => {
+        if (r?.data?.data) setComments(r.data.data);
       })
       .catch(() => setError("Failed to load"))
       .finally(() => setLoading(false));
   }, [slug]);
 
   const refetchComments = (blogId: string) => {
-    fetch(`/api/blog-comments?blogId=${blogId}&approvedOnly=1`)
-      .then((r) => r.json())
-      .then((json) => json?.data && setComments(json.data));
+    apiClient
+      .get<{ data?: BlogCommentType[] }>(`/api/blog-comments?blogId=${blogId}&approvedOnly=1`)
+      .then((res) => res.data?.data && setComments(res.data.data));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -74,19 +75,15 @@ export default function BlogPostContent({ slug }: { slug: string }) {
     if (!blog || !form.authorName.trim() || !form.authorEmail.trim() || !form.content.trim()) return;
     setSubmitting(true);
     setCommentSuccess(false);
-    fetch("/api/blog-comments", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+    apiClient
+      .post<{ success?: boolean }>("/api/blog-comments", {
         blog: blog._id,
         authorName: form.authorName.trim(),
         authorEmail: form.authorEmail.trim(),
         content: form.content.trim(),
-      }),
-    })
-      .then((r) => r.json())
-      .then((json) => {
-        if (json?.success) {
+      })
+      .then((res) => {
+        if (res.data?.success) {
           setForm({ authorName: "", authorEmail: "", content: "" });
           setCommentSuccess(true);
           refetchComments(blog._id);

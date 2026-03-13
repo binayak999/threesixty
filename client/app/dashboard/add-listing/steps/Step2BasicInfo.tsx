@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useMemo } from "react";
+import { apiClient } from "@/lib/apiClient";
 import type { AddListingFormState } from "../types";
 
 interface CategoryOption {
@@ -22,10 +23,10 @@ export default function Step2BasicInfo({
   const subcategoryRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    fetch("/api/categories?type=listing")
-      .then((res) => res.json())
-      .then((json) => {
-        if (json?.data && Array.isArray(json.data)) setCategories(json.data);
+    apiClient
+      .get<{ data?: CategoryOption[] }>("/api/categories?type=listing")
+      .then((res) => {
+        if (res.data?.data && Array.isArray(res.data.data)) setCategories(res.data.data);
       })
       .catch(() => {});
   }, []);

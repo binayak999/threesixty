@@ -2,26 +2,20 @@
 
 import React, { useRef, useState, useCallback, useEffect } from "react";
 import { createPortal } from "react-dom";
+import { apiClient } from "@/lib/apiClient";
 import "@/components/MediaGalleryManager/MediaGalleryManager.css";
 
 async function uploadFiles(files: File[], type: string): Promise<unknown[]> {
   const formData = new FormData();
   files.forEach((f) => formData.append("files", f));
   formData.set("type", type);
-  const res = await fetch("/api/media/upload", { method: "POST", body: formData });
-  const data = await res.json();
-  return Array.isArray(data?.items) ? data.items : [];
+  const res = await apiClient.post<{ items?: unknown[] }>("/api/media/upload", formData);
+  return Array.isArray(res.data?.items) ? res.data.items : [];
 }
 
 async function importFromUrl(url: string): Promise<unknown | null> {
-  const res = await fetch("/api/media/import-url", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ url }),
-  });
-  const data = await res.json();
-  const item = (data as { item?: unknown }).item;
-  return res.ok && item ? item : null;
+  const res = await apiClient.post<{ item?: unknown }>("/api/media/import-url", { url });
+  return res.data?.item ?? null;
 }
 
 export interface AddAssetsModalProps {

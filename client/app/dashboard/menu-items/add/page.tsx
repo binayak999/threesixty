@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { apiClient } from "@/lib/apiClient";
 import "../../add-listing/add-listing.css";
 
 interface ListingOption {
@@ -19,10 +20,10 @@ export default function AddMenuItemPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/listings?all=1")
-      .then((res) => res.json())
-      .then((json) => {
-        if (json?.data && Array.isArray(json.data)) setListings(json.data);
+    apiClient
+      .get<{ data?: ListingOption[] }>("/api/listings?all=1")
+      .then((res) => {
+        if (res.data?.data && Array.isArray(res.data.data)) setListings(res.data.data);
       })
       .catch(() => {});
   }, []);
@@ -37,23 +38,18 @@ export default function AddMenuItemPage() {
     }
     setSaving(true);
     try {
-      const res = await fetch("/api/menu-items", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          listing: form.listing,
-          title: form.title.trim(),
-          detail: form.detail.trim() || undefined,
-          price,
-          label: form.label.trim() || undefined,
-        }),
+      await apiClient.post("/api/menu-items", {
+        listing: form.listing,
+        title: form.title.trim(),
+        detail: form.detail.trim() || undefined,
+        price,
+        label: form.label.trim() || undefined,
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Create failed");
       router.push("/dashboard/menu-items");
       router.refresh();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Request failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Request failed");
     } finally {
       setSaving(false);
     }

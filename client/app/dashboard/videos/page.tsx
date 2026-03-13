@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getMediaUrl } from "@/lib/mediaUrl";
 import DataTable, { DataTableColumn } from "../components/DataTable";
+import { apiClient } from "@/lib/apiClient";
 
 const SEARCH_DEBOUNCE_MS = 400;
 
@@ -51,8 +52,10 @@ export default function VideosPage() {
     try {
       setLoading(true);
       const searchParam = searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : "";
-      const res = await fetch(`/api/videos?all=1&page=${pageNum}&limit=${DEFAULT_LIMIT}${searchParam}`);
-      const json = await res.json();
+      const res = await apiClient.get<{ data?: VideoRow[]; pagination?: typeof pagination }>(
+        `/api/videos?all=1&page=${pageNum}&limit=${DEFAULT_LIMIT}${searchParam}`
+      );
+      const json = res.data;
       if (json?.data) setItems(json.data);
       else setItems([]);
       if (json?.pagination) setPagination(json.pagination);
@@ -72,12 +75,11 @@ export default function VideosPage() {
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this video?")) return;
     try {
-      const res = await fetch(`/api/videos/${id}`, { method: "DELETE" });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Delete failed");
+      await apiClient.delete(`/api/videos/${id}`);
       await fetchItems(page, search);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Delete failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Delete failed");
     }
   };
 

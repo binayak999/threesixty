@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { MediaGalleryManager, type MediaGalleryManagerRef } from "@/components/MediaGalleryManager";
 import { AddAssetsModal } from "@/components/AddAssetsModal";
+import { apiClient } from "@/lib/apiClient";
 
 export default function MediaGalleryPage() {
   const galleryRef = useRef<MediaGalleryManagerRef | null>(null);
@@ -12,10 +13,12 @@ export default function MediaGalleryPage() {
   const handleDeleteSelected = async (ids: string[]) => {
     setDeleteError(null);
     for (const id of ids) {
-      const res = await fetch(`/api/media/${id}`, { method: "DELETE" });
-      if (!res.ok) {
-        const json = await res.json().catch(() => ({}));
-        throw new Error((json as { message?: string }).message || "Delete failed");
+      try {
+        await apiClient.delete(`/api/media/${id}`);
+      } catch (err: unknown) {
+        const msg =
+          (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+        throw new Error(msg || "Delete failed");
       }
     }
   };

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { getMediaUrl as resolveMediaUrl } from "@/lib/mediaUrl";
+import { apiClient } from "@/lib/apiClient";
 import type { ListingItem, ListingCategory, ListingUser, ListingLocation, ListingMediaRef } from "../types";
 
 function getMediaUrlFromRef(m: ListingMediaRef["media"]): string | null {
@@ -23,10 +24,10 @@ export default function ViewListingPage() {
       setLoading(false);
       return;
     }
-    fetch(`/api/listings/${id}`)
-      .then((res) => res.json())
-      .then((json) => {
-        if (json?.data) setListing(json.data);
+    apiClient
+      .get<{ data?: ListingItem }>(`/api/listings/${id}`)
+      .then((res) => {
+        if (res.data?.data) setListing(res.data.data);
         else setError("Listing not found");
       })
       .catch(() => setError("Failed to load listing"))

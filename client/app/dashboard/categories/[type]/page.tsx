@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import DataTable, { DataTableColumn } from "../../components/DataTable";
+import { apiClient } from "@/lib/apiClient";
 import type { CategoryType, CategoryItem } from "./types";
 
 export default function CategoriesListPage() {
@@ -19,9 +20,8 @@ export default function CategoriesListPage() {
   const fetchCategories = async () => {
     if (!categoryType) return;
     try {
-      const res = await fetch(`/api/categories?type=${categoryType}`);
-      const json = await res.json();
-      if (json?.data) setCategories(json.data);
+      const res = await apiClient.get<{ data?: CategoryItem[] }>(`/api/categories?type=${categoryType}`);
+      if (res.data?.data) setCategories(res.data.data);
       else setCategories([]);
     } catch {
       setCategories([]);
@@ -42,12 +42,11 @@ export default function CategoriesListPage() {
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this category?")) return;
     try {
-      const res = await fetch(`/api/categories/${id}`, { method: "DELETE" });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Delete failed");
+      await apiClient.delete(`/api/categories/${id}`);
       await fetchCategories();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Delete failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Delete failed");
     }
   };
 

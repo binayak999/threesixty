@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { SearchableSelect } from "@/components/SearchableSelect";
+import { apiClient } from "@/lib/apiClient";
 import type { AddListingFormState } from "../types";
 
 interface CategoryOption {
@@ -35,10 +36,10 @@ export default function Step1Category({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/categories?type=listing")
-      .then((res) => res.json())
-      .then((json) => {
-        if (json?.data && Array.isArray(json.data)) setCategories(json.data);
+    apiClient
+      .get<{ data?: CategoryOption[] }>("/api/categories?type=listing")
+      .then((res) => {
+        if (res.data?.data && Array.isArray(res.data.data)) setCategories(res.data.data);
       })
       .catch(() => {})
       .finally(() => setLoading(false));

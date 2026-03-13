@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MediaGalleryManager, type MediaGalleryManagerRef } from "@/components/MediaGalleryManager";
 import { getMediaUrl } from "@/lib/mediaUrl";
+import { apiClient } from "@/lib/apiClient";
 import "../../add-listing/add-listing.css";
 
 export default function AddVideoPage() {
@@ -28,21 +29,16 @@ export default function AddVideoPage() {
     }
     setSaving(true);
     try {
-      const res = await fetch("/api/videos", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: form.title.trim(),
-          youtubeLink: form.youtubeLink.trim(),
-          thumbnail: form.thumbnailId,
-        }),
+      await apiClient.post("/api/videos", {
+        title: form.title.trim(),
+        youtubeLink: form.youtubeLink.trim(),
+        thumbnail: form.thumbnailId,
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Create failed");
       router.push("/dashboard/videos");
       router.refresh();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Request failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Request failed");
     } finally {
       setSaving(false);
     }

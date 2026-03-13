@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { MediaGalleryManager, type MediaGalleryManagerRef } from "@/components/MediaGalleryManager";
 import { getMediaUrl } from "@/lib/mediaUrl";
+import { apiClient } from "@/lib/apiClient";
 import "../../add-listing/add-listing.css";
 
 export default function AddBannerPage() {
@@ -30,23 +31,18 @@ export default function AddBannerPage() {
     }
     setSaving(true);
     try {
-      const res = await fetch("/api/banners", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: form.title.trim(),
-          media: form.mediaId,
-          is360: form.is360,
-          bannerType: form.bannerType,
-          link: form.link.trim() || undefined,
-        }),
+      await apiClient.post("/api/banners", {
+        title: form.title.trim(),
+        media: form.mediaId,
+        is360: form.is360,
+        bannerType: form.bannerType,
+        link: form.link.trim() || undefined,
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Create failed");
       router.push("/dashboard/banners");
       router.refresh();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Request failed");
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || "Request failed");
     } finally {
       setSaving(false);
     }
