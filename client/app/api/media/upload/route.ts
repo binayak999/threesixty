@@ -1,31 +1,19 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { getSessionUser } from "@/app/api/auth/session/route";
 
 const API_URL = process.env.API_URL || "http://localhost:4000";
 
-async function getUserId(): Promise<string | null> {
-  const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get("auth_session");
-  if (!sessionCookie?.value) return null;
-  try {
-    const payload = JSON.parse(
-      Buffer.from(sessionCookie.value, "base64url").toString("utf8")
-    ) as { id?: string };
-    return payload?.id ?? null;
-  } catch {
-    return null;
-  }
-}
-
 export async function POST(request: Request) {
   try {
-    const userId = await getUserId();
+    const user = await getSessionUser();
+    const userId = user?.id ?? null;
     if (!userId) {
       return NextResponse.json({ message: "Sign in to upload media.", items: [] }, { status: 401 });
     }
     const formData = await request.formData();
     formData.set("userId", userId);
-    const res = await fetch(`${API_URL}/api/media/upload`, {
+    const uploadUrl = `${API_URL}/api/media/upload?userId=${encodeURIComponent(userId)}`;
+    const res = await fetch(uploadUrl, {
       method: "POST",
       body: formData,
     });

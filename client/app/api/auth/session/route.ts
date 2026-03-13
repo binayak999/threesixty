@@ -56,22 +56,19 @@ function parseLegacyPayload(value: string): SessionUser | null {
   }
 }
 
+/** Get current session user from auth_session cookie (JWT or legacy). Use in API routes that need the current user. */
+export async function getSessionUser(): Promise<SessionUser | null> {
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get("auth_session");
+  if (!sessionCookie?.value) return null;
+  const value = sessionCookie.value;
+  return value.startsWith("eyJ") ? verifySessionToken(value) : parseLegacyPayload(value);
+}
+
 export async function GET() {
   try {
-    const cookieStore = await cookies();
-    const sessionCookie = cookieStore.get("auth_session");
-    if (!sessionCookie?.value) {
-      return NextResponse.json({ user: null });
-    }
-    const value = sessionCookie.value;
-    const user =
-      value.startsWith("eyJ") // JWT format
-        ? verifySessionToken(value)
-        : parseLegacyPayload(value);
-    if (user) {
-      return NextResponse.json({ user });
-    }
-    return NextResponse.json({ user: null });
+    const user = await getSessionUser();
+    return NextResponse.json({ user: user ?? null });
   } catch {
     return NextResponse.json({ user: null });
   }

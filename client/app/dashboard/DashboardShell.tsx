@@ -164,7 +164,7 @@ export default function DashboardShell({
   }
 
   return (
-    <div className="wrapper fixed sidebar-mini">
+    <div className="dashboard-layout wrapper fixed sidebar-mini">
       <style dangerouslySetInnerHTML={{
         __html: `
           .sidebar .metismenu li a.sidebar-dropdown-link.has-arrow::after { display: none; }
