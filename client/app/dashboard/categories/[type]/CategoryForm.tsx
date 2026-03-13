@@ -75,7 +75,12 @@ export default function CategoryForm({
           const json = res.data;
           if (json?.data) {
             const c = json.data as Record<string, unknown> & { name: string; slug: string; description?: string; order?: number; parent?: { _id: string } | string };
-            const parentId = c.parent?._id ?? c.parent ?? "";
+            const parentId =
+              typeof c.parent === "object" && c.parent !== null && "_id" in c.parent
+                ? (c.parent as { _id: string })._id
+                : typeof c.parent === "string"
+                  ? c.parent
+                  : "";
             const seo = (c as { seo?: { metaTitle?: string; metaDescription?: string; metaKeywords?: string[]; ogImage?: string; noIndex?: boolean } }).seo;
             setForm({
               name: c.name,
