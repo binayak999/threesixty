@@ -17,6 +17,8 @@ export default function DashboardLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
+      {/* Load dashboard theme CSS in head so it applies before paint; path matches public/assets/css/dashboard.css */}
+      <link rel="stylesheet" href="/assets/css/dashboard.css" />
       <DashboardStyles />
       <DashboardLayoutClient>{children}</DashboardLayoutClient>
     </>

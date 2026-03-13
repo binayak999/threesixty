@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 
-/** Dashboard uses the same static assets as frontend; only one extra CSS for sidebar/navbar. */
-const STYLES = ["/assets/css/dashboard.css"];
+/** Optional extra dashboard styles; main dashboard.css is loaded via <link> in layout for faster load. */
+const STYLES: string[] = [];
 
 export default function DashboardStyles() {
   useEffect(() => {
