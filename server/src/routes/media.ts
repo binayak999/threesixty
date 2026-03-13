@@ -144,7 +144,10 @@ router.post('/upload', upload.array('files', 20) as unknown as express.RequestHa
 
 router.delete('/:id', async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = req.query.userId as string | undefined;
+    const userId =
+      (req.query.userId as string) ||
+      getSessionFromCookie(req.headers.cookie)?.id ||
+      undefined;
     const doc = await Media.findById(req.params.id).lean();
     if (!doc) {
       res.status(404).json({ success: false, message: 'Media not found' });
