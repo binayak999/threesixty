@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { MediaGalleryManager } from "@/components/MediaGalleryManager";
+import { MediaGalleryManager, type MediaGalleryManagerRef } from "@/components/MediaGalleryManager";
 import {
   SettingsFormState,
   INITIAL_SETTINGS,
@@ -60,11 +60,11 @@ export default function SettingsForm() {
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
-  const faviconRef = useRef<{ open: () => void }>(null);
-  const dashboardLogoRef = useRef<{ open: () => void }>(null);
-  const websiteLogoRef = useRef<{ open: () => void }>(null);
-  const headerBgRef = useRef<{ open: () => void }>(null);
-  const footerBgRef = useRef<{ open: () => void }>(null);
+  const faviconRef = useRef<MediaGalleryManagerRef | null>(null);
+  const dashboardLogoRef = useRef<MediaGalleryManagerRef | null>(null);
+  const websiteLogoRef = useRef<MediaGalleryManagerRef | null>(null);
+  const headerBgRef = useRef<MediaGalleryManagerRef | null>(null);
+  const footerBgRef = useRef<MediaGalleryManagerRef | null>(null);
 
   useEffect(() => {
     fetch("/api/settings")

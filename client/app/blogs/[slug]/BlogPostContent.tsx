@@ -114,7 +114,7 @@ export default function BlogPostContent({ slug }: { slug: string }) {
   }
 
   const featureUrl = getMediaUrl(blog.medias, "feature");
-  const authorName = typeof blog.user === "object" && blog.user ? (blog.user as { name?: string }).name || (blog.user as { email?: string }).email : "Author";
+  const authorName = (typeof blog.user === "object" && blog.user ? (blog.user as { name?: string }).name || (blog.user as { email?: string }).email : null) ?? "Author";
   const categoryName = typeof blog.category === "object" && blog.category ? (blog.category as { name?: string }).name : null;
 
   return (

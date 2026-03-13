@@ -103,9 +103,9 @@ router.get('/slug/:slug', async (req: Request, res: Response) => {
       res.status(404).json({ success: false, message: 'Listing not found' });
       return;
     }
-    const loc = (listing as { location?: { countryRef?: { name: string }; country?: string } }).location;
+    const loc = (listing as unknown as { location?: { countryRef?: { name: string }; country?: string } }).location;
     if (loc?.countryRef) {
-      (listing as { location?: { country: string } }).location = { ...loc, country: (loc.countryRef as { name: string }).name ?? loc.country };
+      (listing as unknown as { location?: { country: string } }).location = { ...loc, country: (loc.countryRef as { name: string }).name ?? loc.country };
     }
     res.json({ success: true, data: listing });
   } catch (err) {
@@ -126,9 +126,9 @@ router.get('/:id', async (req: Request, res: Response) => {
       res.status(404).json({ success: false, message: 'Listing not found' });
       return;
     }
-    const loc = (listing as { location?: { countryRef?: { name: string }; country?: string } }).location;
+    const loc = (listing as unknown as { location?: { countryRef?: { name: string }; country?: string } }).location;
     if (loc?.countryRef) {
-      (listing as { location?: { country: string } }).location = { ...loc, country: (loc.countryRef as { name: string }).name ?? loc.country };
+      (listing as unknown as { location?: { country: string } }).location = { ...loc, country: (loc.countryRef as { name: string }).name ?? loc.country };
     }
     res.json({ success: true, data: listing });
   } catch (err) {

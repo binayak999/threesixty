@@ -5,13 +5,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { MediaGalleryManager } from "@/components/MediaGalleryManager";
+import { MediaGalleryManager, type MediaGalleryManagerRef } from "@/components/MediaGalleryManager";
 import { getMediaUrl } from "@/lib/mediaUrl";
 import "@/app/dashboard/add-listing/add-listing.css";
 
 export default function AddVideoPublicPage() {
   const router = useRouter();
-  const thumbnailRef = useRef<{ open: () => void }>(null);
+  const thumbnailRef = useRef<MediaGalleryManagerRef | null>(null);
   const [checking, setChecking] = useState(true);
   const [allowed, setAllowed] = useState(false);
   const [form, setForm] = useState<{

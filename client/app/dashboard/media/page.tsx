@@ -1,11 +1,11 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { MediaGalleryManager } from "@/components/MediaGalleryManager";
+import { MediaGalleryManager, type MediaGalleryManagerRef } from "@/components/MediaGalleryManager";
 import { AddAssetsModal } from "@/components/AddAssetsModal";
 
 export default function MediaGalleryPage() {
-  const galleryRef = useRef<{ refetch: () => Promise<void> }>(null);
+  const galleryRef = useRef<MediaGalleryManagerRef | null>(null);
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
 

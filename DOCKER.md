@@ -22,6 +22,8 @@ docker compose up --build
 - **Client (Next.js):** http://localhost:3000  
 - **Server (API):** http://localhost:4000  
 
+The client container waits for the server to be healthy (via `/api/health`) before starting, so the backend is always up before the Next.js app runs.  
+
 ## Options
 
 - **Detached (background):** `docker compose up -d --build`

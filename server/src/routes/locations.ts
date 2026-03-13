@@ -74,7 +74,7 @@ router.get('/', async (req: Request, res: Response) => {
       baseQuery.countDocuments(),
     ]);
 
-    const data = locations.map((loc: { countryRef?: { name: string }; country?: string }) => ({
+    const data = (locations as { countryRef?: { name: string }; country?: string }[]).map((loc) => ({
       ...loc,
       country: (loc.countryRef as { name: string })?.name ?? loc.country ?? undefined,
     }));

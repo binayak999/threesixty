@@ -24,7 +24,7 @@ type PannellumViewerProps = {
  */
 export default function PannellumViewer({ panoramaUrl, className, style }: PannellumViewerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const viewerRef = useRef<ReturnType<Window["pannellum"]["viewer"]> | null>(null);
+  const viewerRef = useRef<ReturnType<NonNullable<Window["pannellum"]>["viewer"]> | null>(null);
 
   useEffect(() => {
     if (!panoramaUrl || !containerRef.current) return;
@@ -36,9 +36,10 @@ export default function PannellumViewer({ panoramaUrl, className, style }: Panne
     reactContainer.appendChild(pannellumContainer);
 
     function init() {
-      if (!window.pannellum) return;
+      const p = window.pannellum;
+      if (!p) return;
       try {
-        viewerRef.current = window.pannellum.viewer(pannellumContainer, {
+        viewerRef.current = p.viewer(pannellumContainer, {
           panorama: panoramaUrl,
           autoLoad: true,
           autoRotate: -2,

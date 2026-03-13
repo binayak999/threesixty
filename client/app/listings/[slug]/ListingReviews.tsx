@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { getMediaUrl } from "@/lib/mediaUrl";
-import MediaGalleryManager from "@/components/MediaGalleryManager/MediaGalleryManager";
+import { MediaGalleryManager, type MediaGalleryManagerRef } from "@/components/MediaGalleryManager";
 
 interface ReviewMedia {
   _id?: string;
@@ -61,7 +61,7 @@ export default function ListingReviews({
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const mediaGalleryRef = useRef<{ open: () => void } | null>(null);
+  const mediaGalleryRef = useRef<MediaGalleryManagerRef | null>(null);
 
   const fetchReviews = useCallback(() => {
     setLoading(true);

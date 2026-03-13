@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { getMediaUrl as resolveMediaUrl } from "@/lib/mediaUrl";
-import type { ListingItem, ListingCategory, ListingUser, ListingLocation, ListingMediaRef } from "../../types";
+import type { ListingItem, ListingCategory, ListingUser, ListingLocation, ListingMediaRef } from "../types";
 
 function getMediaUrlFromRef(m: ListingMediaRef["media"]): string | null {
   if (!m) return null;
@@ -76,7 +76,7 @@ export default function ViewListingPage() {
   const locationStr = loc ? [loc.address, loc.city, loc.region, loc.country].filter(Boolean).join(", ") : null;
 
   const medias = listing.medias || [];
-  const byRole = (role: string) => medias.filter((m) => m.role === role).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  const byRole = (role: string) => medias.filter((m: ListingMediaRef) => m.role === role).sort((a: ListingMediaRef, b: ListingMediaRef) => (a.order ?? 0) - (b.order ?? 0));
   const feature = byRole("feature")[0];
   const gallery = byRole("gallery");
   const videos = byRole("video");
@@ -129,7 +129,7 @@ export default function ViewListingPage() {
               })()}
               {gallery.length > 0 && (
                 <div className="row g-2 mb-3">
-                  {gallery.map((m) => {
+                  {gallery.map((m: ListingMediaRef) => {
                     const url = getMediaUrlFromRef(m.media);
                     const key = typeof m.media === "string" ? m.media : (m.media as { _id: string })._id;
                     return url ? (
@@ -147,7 +147,7 @@ export default function ViewListingPage() {
               )}
               {videos.length > 0 && (
                 <div className="row g-2 mb-3">
-                  {videos.map((m) => {
+                  {videos.map((m: ListingMediaRef) => {
                     const url = getMediaUrlFromRef(m.media);
                     const key = typeof m.media === "string" ? m.media : (m.media as { _id: string })._id;
                     return url ? (

@@ -2,8 +2,7 @@
 
 import { useRef, useState, useEffect, useCallback } from "react";
 import type { AddListingFormState } from "../types";
-import { MediaGalleryManager } from "@/components/MediaGalleryManager";
-import type { MediaItem } from "@/components/MediaGalleryManager";
+import { MediaGalleryManager, type MediaGalleryManagerRef, type MediaItem } from "@/components/MediaGalleryManager";
 import { getMediaUrl } from "@/lib/mediaUrl";
 
 export default function Step5Media({
@@ -13,7 +12,7 @@ export default function Step5Media({
   form: AddListingFormState;
   update: (u: Partial<AddListingFormState>) => void;
 }) {
-  const galleryRef = useRef<{ open: () => void }>(null);
+  const galleryRef = useRef<MediaGalleryManagerRef | null>(null);
   const [mediaCache, setMediaCache] = useState<Record<string, MediaItem>>({});
   const allMediaIds = [...form.mediaIds, ...form.media360Ids, ...form.videoIds];
 

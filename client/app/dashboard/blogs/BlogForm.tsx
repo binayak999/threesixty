@@ -2,9 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { MediaGalleryManager } from "@/components/MediaGalleryManager";
+import { MediaGalleryManager, type MediaGalleryManagerRef } from "@/components/MediaGalleryManager";
 import { getMediaUrl } from "@/lib/mediaUrl";
-import type { BlogItem, BlogCategory } from "./types";
+import type { BlogItem, BlogCategory, BlogMediaRef } from "./types";
 import { slugify, INITIAL_BLOG_FORM } from "./types";
 
 type BlogFormProps = {
@@ -14,15 +14,24 @@ type BlogFormProps = {
   onSuccess: () => void;
 };
 
-function getMediaId(m: BlogItem["medias"][0]): string | null {
+function getMediaId(m: BlogMediaRef | undefined): string | null {
   if (!m?.media) return null;
   return typeof m.media === "string" ? m.media : (m.media as { _id: string })._id;
 }
 
 export default function BlogForm({ mode, blogId, categories, onSuccess }: BlogFormProps) {
   type MediaPreview = { url: string; type: string };
-  const [form, setForm] = useState(() => ({
+  type BlogFormState = Omit<typeof INITIAL_BLOG_FORM, "status"> & {
+    status: "draft" | "pending" | "published";
+    galleryMediaIds: string[];
+    videoMediaIds: string[];
+    featureMediaPreview: MediaPreview | undefined;
+    galleryMediaPreviews: MediaPreview[];
+    videoMediaPreviews: MediaPreview[];
+  };
+  const [form, setForm] = useState<BlogFormState>(() => ({
     ...INITIAL_BLOG_FORM,
+    status: "draft",
     galleryMediaIds: [] as string[],
     videoMediaIds: [] as string[],
     featureMediaPreview: undefined as MediaPreview | undefined,
@@ -32,9 +41,9 @@ export default function BlogForm({ mode, blogId, categories, onSuccess }: BlogFo
   const [loading, setLoading] = useState(mode === "edit" && !!blogId);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const featureRef = useRef<{ open: () => void }>(null);
-  const galleryRef = useRef<{ open: () => void }>(null);
-  const videoRef = useRef<{ open: () => void }>(null);
+  const featureRef = useRef<MediaGalleryManagerRef | null>(null);
+  const galleryRef = useRef<MediaGalleryManagerRef | null>(null);
+  const videoRef = useRef<MediaGalleryManagerRef | null>(null);
 
   useEffect(() => {
     if (mode === "edit" && blogId) {
@@ -48,7 +57,7 @@ export default function BlogForm({ mode, blogId, categories, onSuccess }: BlogFo
             const feature = medias.find((m) => m.role === "feature");
             const gallery = medias.filter((m) => m.role === "gallery").sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
             const video = medias.filter((m) => m.role === "video").sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
-            const getPreview = (m: BlogItem["medias"][0]): MediaPreview | undefined => {
+            const getPreview = (m: BlogMediaRef | undefined): MediaPreview | undefined => {
               const media = m?.media;
               if (!media || typeof media !== "object") return undefined;
               const url = (media as { url?: string }).url;

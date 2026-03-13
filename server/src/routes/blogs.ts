@@ -101,8 +101,8 @@ router.get('/slug/:slug', async (req: Request, res: Response) => {
       const normalizedParam = slugify(paramSlug);
       if (normalizedParam) {
         const all = await Blog.find(publishedFilter).select('slug').lean();
-        const match = (all as { slug?: string }[]).find((d) => slugify(d.slug || '') === normalizedParam);
-        if (match) {
+        const match = (all as { _id?: unknown; slug?: string }[]).find((d) => slugify(d.slug || '') === normalizedParam);
+        if (match?._id) {
           blog = await Blog.findById(match._id)
             .populate('user', 'name email')
             .populate('category', 'name slug')
@@ -171,7 +171,7 @@ router.post('/', async (req: Request, res: Response) => {
       blogStatus = 'pending';
     }
     const medias = Array.isArray(req.body.medias) ? req.body.medias : [];
-    const mediaIds = medias.map((m: { media?: string }) => m?.media).filter(Boolean);
+    const mediaIds = medias.map((m: { media?: string }) => m?.media).filter((id: string | undefined): id is string => typeof id === 'string');
     const mediaOwned = await ensureMediaOwnership(mediaIds, userId);
     if (!mediaOwned) {
       res.status(400).json({ success: false, message: 'You can only use your own media on a blog.' });
@@ -228,7 +228,7 @@ router.put('/:id', async (req: Request, res: Response) => {
       update.slug = slugify(update.slug) || update.slug.trim();
     }
     const medias = Array.isArray(update.medias) ? update.medias : [];
-    const mediaIds = medias.map((m: { media?: string }) => m?.media).filter(Boolean);
+    const mediaIds = medias.map((m: { media?: string }) => m?.media).filter((id: string | undefined): id is string => typeof id === 'string');
     const ownerId = String(existing.user);
     const mediaOwned = await ensureMediaOwnership(mediaIds, ownerId);
     if (!mediaOwned) {

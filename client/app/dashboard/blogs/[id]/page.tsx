@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { getMediaUrl as resolveMediaUrl } from "@/lib/mediaUrl";
-import type { BlogItem, BlogCategory, BlogUser, BlogMediaRef } from "../../types";
+import type { BlogItem, BlogCategory, BlogUser, BlogMediaRef } from "../types";
 
 function getMediaUrlFromRef(m: BlogMediaRef["media"]): string | null {
   if (!m) return null;
@@ -106,7 +106,7 @@ export default function ViewBlogPage() {
         <div className="card-body">
           {(blog.medias || []).length > 0 && (
             <div className="mb-4">
-              {(blog.medias || []).filter((m) => m.role === "feature").map((m) => {
+              {(blog.medias || []).filter((m: BlogMediaRef) => m.role === "feature").map((m: BlogMediaRef) => {
                 const url = getMediaUrlFromRef(m.media);
                 return url ? (
                   <div key={typeof m.media === "string" ? m.media : (m.media as { _id: string })._id} className="mb-3">
@@ -117,9 +117,9 @@ export default function ViewBlogPage() {
               {(blog.medias || []).filter((m) => m.role === "gallery").length > 0 && (
                 <div className="row g-2 mb-3">
                   {(blog.medias || [])
-                    .filter((m) => m.role === "gallery")
-                    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-                    .map((m) => {
+                    .filter((m: BlogMediaRef) => m.role === "gallery")
+                    .sort((a: BlogMediaRef, b: BlogMediaRef) => (a.order ?? 0) - (b.order ?? 0))
+                    .map((m: BlogMediaRef) => {
                       const url = getMediaUrlFromRef(m.media);
                       return url ? (
                         <div key={typeof m.media === "string" ? m.media : (m.media as { _id: string })._id} className="col-6 col-md-4">
@@ -132,9 +132,9 @@ export default function ViewBlogPage() {
               {(blog.medias || []).filter((m) => m.role === "video").length > 0 && (
                 <div className="row g-2 mb-3">
                   {(blog.medias || [])
-                    .filter((m) => m.role === "video")
-                    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-                    .map((m) => {
+                    .filter((m: BlogMediaRef) => m.role === "video")
+                    .sort((a: BlogMediaRef, b: BlogMediaRef) => (a.order ?? 0) - (b.order ?? 0))
+                    .map((m: BlogMediaRef) => {
                       const url = getMediaUrlFromRef(m.media);
                       return url ? (
                         <div key={typeof m.media === "string" ? m.media : (m.media as { _id: string })._id} className="col-12">
@@ -171,7 +171,7 @@ export default function ViewBlogPage() {
           )}
           {blog.tags && blog.tags.length > 0 && (
             <div className="mb-3">
-              {blog.tags.map((t) => (
+              {blog.tags.map((t: string) => (
                 <span key={t} className="badge bg-light text-dark me-1">
                   {t}
                 </span>

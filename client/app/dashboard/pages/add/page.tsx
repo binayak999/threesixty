@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { MediaGalleryManager } from "@/components/MediaGalleryManager";
+import { MediaGalleryManager, type MediaGalleryManagerRef } from "@/components/MediaGalleryManager";
 import { getMediaUrl } from "@/lib/mediaUrl";
 import "../../add-listing/add-listing.css";
 
@@ -17,7 +17,7 @@ const initialSeo = {
 
 export default function AddPagePage() {
   const router = useRouter();
-  const mediaRef = useRef<{ open: () => void }>(null);
+  const mediaRef = useRef<MediaGalleryManagerRef | null>(null);
   const [form, setForm] = useState<{
     title: string;
     slug: string;

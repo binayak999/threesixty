@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { MediaGalleryManager } from "@/components/MediaGalleryManager";
+import { MediaGalleryManager, type MediaGalleryManagerRef } from "@/components/MediaGalleryManager";
 import { getMediaUrl } from "@/lib/mediaUrl";
 import "../../../add-listing/add-listing.css";
 
@@ -19,7 +19,7 @@ export default function EditPagePage() {
   const params = useParams();
   const router = useRouter();
   const id = params?.id as string;
-  const mediaRef = useRef<{ open: () => void }>(null);
+  const mediaRef = useRef<MediaGalleryManagerRef | null>(null);
   const [form, setForm] = useState<{
     title: string;
     slug: string;

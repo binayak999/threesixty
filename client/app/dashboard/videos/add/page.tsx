@@ -3,13 +3,13 @@
 import { useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { MediaGalleryManager } from "@/components/MediaGalleryManager";
+import { MediaGalleryManager, type MediaGalleryManagerRef } from "@/components/MediaGalleryManager";
 import { getMediaUrl } from "@/lib/mediaUrl";
 import "../../add-listing/add-listing.css";
 
 export default function AddVideoPage() {
   const router = useRouter();
-  const thumbnailRef = useRef<{ open: () => void }>(null);
+  const thumbnailRef = useRef<MediaGalleryManagerRef | null>(null);
   const [form, setForm] = useState<{
     title: string;
     youtubeLink: string;
