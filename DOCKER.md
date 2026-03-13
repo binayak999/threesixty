@@ -33,7 +33,7 @@ The client container waits for the server to be healthy (via `/api/health`) befo
 ## Environment
 
 - **MONGODB_URI** (required) – Your MongoDB connection string (Atlas or self-hosted).
-- **JWT_SECRET** (required in production) – Secret key for JWT auth cookies. Use a long random string; same value must be set for the Next.js client if it handles auth (e.g. when not proxying `/api` to the backend).
+- **JWT_SECRET** (required in production) – Secret key for JWT auth cookies. Use a long random string. If Nginx (or similar) proxies `/api/*` to the backend, set JWT_SECRET only on the backend; the backend now reads the session from the `auth_session` cookie for media list and other APIs. If Next.js handles `/api` (no proxy to backend), set the same JWT_SECRET on both backend and Next.js so session verification works.
 - Other defaults are in `docker-compose.yml`; override via `.env` or environment.
 
 ## First run

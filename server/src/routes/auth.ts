@@ -1,7 +1,8 @@
 import { Router, Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import User from '../models/User';
-import { signSession, verifySession } from '../lib/jwt';
+import { signSession } from '../lib/jwt';
+import { getSessionFromCookie } from '../lib/session';
 
 const router = Router();
 
@@ -23,21 +24,6 @@ function setSessionCookie(res: Response, token: string): void {
   ];
   if (secure) parts.push('Secure');
   res.setHeader('Set-Cookie', parts.join('; '));
-}
-
-function getSessionFromCookie(cookieHeader: string | undefined): { id: string; email: string; name: string; role: UserRole } | null {
-  if (!cookieHeader) return null;
-  const match = cookieHeader.match(new RegExp(`\\b${SESSION_COOKIE_NAME}=([^;]+)`));
-  const token = match?.[1]?.trim();
-  if (!token) return null;
-  const payload = verifySession(token);
-  if (!payload) return null;
-  return {
-    id: payload.sub,
-    email: payload.email,
-    name: payload.name ?? payload.email,
-    role: payload.role as UserRole,
-  };
 }
 
 /** GET /api/auth/session – return current user from auth_session cookie (same contract as Next.js API route). */

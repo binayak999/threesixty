@@ -4,6 +4,7 @@ import path from 'path';
 import fs from 'fs';
 import Media from '../models/Media';
 import { processMediaFile } from '../services/mediaProcessor';
+import { getSessionFromCookie } from '../lib/session';
 
 const router = Router();
 const UPLOAD_DIR = path.join(process.cwd(), 'uploads');
@@ -54,7 +55,10 @@ function getExtFromMime(mime: string): string {
 
 router.get('/', async (req: Request, res: Response): Promise<void> => {
   try {
-    const userId = (req.query.userId as string) || undefined;
+    const userId =
+      (req.query.userId as string) ||
+      getSessionFromCookie(req.headers.cookie)?.id ||
+      undefined;
     if (!userId) {
       res.json({ success: true, data: [] });
       return;

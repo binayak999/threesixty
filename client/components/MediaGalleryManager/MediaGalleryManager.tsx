@@ -17,7 +17,7 @@ const MEDIA_TYPES: { key: MediaType; label: string; icon: string; accept: string
 
 async function defaultFetch(): Promise<MediaItem[]> {
   try {
-    const res = await fetch("/api/media");
+    const res = await fetch("/api/media", { credentials: "include" });
     const data = await res.json();
     return Array.isArray(data?.items) ? data.items : [];
   } catch {
