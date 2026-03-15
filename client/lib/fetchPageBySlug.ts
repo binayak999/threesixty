@@ -1,9 +1,10 @@
 /**
  * Fetches a page by slug from the API (for server components and generateMetadata).
  * Returns null if not found or on error.
+ * Uses server apiClient so base URL and behavior match the rest of the app.
  */
 
-const API_URL = process.env.API_URL || "http://localhost:4000";
+import { apiClient } from "@/server/client";
 
 export interface PageSeo {
   metaTitle?: string;
@@ -20,6 +21,14 @@ export interface PageBanner {
   urlLow?: string;
 }
 
+/** Get the first available image URL from a page's banner (populated Media). */
+export function getPageBannerRawUrl(page: PageBySlug | null | undefined): string | undefined {
+  const b = page?.banner;
+  if (!b || typeof b !== "object") return undefined;
+  const media = b as { url?: string; urlMedium?: string; urlLow?: string };
+  return media.url ?? media.urlMedium ?? media.urlLow;
+}
+
 export interface PageBySlug {
   _id: string;
   title: string;
@@ -30,13 +39,13 @@ export interface PageBySlug {
 
 export async function fetchPageBySlug(slug: string): Promise<PageBySlug | null> {
   try {
-    const res = await fetch(
-      `${API_URL}/api/pages/slug/${encodeURIComponent(slug)}`,
-      { next: { revalidate: 60 } }
+    const res = await apiClient.get<{ success?: boolean; data?: PageBySlug }>(
+      `/api/pages/slug/${encodeURIComponent(slug)}`
     );
-    const json = await res.json().catch(() => ({}));
-    if (!res.ok || !json?.data) return null;
-    return json.data as PageBySlug;
+    const data = res.data;
+    const page = (data?.data ?? data) as PageBySlug | undefined;
+    if (!page?.slug) return null;
+    return page;
   } catch {
     return null;
   }

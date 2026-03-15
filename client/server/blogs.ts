@@ -1,4 +1,4 @@
-import { apiClient } from "./client";
+import { apiClient, unwrapList } from "./client";
 
 export interface BlogMediaRef {
   role: string;
@@ -33,7 +33,7 @@ export async function getBlogs(params?: GetBlogsParams): Promise<BlogItem[]> {
   const query = search.toString();
   const url = query ? `/api/blogs?${query}` : "/api/blogs";
   const { data } = await apiClient.get<BlogsResponse>(url);
-  let list = data?.data && Array.isArray(data.data) ? data.data : [];
+  let list = unwrapList<BlogItem>(data);
   if (params?.limit != null && params.limit > 0) list = list.slice(0, params.limit);
   return list;
 }

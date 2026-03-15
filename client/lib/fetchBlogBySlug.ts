@@ -3,7 +3,8 @@
  * Use from async Server Components (e.g. app/blogs/[slug]/page.tsx).
  */
 
-const API_URL = process.env.API_URL || "http://localhost:4000";
+const rawUrl = process.env.API_URL || "http://localhost:4000";
+const API_BASE = rawUrl.replace(/\/api\/?$/, "");
 
 export interface BlogBySlugResult {
   _id: string;
@@ -23,12 +24,13 @@ export interface BlogBySlugResult {
 
 export async function fetchBlogBySlug(slug: string): Promise<BlogBySlugResult | null> {
   try {
-    const res = await fetch(`${API_URL}/api/blogs/slug/${encodeURIComponent(slug)}`, {
+    const res = await fetch(`${API_BASE}/api/blogs/slug/${encodeURIComponent(slug)}`, {
       next: { revalidate: 60 },
     });
     const json = await res.json().catch(() => ({}));
-    if (!res.ok || !json?.success || !json?.data) return null;
-    return json.data as BlogBySlugResult;
+    const blog = (json?.data ?? json) as BlogBySlugResult | undefined;
+    if (!res.ok || !blog?.slug) return null;
+    return blog;
   } catch {
     return null;
   }

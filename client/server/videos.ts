@@ -1,4 +1,4 @@
-import { apiClient } from "./client";
+import { apiClient, unwrapList } from "./client";
 
 export interface VideoThumbnail {
   _id: string;
@@ -18,6 +18,6 @@ interface VideosResponse {
 
 export async function getVideos(limit?: number): Promise<VideoItem[]> {
   const { data } = await apiClient.get<VideosResponse>("/api/videos");
-  const list = Array.isArray(data?.data) ? data.data : [];
+  const list = unwrapList<VideoItem>(data);
   return limit != null ? list.slice(0, limit) : list;
 }

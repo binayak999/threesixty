@@ -1,4 +1,4 @@
-import { apiClient } from "./client";
+import { apiClient, unwrapList } from "./client";
 
 export interface LocationItem {
   _id: string;
@@ -25,6 +25,5 @@ export async function getLocations(params?: GetLocationsParams): Promise<Locatio
   const query = search.toString();
   const url = query ? `/api/locations?${query}` : "/api/locations";
   const { data } = await apiClient.get<LocationsResponse>(url);
-  if (data?.data && Array.isArray(data.data)) return data.data;
-  return [];
+  return unwrapList<LocationItem>(data);
 }

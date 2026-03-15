@@ -23,9 +23,11 @@ export function BlogsPageDataProvider({
 
 export function useBlogsPageData(): BlogsPageData {
   const value = useContext(BlogsPageDataContext);
+  const defaultBanner =
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='320'%3E%3Crect fill='%231e3a5f' width='1200' height='320'/%3E%3C/svg%3E";
   return (
     value ?? {
-      bannerUrl: "/assets/images/header/02.jpg",
+      bannerUrl: defaultBanner,
       heroTitle: "Blogs",
     }
   );

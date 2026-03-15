@@ -1,4 +1,4 @@
-import { apiClient } from "./client";
+import { apiClient, unwrapList } from "./client";
 
 export interface ListingMediaRef {
   role: string;
@@ -34,7 +34,7 @@ export async function getListings(params?: GetListingsParams): Promise<ListingIt
   const query = search.toString();
   const url = query ? `/api/listings?${query}` : "/api/listings";
   const { data } = await apiClient.get<ListingsResponse>(url);
-  let list = data?.data && Array.isArray(data.data) ? data.data : [];
+  let list = unwrapList<ListingItem>(data);
   if (params?.limit != null && params.limit > 0) list = list.slice(0, params.limit);
   return list;
 }

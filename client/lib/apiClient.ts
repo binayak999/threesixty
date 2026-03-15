@@ -6,7 +6,8 @@ import axios from "axios";
  * - withCredentials: true so cookies (auth_session) are sent.
  * - FormData: Content-Type is cleared so axios/browser sets multipart/form-data with boundary.
  */
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || "http://localhost:4000";
+const rawUrl = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || "http://localhost:4000";
+const API_BASE = rawUrl.replace(/\/api\/?$/, "");
 
 export const apiClient = axios.create({
   baseURL: API_BASE,

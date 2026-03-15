@@ -3,7 +3,8 @@
  * Uses backend API directly so sitemap.ts can run at build/request time without client.
  */
 
-const API_URL = process.env.API_URL || "http://localhost:4000";
+const rawUrl = process.env.API_URL || "http://localhost:4000";
+const API_BASE = rawUrl.replace(/\/api\/?$/, "");
 
 async function fetchJson<T>(url: string): Promise<T> {
   const res = await fetch(url, { next: { revalidate: 3600 } });
@@ -28,7 +29,7 @@ export async function getBlogSlugsForSitemap(): Promise<SitemapBlog[]> {
         success?: boolean;
         data?: { slug?: string; updatedAt?: string }[];
         pagination?: { totalPages: number };
-      }>(`${API_URL}/api/blogs?publishedOnly=1&limit=${PAGE_SIZE}&page=${page}`);
+      }>(`${API_BASE}/api/blogs?publishedOnly=1&limit=${PAGE_SIZE}&page=${page}`);
       const list = data?.success && Array.isArray(data.data) ? data.data : [];
       for (const b of list) {
         if (b?.slug) out.push({ slug: b.slug, updatedAt: b.updatedAt });
@@ -62,7 +63,7 @@ export async function getListingsDataForSitemap(): Promise<SitemapListingsData> 
   let categories: SitemapCategory[] = [];
   try {
     const categoriesRes = await fetchJson<{ success?: boolean; data?: { slug: string }[] }>(
-      `${API_URL}/api/categories?type=listing&publishedOnly=1`
+      `${API_BASE}/api/categories?type=listing&publishedOnly=1`
     );
     categories =
       categoriesRes?.success && Array.isArray(categoriesRes.data)
@@ -78,7 +79,7 @@ export async function getListingsDataForSitemap(): Promise<SitemapListingsData> 
         success?: boolean;
         data?: { slug?: string; updatedAt?: string }[];
         pagination?: { totalPages: number };
-      }>(`${API_URL}/api/listings?limit=${PAGE_SIZE}&page=${page}`);
+      }>(`${API_BASE}/api/listings?limit=${PAGE_SIZE}&page=${page}`);
       const list = listingsRes?.success && Array.isArray(listingsRes.data) ? listingsRes.data : [];
       for (const l of list) {
         if (l?.slug) listings.push({ slug: l.slug, updatedAt: l.updatedAt });

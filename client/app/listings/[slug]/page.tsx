@@ -5,7 +5,8 @@ import { getMediaUrlFromRef } from "@/lib/mediaUrl";
 import { notFound } from "next/navigation";
 import ListingReviews from "./ListingReviews";
 
-const API_URL = process.env.API_URL || "http://localhost:4000";
+const rawApiUrl = process.env.API_URL || "http://localhost:4000";
+const API_BASE = rawApiUrl.replace(/\/api\/?$/, "");
 
 interface ListingPageProps {
   params: Promise<{ slug: string }>;
@@ -56,19 +57,19 @@ interface ListingData {
 export default async function ListingDetailPage({ params }: ListingPageProps) {
   const { slug } = await params;
 
-  const res = await fetch(`${API_URL}/api/listings/slug/${encodeURIComponent(slug)}`, {
+  const res = await fetch(`${API_BASE}/api/listings/slug/${encodeURIComponent(slug)}`, {
     headers: { "Content-Type": "application/json" },
     next: { revalidate: 60 },
   });
   const json = await res.json().catch(() => ({}));
-  if (!res.ok || !json?.data) notFound();
-  const listing = json.data as ListingData;
+  const listing = (json?.data ?? json) as ListingData | undefined;
+  if (!res.ok || !listing?._id) notFound();
 
   let reviewAverage = 0;
   let reviewCount = 0;
   try {
     const revRes = await fetch(
-      `${API_URL}/api/reviews?listingId=${encodeURIComponent(listing._id)}`,
+      `${API_BASE}/api/reviews?listingId=${encodeURIComponent(listing._id)}`,
       { headers: { "Content-Type": "application/json" }, next: { revalidate: 60 } }
     );
     const revJson = await revRes.json().catch(() => ({}));

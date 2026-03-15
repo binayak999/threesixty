@@ -3,13 +3,15 @@ import JsonLd from "@/components/JsonLd";
 import { getSiteBaseUrl } from "@/lib/siteUrl";
 import { getMediaUrl } from "@/lib/mediaUrl";
 import { buildWebPage } from "@/lib/schema";
-import { fetchPageBySlug } from "@/lib/fetchPageBySlug";
+import { fetchPageBySlug, getPageBannerRawUrl } from "@/lib/fetchPageBySlug";
 import { BlogsPageDataProvider } from "./BlogsPageDataContext";
 
 const DEFAULT_BLOGS_TITLE = "Blogs | 360Nepal";
 const DEFAULT_BLOGS_DESCRIPTION =
   "Stories, guides, and updates from 360Nepal. Explore Nepal from every angle.";
-const DEFAULT_BANNER = "/assets/images/header/02.jpg";
+// Placeholder when API returns no banner (header/02.jpg may not exist in public)
+const DEFAULT_BANNER =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='320'%3E%3Crect fill='%231e3a5f' width='1200' height='320'/%3E%3C/svg%3E";
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await fetchPageBySlug("blogs");
@@ -34,10 +36,10 @@ export default async function BlogsLayout({
 }) {
   const baseUrl = getSiteBaseUrl();
   const page = await fetchPageBySlug("blogs");
-  const bannerUrl =
-    page?.banner && typeof page.banner === "object" && page.banner.url
-      ? getMediaUrl(page.banner.url)
-      : DEFAULT_BANNER;
+  const bannerUrl = (() => {
+    const raw = getPageBannerRawUrl(page);
+    return raw ? getMediaUrl(raw) : DEFAULT_BANNER;
+  })();
   const heroTitle =
     page?.title ?? "Blogs";
 

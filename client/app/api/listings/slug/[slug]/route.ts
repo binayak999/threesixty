@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
-const API_URL = process.env.API_URL || "http://localhost:4000";
+const rawUrl = process.env.API_URL || "http://localhost:4000";
+const API_BASE = rawUrl.replace(/\/api\/?$/, "");
 
 export async function GET(
   _request: Request,
@@ -8,7 +9,7 @@ export async function GET(
 ) {
   const { slug } = await params;
   try {
-    const res = await fetch(`${API_URL}/api/listings/slug/${encodeURIComponent(slug)}`, {
+    const res = await fetch(`${API_BASE}/api/listings/slug/${encodeURIComponent(slug)}`, {
       headers: { "Content-Type": "application/json" },
     });
     const data = await res.json().catch(() => ({}));

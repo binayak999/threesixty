@@ -3,7 +3,7 @@ import JsonLd from "@/components/JsonLd";
 import { getSiteBaseUrl } from "@/lib/siteUrl";
 import { getMediaUrl } from "@/lib/mediaUrl";
 import { buildAboutPage, buildWebPage } from "@/lib/schema";
-import { fetchPageBySlug } from "@/lib/fetchPageBySlug";
+import { fetchPageBySlug, getPageBannerRawUrl } from "@/lib/fetchPageBySlug";
 import { AboutPageDataProvider } from "./AboutPageDataContext";
 
 const DEFAULT_ABOUT_TITLE = "About | 360Nepal";
@@ -34,10 +34,10 @@ export default async function AboutLayout({
 }) {
   const baseUrl = getSiteBaseUrl();
   const page = await fetchPageBySlug("about");
-  const bannerUrl =
-    page?.banner && typeof page.banner === "object" && page.banner.url
-      ? getMediaUrl(page.banner.url)
-      : DEFAULT_BANNER;
+  const bannerUrl = (() => {
+    const raw = getPageBannerRawUrl(page);
+    return raw ? getMediaUrl(raw) : DEFAULT_BANNER;
+  })();
   const heroTitle = page?.title ?? "360Nepal was founded with a vision to your original vision or inspiration.";
   const heroSubtitle =
     page?.seo?.metaDescription ?? "7+ YEARS EXPERIENCED IN FIELD";

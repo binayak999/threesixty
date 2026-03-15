@@ -1,4 +1,4 @@
-import { apiClient } from "./client";
+import { apiClient, unwrapList } from "./client";
 
 export interface CategoryItem {
   _id: string;
@@ -30,6 +30,5 @@ export async function getCategories(params?: GetCategoriesParams | CategoryType)
   const query = search.toString();
   const url = query ? `/api/categories?${query}` : "/api/categories";
   const { data } = await apiClient.get<CategoriesResponse>(url);
-  if (data?.data && Array.isArray(data.data)) return data.data;
-  return [];
+  return unwrapList<CategoryItem>(data);
 }

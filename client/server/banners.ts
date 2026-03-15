@@ -1,4 +1,4 @@
-import { apiClient } from "./client";
+import { apiClient, unwrapList } from "./client";
 
 export interface BannerMedia {
   _id: string;
@@ -35,6 +35,6 @@ export async function getBanners(params?: GetBannersParams): Promise<BannerItem[
   const query = search.toString();
   const url = query ? `/api/banners?${query}` : "/api/banners";
   const { data } = await apiClient.get<BannersResponse>(url);
-  const list = data?.success && Array.isArray(data.data) ? data.data : [];
+  const list = unwrapList<BannerItem>(data);
   return params?.limit != null ? list.slice(0, params.limit) : list;
 }
