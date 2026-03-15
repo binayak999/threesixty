@@ -6,6 +6,7 @@ import Amenity from '../models/Amenity';
 import User from '../models/User';
 import Review from '../models/Review';
 import Media from '../models/Media';
+import { getSessionFromCookie } from '../lib/session';
 import '../models/Tier';
 
 const router = Router();
@@ -145,7 +146,7 @@ router.post('/', async (req: Request, res: Response) => {
   }
 });
 
-router.post('/create-full', async (req: Request, res: Response): Promise<void> => {
+async function handleCreateFull(req: Request, res: Response): Promise<void> {
   try {
     const {
       userId,
@@ -295,7 +296,20 @@ router.post('/create-full', async (req: Request, res: Response): Promise<void> =
     console.error('Create listing error:', err);
     res.status(500).json({ success: false, message: (err as Error).message });
   }
-});
+}
+
+function requireSessionForCreate(req: Request, res: Response, next: () => void): void {
+  const user = getSessionFromCookie(req.headers.cookie);
+  if (!user?.id) {
+    res.status(401).json({ message: 'Unauthorized.' });
+    return;
+  }
+  req.body = { ...(req.body || {}), userId: user.id };
+  next();
+}
+
+router.post('/create', requireSessionForCreate, handleCreateFull);
+router.post('/create-full', handleCreateFull);
 
 router.patch('/:id', async (req: Request, res: Response): Promise<void> => {
   try {

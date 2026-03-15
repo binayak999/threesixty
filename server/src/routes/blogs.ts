@@ -2,9 +2,20 @@ import { Router, Request, Response } from 'express';
 import Blog from '../models/Blog';
 import User from '../models/User';
 import Media from '../models/Media';
+import { getSessionFromCookie } from '../lib/session';
 import '../models/Tier';
 
 const router = Router();
+
+function requireSessionForCreate(req: Request, res: Response, next: () => void): void {
+  const user = getSessionFromCookie(req.headers.cookie);
+  if (!user?.id) {
+    res.status(401).json({ message: 'Unauthorized.' });
+    return;
+  }
+  req.body = { ...(req.body || {}), user: user.id };
+  next();
+}
 
 async function ensureMediaOwnership(mediaIds: string[], ownerId: string): Promise<boolean> {
   if (mediaIds.length === 0) return true;
@@ -138,7 +149,7 @@ router.get('/:id', async (req: Request, res: Response) => {
   }
 });
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', requireSessionForCreate, async (req: Request, res: Response) => {
   try {
     const userId = req.body.user;
     if (!userId) {

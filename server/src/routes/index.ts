@@ -15,10 +15,12 @@ import videoRoutes from './videos';
 import bannerRoutes from './banners';
 import pageRoutes from './pages';
 import userRoutes from './users';
+import profileRoutes from './profile';
 
 const router = Router();
 
 router.use('/users', userRoutes);
+router.use('/profile', profileRoutes);
 router.use('/listings', listingRoutes);
 router.use('/categories', categoryRoutes);
 router.use('/auth', authRoutes);

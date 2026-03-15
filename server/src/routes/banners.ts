@@ -1,7 +1,17 @@
 import { Router, Request, Response } from 'express';
 import Banner from '../models/Banner';
+import { getSessionFromCookie } from '../lib/session';
 
 const router = Router();
+
+function requireSessionForCreate(req: Request, res: Response, next: () => void): void {
+  const user = getSessionFromCookie(req.headers.cookie);
+  if (!user?.id) {
+    res.status(401).json({ message: 'Unauthorized.' });
+    return;
+  }
+  next();
+}
 
 router.get('/', async (req: Request, res: Response) => {
   try {
@@ -38,7 +48,7 @@ router.get('/:id', async (req: Request, res: Response) => {
   }
 });
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', requireSessionForCreate, async (req: Request, res: Response) => {
   try {
     const { title, media, is360, bannerType, link } = req.body;
     if (!title || !media) {

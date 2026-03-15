@@ -1,9 +1,20 @@
 import { Router, Request, Response } from 'express';
 import Video from '../models/Video';
 import User from '../models/User';
+import { getSessionFromCookie } from '../lib/session';
 import '../models/Tier';
 
 const router = Router();
+
+function requireSessionForCreate(req: Request, res: Response, next: () => void): void {
+  const user = getSessionFromCookie(req.headers.cookie);
+  if (!user?.id) {
+    res.status(401).json({ message: 'Unauthorized.' });
+    return;
+  }
+  req.body = { ...(req.body || {}), userId: user.id };
+  next();
+}
 
 const publishedFilter = { $or: [ { status: 'published' }, { status: { $exists: false } } ] };
 
@@ -72,7 +83,7 @@ router.get('/:id', async (req: Request, res: Response) => {
   }
 });
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', requireSessionForCreate, async (req: Request, res: Response) => {
   try {
     const { title, youtubeLink, thumbnail, userId } = req.body;
     if (!title || !youtubeLink) {
