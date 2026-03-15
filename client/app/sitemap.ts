@@ -24,13 +24,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [];
 
   // Static and common pages
+  type ChangeFreq = "weekly" | "monthly";
   entries.push(
-    ...STATIC_PATHS.map((path) => ({
-      url: `${base}${path || "/"}`,
-      lastModified: new Date(),
-      changeFrequency: (path === "" ? "weekly" : "monthly") as const,
-      priority: path === "" ? 1 : 0.8,
-    }))
+    ...STATIC_PATHS.map((path) => {
+      const changeFrequency: ChangeFreq = path === "" ? "weekly" : "monthly";
+      return {
+        url: `${base}${path || "/"}`,
+        lastModified: new Date(),
+        changeFrequency,
+        priority: path === "" ? 1 : 0.8,
+      };
+    })
   );
 
   // Blog posts
