@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { getMediaUrlFromRef } from "@/lib/mediaUrl";
 import { apiClient } from "@/lib/apiClient";
-import type { ListingItem, ListingCategory, ListingUser, ListingLocation } from "../types";
+import type { ListingItem, ListingCategory, ListingUser, ListingLocation, ListingMediaRef } from "../types";
 
 export default function ViewListingPage() {
   const params = useParams();

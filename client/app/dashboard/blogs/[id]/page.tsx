@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { getMediaUrlFromRef } from "@/lib/mediaUrl";
 import { apiClient } from "@/lib/apiClient";
-import type { BlogItem, BlogCategory, BlogUser } from "../types";
+import type { BlogItem, BlogCategory, BlogUser, BlogMediaRef } from "../types";
 
 export default function ViewBlogPage() {
   const params = useParams();

@@ -45,9 +45,11 @@ export interface MediaRef {
 /**
  * Resolve URL from a media ref (urlMedium || url || urlLow). Use this for listing images,
  * blog images, review images, etc. so all pages use the same media URL logic.
+ * Accepts string (e.g. media ID when not populated) and returns "" in that case.
  */
-export function getMediaUrlFromRef(media: MediaRef | null | undefined): string {
-  if (!media) return "";
+export function getMediaUrlFromRef(media: MediaRef | string | null | undefined): string {
+  if (media == null) return "";
+  if (typeof media === "string") return "";
   const path = media.urlMedium || media.url || media.urlLow || "";
   return getMediaUrl(path);
 }
