@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
-import { getMediaUrl } from "@/lib/mediaUrl";
+import { getMediaUrlFromRef } from "@/lib/mediaUrl";
 import { notFound } from "next/navigation";
 import ListingReviews from "./ListingReviews";
 
@@ -22,7 +22,7 @@ function starIconClasses(value: number, index: number): string {
   return "fa-star-icon none";
 }
 
-interface MediaRef {
+interface MediaItem {
   media?: { url?: string; urlMedium?: string; urlLow?: string; type?: string };
   role?: string;
   order?: number;
@@ -43,7 +43,7 @@ interface ListingData {
     region?: string;
     country?: string;
   };
-  medias?: MediaRef[];
+  medias?: MediaItem[];
   amenities?: Array<{ name?: string; slug?: string; icon?: string }>;
   openingHours?: Array<{
     dayOfWeek: string;
@@ -51,11 +51,6 @@ interface ListingData {
     closeTime?: string;
     isClosed?: boolean;
   }>;
-}
-
-function getMediaUrlFromRef(m: MediaRef["media"]): string {
-  if (!m) return "";
-  return getMediaUrl(m.urlMedium || m.url || m.urlLow || "");
 }
 
 export default async function ListingDetailPage({ params }: ListingPageProps) {
@@ -255,7 +250,7 @@ export default async function ListingDetailPage({ params }: ListingPageProps) {
               <div className="col-lg-8 content">
                 <div className="mb-4">
                   <h4 className="fw-semibold fs-3 mb-4">
-                    Latest Property <span className="font-caveat text-primary">Reviews</span>
+                    About this <span className="font-caveat text-primary">listing</span>
                   </h4>
                   <div style={{ whiteSpace: "pre-wrap" }}>{listing.description}</div>
                 </div>

@@ -3,14 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { getMediaUrl as resolveMediaUrl } from "@/lib/mediaUrl";
+import { getMediaUrlFromRef } from "@/lib/mediaUrl";
 import { apiClient } from "@/lib/apiClient";
-import type { ListingItem, ListingCategory, ListingUser, ListingLocation, ListingMediaRef } from "../types";
-
-function getMediaUrlFromRef(m: ListingMediaRef["media"]): string | null {
-  if (!m) return null;
-  return typeof m === "object" && m && "url" in m ? (m as { url?: string }).url ?? null : null;
-}
+import type { ListingItem, ListingCategory, ListingUser, ListingLocation } from "../types";
 
 export default function ViewListingPage() {
   const params = useParams();
@@ -120,7 +115,7 @@ export default function ViewListingPage() {
                 return url ? (
                   <div className="mb-3">
                     <img
-                      src={resolveMediaUrl(url)}
+                      src={url}
                       alt="Feature"
                       className="img-fluid rounded w-100"
                       style={{ maxHeight: 320, objectFit: "cover" }}
@@ -136,7 +131,7 @@ export default function ViewListingPage() {
                     return url ? (
                       <div key={key} className="col-6 col-md-4">
                         <img
-                          src={resolveMediaUrl(url)}
+                          src={url}
                           alt="Gallery"
                           className="img-fluid rounded"
                           style={{ objectFit: "cover", width: "100%", height: 140 }}
@@ -153,7 +148,7 @@ export default function ViewListingPage() {
                     const key = typeof m.media === "string" ? m.media : (m.media as { _id: string })._id;
                     return url ? (
                       <div key={key} className="col-12">
-                        <video src={resolveMediaUrl(url)} controls className="rounded w-100" style={{ maxHeight: 360 }} />
+                        <video src={url} controls className="rounded w-100" style={{ maxHeight: 360 }} />
                       </div>
                     ) : null;
                   })}

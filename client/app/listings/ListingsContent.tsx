@@ -4,6 +4,7 @@ import { useMemo, useState, useCallback, useEffect } from "react";
 import Link from "next/link";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
+import { getMediaUrlFromRef } from "@/lib/mediaUrl";
 import type {
   ListingsDataCategory,
   ListingsDataListing,
@@ -30,8 +31,7 @@ function mapApiListingToCard(listing: ListingsDataListing): ListingCardItem {
   const featureMedia = listing.medias?.find((m) => m.role === "feature")?.media
     || listing.medias?.[0]?.media;
   const image =
-    featureMedia?.urlMedium || featureMedia?.url || featureMedia?.urlLow
-    || "/assets/images/place/01.jpg";
+    getMediaUrlFromRef(featureMedia) || "/assets/images/place/01.jpg";
   const locationName =
     typeof listing.location === "object" && listing.location
       ? listing.location.name || listing.location.slug || ""

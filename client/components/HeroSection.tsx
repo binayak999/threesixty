@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { getMediaUrl } from "@/lib/mediaUrl";
+import { getMediaUrlFromRef } from "@/lib/mediaUrl";
 import type { BannerItem } from "@/server";
 
 export interface HeroLocationItem {
@@ -20,11 +20,6 @@ const PannellumViewer = dynamic(
   { ssr: false, loading: () => <div className="w-100 h-100 bg-dark d-flex align-items-center justify-content-center"><div className="spinner-border text-light" role="status" /></div> }
 );
 
-function getMediaUrlFromBanner(banner: BannerItem): string {
-  const m = banner.media;
-  const url = typeof m === "object" && m && "url" in m ? (m as { url?: string }).url : undefined;
-  return url ?? "";
-}
 
 /** Load pannellum.js only when we need 360° view; returns true when ready. */
 function usePannellumScript(needed: boolean): boolean {
@@ -88,8 +83,8 @@ export default function HeroSection({ banners, locations = [] }: HeroSectionProp
   const current = hasBanners ? banners[currentIndex] : null;
 
   if (!hasBanners) return null;
-  const rawMediaUrl = current ? getMediaUrlFromBanner(current) : "";
-  const mediaUrl = getMediaUrl(rawMediaUrl);
+  const mediaObj = current && typeof current.media === "object" && current.media ? current.media : null;
+  const mediaUrl = getMediaUrlFromRef(mediaObj as { url?: string; urlMedium?: string; urlLow?: string } | null);
   const is360 = current?.is360 === true;
   const bannerLink = current?.link?.trim();
   const hasLink = bannerLink && bannerLink !== "#";

@@ -3,14 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { getMediaUrl as resolveMediaUrl } from "@/lib/mediaUrl";
+import { getMediaUrlFromRef } from "@/lib/mediaUrl";
 import { apiClient } from "@/lib/apiClient";
-import type { BlogItem, BlogCategory, BlogUser, BlogMediaRef } from "../types";
-
-function getMediaUrlFromRef(m: BlogMediaRef["media"]): string | null {
-  if (!m) return null;
-  return typeof m === "object" && m && "url" in m ? (m as { url?: string }).url ?? null : null;
-}
+import type { BlogItem, BlogCategory, BlogUser } from "../types";
 
 export default function ViewBlogPage() {
   const params = useParams();
@@ -111,7 +106,7 @@ export default function ViewBlogPage() {
                 const url = getMediaUrlFromRef(m.media);
                 return url ? (
                   <div key={typeof m.media === "string" ? m.media : (m.media as { _id: string })._id} className="mb-3">
-                    <img src={resolveMediaUrl(url)} alt="Feature" className="img-fluid rounded w-100" style={{ maxHeight: 320, objectFit: "cover" }} />
+                    <img src={url} alt="Feature" className="img-fluid rounded w-100" style={{ maxHeight: 320, objectFit: "cover" }} />
                   </div>
                 ) : null;
               })}
@@ -124,7 +119,7 @@ export default function ViewBlogPage() {
                       const url = getMediaUrlFromRef(m.media);
                       return url ? (
                         <div key={typeof m.media === "string" ? m.media : (m.media as { _id: string })._id} className="col-6 col-md-4">
-                          <img src={resolveMediaUrl(url)} alt="Gallery" className="img-fluid rounded" style={{ objectFit: "cover", width: "100%", height: 140 }} />
+                          <img src={url} alt="Gallery" className="img-fluid rounded" style={{ objectFit: "cover", width: "100%", height: 140 }} />
                         </div>
                       ) : null;
                     })}
@@ -139,7 +134,7 @@ export default function ViewBlogPage() {
                       const url = getMediaUrlFromRef(m.media);
                       return url ? (
                         <div key={typeof m.media === "string" ? m.media : (m.media as { _id: string })._id} className="col-12">
-                          <video src={resolveMediaUrl(url)} controls className="rounded w-100" style={{ maxHeight: 360 }} />
+                          <video src={url} controls className="rounded w-100" style={{ maxHeight: 360 }} />
                         </div>
                       ) : null;
                     })}
