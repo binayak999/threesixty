@@ -1,7 +1,10 @@
 import axios from "axios";
 
-// Use NEXT_PUBLIC_API_URL in browser (client components calling getBlogs/getVideos etc.); API_URL on server
-const rawUrl = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || "http://localhost:4000";
+// Server (Node/SSR/Docker): prefer API_URL so container can use http://server:4000. Browser: use NEXT_PUBLIC_API_URL or fallback.
+const rawUrl =
+  typeof window === "undefined"
+    ? (process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000")
+    : (process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000");
 // Strip trailing /api or /api/ so baseURL is the origin; server paths are always /api/...
 const baseURL = rawUrl.replace(/\/api\/?$/, "");
 
