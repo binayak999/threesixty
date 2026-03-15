@@ -15,9 +15,9 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  // Proxy /uploads to the API server so relative media URLs (e.g. /uploads/xxx.jpg) load correctly
+  // Proxy /uploads to the backend that serves static uploads. Use backend origin only (no /api path).
   async rewrites() {
-    const apiUrl = process.env.API_URL || "http://localhost:4000";
+    const apiUrl = (process.env.API_URL || process.env.BACKEND_URL || "http://localhost:4000").replace(/\/api\/?$/, "");
     return [{ source: "/uploads/:path*", destination: `${apiUrl}/uploads/:path*` }];
   },
 };

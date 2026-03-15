@@ -1,7 +1,9 @@
 /**
- * Base URL for media assets. When set, relative paths are prefixed so they resolve to the API.
- * For same-origin loading (recommended in production): leave unset so /uploads/... is requested
- * from the current origin and your server (Next.js rewrites or Nginx) proxies to the backend.
+ * Base URL for media assets (backend origin that serves /uploads).
+ * - Set NEXT_PUBLIC_MEDIA_BASE_URL to your backend root (e.g. https://api.360nepal.com) so
+ *   image requests go directly to the backend when the proxy is unreliable.
+ * - Or set NEXT_PUBLIC_API_URL as fallback (same: backend root, no trailing /api).
+ * - Leave both unset for same-origin: browser requests /uploads/... and Next.js rewrites to backend.
  */
 export const MEDIA_BASE_URL =
   (typeof process !== "undefined" && process.env?.NEXT_PUBLIC_MEDIA_BASE_URL) ||
