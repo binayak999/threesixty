@@ -16,11 +16,18 @@ interface CategoriesResponse {
 
 export type CategoryType = "listing" | "blog";
 
-export async function getCategories(type?: CategoryType): Promise<CategoryItem[]> {
-  const params = new URLSearchParams();
-  if (type) params.set("type", type);
-  params.set("publishedOnly", "1");
-  const query = params.toString();
+export interface GetCategoriesParams {
+  type?: CategoryType;
+  parentOnly?: boolean;
+}
+
+export async function getCategories(params?: GetCategoriesParams | CategoryType): Promise<CategoryItem[]> {
+  const search = new URLSearchParams();
+  const type = typeof params === "string" ? params : params?.type;
+  if (type) search.set("type", type);
+  search.set("publishedOnly", "1");
+  if (typeof params === "object" && params?.parentOnly) search.set("parentOnly", "1");
+  const query = search.toString();
   const url = query ? `/api/categories?${query}` : "/api/categories";
   const { data } = await apiClient.get<CategoriesResponse>(url);
   if (data?.data && Array.isArray(data.data)) return data.data;

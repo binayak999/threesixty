@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import type { LocationItem } from "@/server";
+import { getMediaUrl } from "@/lib/mediaUrl";
+import type { LocationItem, ListingItem } from "@/server";
 
 const PLACEHOLDER_IMAGES = [
   "/assets/images/locations/masonry/09.jpg",
@@ -10,18 +11,45 @@ const PLACEHOLDER_IMAGES = [
   "/assets/images/locations/masonry/12.jpg",
 ];
 
-function getPlaceImage(index: number): string {
+function getPlaceholderImage(index: number): string {
   return PLACEHOLDER_IMAGES[index % PLACEHOLDER_IMAGES.length] ?? PLACEHOLDER_IMAGES[0];
+}
+
+function getListingImageUrl(listing: ListingItem): string {
+  const medias = listing.medias ?? [];
+  const feature = medias.find((m) => m.role === "feature");
+  const url = feature?.media?.url ?? feature?.media?.urlMedium ?? feature?.media?.urlLow;
+  return url ? getMediaUrl(url) : "";
+}
+
+/** For a location, pick the first listing in that location and return its image URL, or "" */
+function getLocationImageUrl(location: LocationItem, listings: ListingItem[]): string {
+  for (const listing of listings) {
+    const loc = listing.location;
+    if (!loc) continue;
+    const locId = typeof loc === "object" && loc !== null && "_id" in loc ? (loc as { _id?: string })._id : undefined;
+    const locSlug = typeof loc === "object" && loc !== null && "slug" in loc ? (loc as { slug?: string }).slug : undefined;
+    if (locId === location._id || locSlug === location.slug) {
+      const img = getListingImageUrl(listing);
+      if (img) return img;
+    }
+  }
+  return "";
 }
 
 interface PlacesSectionProps {
   locations: LocationItem[];
+  /** Optional listings (e.g. featured) used to show a real image per location when available */
+  listings?: ListingItem[];
 }
 
-export default function PlacesSection({ locations }: PlacesSectionProps) {
+export default function PlacesSection({ locations, listings = [] }: PlacesSectionProps) {
   if (locations.length === 0) return null;
 
   const [first, second, ...rest] = locations;
+
+  const getImage = (loc: LocationItem, index: number) =>
+    getLocationImageUrl(loc, listings) || getPlaceholderImage(index);
 
   return (
     <div className="py-5">
@@ -40,11 +68,11 @@ export default function PlacesSection({ locations }: PlacesSectionProps) {
             <div className="col-md-6">
               <div className="card rounded-4 h-100 overflow-hidden bg-light border-0 position-relative">
                 <div className="position-relative overflow-hidden dark-overlay h-100">
-                  <img src={getPlaceImage(0)} className="h-100 w-100 object-fit-cover image-zoom-hover" alt="" />
+                  <img src={getImage(first, 0)} className="h-100 w-100 object-fit-cover image-zoom-hover" alt="" />
                 </div>
                 <div className="card-body py-3">
-                  <h4 className="font-caveat text-primary mb-0">{first.region || first.country || "Location"}</h4>
-                  <h5 className="mb-0 fw-semibold"><Link href={`/listings?location=${encodeURIComponent(first.slug)}`} className="stretched-link">{first.name}</Link></h5>
+                  <h4 className="font-caveat text-primary mb-0">{first.country || "Location"}</h4>
+                  <h5 className="mb-0 fw-semibold"><Link href={`/listings?location=${encodeURIComponent(first.slug)}`} className="stretched-link">{first.region}</Link></h5>
                 </div>
               </div>
             </div>
@@ -53,11 +81,11 @@ export default function PlacesSection({ locations }: PlacesSectionProps) {
             <div className="col-md-3">
               <div className="card rounded-4 h-100 overflow-hidden bg-light border-0 position-relative">
                 <div className="position-relative overflow-hidden dark-overlay h-100">
-                  <img src={getPlaceImage(1)} className="h-100 w-100 object-fit-cover image-zoom-hover" alt="" />
+                  <img src={getImage(second, 1)} className="h-100 w-100 object-fit-cover image-zoom-hover" alt="" />
                 </div>
                 <div className="card-body py-3">
-                  <h4 className="font-caveat text-primary mb-0">{second.region || second.country || "Location"}</h4>
-                  <h5 className="mb-0 fw-semibold"><Link href={`/listings?location=${encodeURIComponent(second.slug)}`} className="stretched-link">{second.name}</Link></h5>
+                  <h4 className="font-caveat text-primary mb-0">{second.country || "Location"}</h4>
+                  <h5 className="mb-0 fw-semibold"><Link href={`/listings?location=${encodeURIComponent(second.slug)}`} className="stretched-link">{second.region}</Link></h5>
                 </div>
               </div>
             </div>
@@ -69,11 +97,11 @@ export default function PlacesSection({ locations }: PlacesSectionProps) {
                   <div key={loc._id} className="col-12">
                     <div className="card rounded-4 h-100 overflow-hidden bg-light border-0 position-relative">
                       <div className="position-relative overflow-hidden dark-overlay h-100">
-                        <img src={getPlaceImage(2 + i)} className="h-100 w-100 object-fit-cover image-zoom-hover" alt="" />
+                        <img src={getImage(loc, 2 + i)} className="h-100 w-100 object-fit-cover image-zoom-hover" alt="" />
                       </div>
                       <div className="card-body py-3">
-                        <h4 className="font-caveat text-primary mb-0">{loc.region || loc.country || "Location"}</h4>
-                        <h5 className="mb-0 fw-semibold"><Link href={`/listings?location=${encodeURIComponent(loc.slug)}`} className="stretched-link">{loc.name}</Link></h5>
+                        <h4 className="font-caveat text-primary mb-0">{loc.country || "Location"}</h4>
+                        <h5 className="mb-0 fw-semibold"><Link href={`/listings?location=${encodeURIComponent(loc.slug)}`} className="stretched-link">{loc.region}</Link></h5>
                       </div>
                     </div>
                   </div>

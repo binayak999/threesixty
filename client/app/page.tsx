@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import CategoriesSection from "@/components/CategoriesSection";
+import AdsSection from "@/components/AdsSection";
 import PlacesSection from "@/components/PlacesSection";
 import PopularRestaurantsSection from "@/components/PopularRestaurantsSection";
 import VideoSection from "@/components/VideoSection";
@@ -55,8 +56,9 @@ export default async function HomePage() {
       <main>
         <HeroSection banners={data.banners as BannerItem[]} locations={data.locations as LocationItem[]} />
         <CategoriesSection categories={data.categories as CategoryItem[]} />
-        <PlacesSection locations={(data.locations as LocationItem[]).slice(0, 4)} />
-        <PopularRestaurantsSection listings={data.featuredListings as ListingItem[]} />
+        <AdsSection banners={(data.adsBanners ?? []) as BannerItem[]} />
+        <PlacesSection locations={(data.locations as LocationItem[]).slice(0, 4)} listings={data.listingsForPlaces as ListingItem[]} />
+        <PopularRestaurantsSection listings={(data.featuredListings ?? []) as ListingItem[]} adsBanners={(data.adsBanners ?? []) as BannerItem[]} />
         <VideoSection videos={data.videos as VideoItem[]} />
         <TrendingNowSection posts={data.trendingBlogs as BlogItem[]} />
         <NewsSection articles={data.newsBlogs as BlogItem[]} />

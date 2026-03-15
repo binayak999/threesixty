@@ -2,12 +2,14 @@ import axios from "axios";
 
 /**
  * Shared axios instance for client-side API calls.
- * - baseURL: "" so requests go to same origin (/api/...).
+ * Talks to backend directly (NEXT_PUBLIC_API_URL in browser, API_URL on server); no Next.js API proxy.
  * - withCredentials: true so cookies (auth_session) are sent.
  * - FormData: Content-Type is cleared so axios/browser sets multipart/form-data with boundary.
  */
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || "http://localhost:4000";
+
 export const apiClient = axios.create({
-  baseURL: "",
+  baseURL: API_BASE,
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { getMediaUrl } from "@/lib/mediaUrl";
-import type { ListingItem } from "@/server";
+import type { ListingItem, BannerItem } from "@/server";
 
 const PLACEHOLDER_IMG = "/assets/images/place/17.jpg";
 
@@ -11,6 +11,13 @@ function getFeatureImageUrl(listing: ListingItem): string {
   const feature = medias.find((m) => m.role === "feature");
   const url = feature?.media?.url ?? feature?.media?.urlMedium ?? feature?.media?.urlLow;
   return url ? getMediaUrl(url) : PLACEHOLDER_IMG;
+}
+
+function getBannerImageUrl(banner: BannerItem): string {
+  const media = banner.media;
+  if (typeof media === "string") return "";
+  if (media && typeof media === "object" && "url" in media) return getMediaUrl((media as { url?: string }).url);
+  return "";
 }
 
 function getAddress(listing: ListingItem): string {
@@ -23,10 +30,18 @@ function getAddress(listing: ListingItem): string {
 
 interface PopularRestaurantsSectionProps {
   listings: ListingItem[];
+  /** Ads from banner API (bannerType: adsbanner); first item used for the promo banner */
+  adsBanners?: BannerItem[];
 }
 
-export default function PopularRestaurantsSection({ listings }: PopularRestaurantsSectionProps) {
+export default function PopularRestaurantsSection({ listings, adsBanners = [] }: PopularRestaurantsSectionProps) {
   if (listings.length === 0) return null;
+
+  const promoAd = adsBanners?.length ? adsBanners[0] : null;
+  const promoImg = promoAd ? getBannerImageUrl(promoAd) : "";
+  const showPromoBanner = promoAd && promoImg;
+  const promoLink = promoAd?.link?.trim();
+  const hasPromoLink = promoLink && promoLink !== "#";
 
   return (
     <div className="py-5 bg-light rounded-4 mx-3 my-3 bg-size-contain js-bg-image js-bg-image-lines" data-image-src="/assets/images/lines.svg">
@@ -83,20 +98,30 @@ export default function PopularRestaurantsSection({ listings }: PopularRestauran
               </div>
             ))}
         </div>
-        <div className="banner banne-restaurant dark-overlay mt-5 overflow-hidden position-relative rounded-4">
-          <img src="/assets/images/banner-bg-03.jpg" className="bg-image js-image-parallax" alt="" />
-          <div className="align-items-center g-4 h-100 justify-content-between p-3 p-sm-5 position-relative row text-white wrapper z-1">
-            <div className="col-md-7 col-lg-6 text-center text-md-start">
-              <div className="fs-14 l-spacing-1">SPECIAL OFFER</div>
-              <h2 className="display-5 fw-semibold lh-1">Discover Nepal<br className="d-none d-lg-block" /> one listing at a time</h2>
-              <p>Restaurants, hotels, and local favorites</p>
-              <Link href="/listings" className="btn btn-primary mt-3">Explore listings</Link>
-            </div>
-            <div className="col-md-5 col-lg-4">
-              <img src="/assets/images/png-img/happy-hour-02.png" alt="" className="img-fluid" />
+        {showPromoBanner && (
+          <div className="banner banne-restaurant dark-overlay mt-5 overflow-hidden position-relative rounded-4">
+            <img
+              src={promoImg}
+              className="bg-image js-image-parallax"
+              alt={promoAd?.title || ""}
+            />
+            <div className="align-items-center g-4 h-100 justify-content-between p-3 p-sm-5 position-relative row text-white wrapper z-1">
+              <div className="col-md-7 col-lg-6 text-center text-md-start">
+                <div className="fs-14 l-spacing-1">SPECIAL OFFER</div>
+                {promoAd?.title && <h2 className="display-5 fw-semibold lh-1">{promoAd.title}</h2>}
+                <p>Restaurants, hotels, and local favorites</p>
+                {hasPromoLink ? (
+                  <a href={promoLink} className="btn btn-primary mt-3" target="_blank" rel="noopener noreferrer">Explore offer</a>
+                ) : (
+                  <Link href="/listings" className="btn btn-primary mt-3">Explore listings</Link>
+                )}
+              </div>
+              <div className="col-md-5 col-lg-4">
+                <img src="/assets/images/png-img/happy-hour-02.png" alt="" className="img-fluid" />
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

@@ -1,8 +1,12 @@
 import axios from "axios";
 
-/** Axios instance for app API calls. Uses relative /api paths (same origin). */
+const rawUrl = process.env.API_URL || "http://localhost:4000";
+// Strip trailing /api or /api/ so baseURL is the origin; server paths are always /api/...
+const baseURL = rawUrl.replace(/\/api\/?$/, "");
+
+/** Axios instance for server-side API calls. Talks to backend (API_URL) directly. */
 export const apiClient = axios.create({
-  baseURL: "",
+  baseURL,
   timeout: 15000,
   headers: { "Content-Type": "application/json" },
 });

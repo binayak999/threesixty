@@ -25,14 +25,16 @@ interface BannersResponse {
 
 export interface GetBannersParams {
   bannerType?: BannerType;
+  limit?: number;
 }
 
 export async function getBanners(params?: GetBannersParams): Promise<BannerItem[]> {
   const search = new URLSearchParams();
   if (params?.bannerType) search.set("bannerType", params.bannerType);
+  if (params?.limit != null) search.set("limit", String(params.limit));
   const query = search.toString();
   const url = query ? `/api/banners?${query}` : "/api/banners";
   const { data } = await apiClient.get<BannersResponse>(url);
-  if (data?.success && Array.isArray(data.data)) return data.data;
-  return [];
+  const list = data?.success && Array.isArray(data.data) ? data.data : [];
+  return params?.limit != null ? list.slice(0, params.limit) : list;
 }

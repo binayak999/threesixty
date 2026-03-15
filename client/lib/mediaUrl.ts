@@ -1,9 +1,6 @@
 /**
- * Base URL for media assets (backend origin that serves /uploads). Same logic everywhere so
- * home, listings, and single listing pages all resolve media URLs consistently.
- * - NEXT_PUBLIC_MEDIA_BASE_URL or NEXT_PUBLIC_API_URL: backend root (no trailing /api). Use for client + server.
- * - API_URL (server-only): fallback when NEXT_PUBLIC_* are unset; we strip /api to get origin.
- * - Leave all unset for same-origin: relative /uploads/... with Next.js rewrites.
+ * Base URL for media assets (backend origin). Only used when we need an absolute URL
+ * (e.g. open graph, redirects). For <img src> we use relative paths to avoid hydration mismatch.
  */
 function getMediaBaseUrl(): string {
   if (typeof process === "undefined") return "";
@@ -20,18 +17,21 @@ function getMediaBaseUrl(): string {
   return "";
 }
 
+/** @deprecated Prefer relative URLs for in-page media. */
 export const MEDIA_BASE_URL = getMediaBaseUrl();
 
 /**
- * Returns the URL for media. Absolute URLs are returned as-is. Relative paths (e.g. /uploads/xxx)
- * are prefixed with MEDIA_BASE_URL when set, otherwise returned as-is (same-origin).
+ * Returns the URL for media in the app (e.g. <img src>). Uses relative paths (/uploads/...)
+ * so server and client render the same URL and Next.js rewrites can proxy to the backend.
+ * Absolute URLs from the API are returned as-is. This avoids hydration mismatch from
+ * env differing between server (no NEXT_PUBLIC_*) and client (inlined).
  */
 export function getMediaUrl(url: string | undefined | null): string {
   if (url == null || url === "") return "";
   if (url.startsWith("http://") || url.startsWith("https://")) return url;
   const path = url.startsWith("/") ? url : `/${url}`;
-  const base = MEDIA_BASE_URL;
-  return base ? `${base}${path}` : path;
+  // Always use relative path so SSR and client output match; rewrites proxy /uploads to backend
+  return path;
 }
 
 /** Media object shape from API (listing, blog, banner, etc.). */

@@ -30,6 +30,7 @@ export interface GetListingsParams {
 export async function getListings(params?: GetListingsParams): Promise<ListingItem[]> {
   const search = new URLSearchParams();
   if (params?.featuredOnly) search.set("featuredOnly", "1");
+  if (params?.limit != null && params.limit > 0) search.set("limit", String(params.limit));
   const query = search.toString();
   const url = query ? `/api/listings?${query}` : "/api/listings";
   const { data } = await apiClient.get<ListingsResponse>(url);

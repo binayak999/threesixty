@@ -1,15 +1,16 @@
 /**
- * Server-side only: fetches all home page data from the backend in parallel.
+ * Server-side only: fetches all home page data from the backend via client/server.
  * Use from async Server Components (e.g. app/page.tsx).
  */
 
-const API_URL = process.env.API_URL || "http://localhost:4000";
-
-async function fetchJson<T>(url: string): Promise<T> {
-  const res = await fetch(url, { next: { revalidate: 60 } });
-  const data = await res.json().catch(() => ({}));
-  return data as T;
-}
+import {
+  getBanners,
+  getCategories,
+  getLocations,
+  getListings,
+  getVideos,
+  getBlogs,
+} from "@/server";
 
 export interface HomeData {
   banners: Array<{
@@ -18,6 +19,13 @@ export interface HomeData {
     is360?: boolean;
     media: { _id: string; url?: string; type?: string } | string;
     bannerType?: string;
+    link?: string;
+  }>;
+  /** Ads banners (bannerType: adsbanner) for the ads section */
+  adsBanners: Array<{
+    _id: string;
+    title: string;
+    media: { _id: string; url?: string; type?: string } | string;
     link?: string;
   }>;
   categories: Array<{ _id: string; name: string; slug: string; type?: string; icon?: string; order?: number }>;
@@ -32,6 +40,14 @@ export interface HomeData {
     user?: { name?: string; email?: string };
     medias?: Array<{ role: string; media?: { _id: string; url?: string; urlMedium?: string; urlLow?: string } }>;
     isFeatured?: boolean;
+  }>;
+  /** Listings used to show a real image per location in PlacesSection (need variety of locations) */
+  listingsForPlaces: Array<{
+    _id: string;
+    title: string;
+    slug: string;
+    location?: { _id: string; name?: string; slug?: string };
+    medias?: Array<{ role: string; media?: { _id: string; url?: string; urlMedium?: string; urlLow?: string } }>;
   }>;
   videos: Array<{
     _id: string;
@@ -63,35 +79,40 @@ export interface HomeData {
 
 const emptyHomeData: HomeData = {
   banners: [],
+  adsBanners: [],
   categories: [],
   locations: [],
   featuredListings: [],
+  listingsForPlaces: [],
   videos: [],
   trendingBlogs: [],
   newsBlogs: [],
 };
 
 export async function fetchHomeData(): Promise<HomeData> {
-  const base = API_URL;
   try {
-    const [bannersRes, categoriesRes, locationsRes, listingsRes, videosRes, featuredBlogsRes, latestBlogsRes] = await Promise.all([
-      fetchJson<{ success?: boolean; data?: HomeData["banners"] }>(`${base}/api/banners?bannerType=homebanner&limit=5`),
-      fetchJson<{ success?: boolean; data?: HomeData["categories"] }>(`${base}/api/categories?type=listing&publishedOnly=1&parentOnly=1`),
-      fetchJson<{ success?: boolean; data?: HomeData["locations"] }>(`${base}/api/locations?hasListings=1`),
-      fetchJson<{ success?: boolean; data?: HomeData["featuredListings"] }>(`${base}/api/listings?featuredOnly=1`),
-      fetchJson<{ success?: boolean; data?: HomeData["videos"] }>(`${base}/api/videos`),
-      fetchJson<{ success?: boolean; data?: HomeData["trendingBlogs"] }>(`${base}/api/blogs?publishedOnly=1&featuredOnly=1&limit=6`),
-      fetchJson<{ success?: boolean; data?: HomeData["newsBlogs"] }>(`${base}/api/blogs?publishedOnly=1&limit=10`),
+    const [
+      banners,
+      adsBannersRaw,
+      categories,
+      locations,
+      featuredListingsRaw,
+      listingsForPlacesRaw,
+      videos,
+      featuredBlogs,
+      latestBlogs,
+    ] = await Promise.all([
+      getBanners({ bannerType: "homebanner", limit: 5 }),
+      getBanners({ bannerType: "adsbanner", limit: 6 }),
+      getCategories({ type: "listing", parentOnly: true }),
+      getLocations({ hasListings: true }),
+      getListings({ featuredOnly: true, limit: 6 }),
+      getListings({ limit: 24 }),
+      getVideos(6),
+      getBlogs({ publishedOnly: true, featuredOnly: true, limit: 6 }),
+      getBlogs({ publishedOnly: true, limit: 10 }),
     ]);
 
-    const banners = (bannersRes?.success && Array.isArray(bannersRes.data) ? bannersRes.data : []).slice(0, 5);
-    const categories = categoriesRes?.success && Array.isArray(categoriesRes.data) ? categoriesRes.data : [];
-    const locations = locationsRes?.success && Array.isArray(locationsRes.data) ? locationsRes.data : [];
-    const featuredListings = (listingsRes?.success && Array.isArray(listingsRes.data) ? listingsRes.data : []).slice(0, 2);
-    const videos = (videosRes?.success && Array.isArray(videosRes.data) ? videosRes.data : []).slice(0, 6);
-
-    const featuredBlogs = (featuredBlogsRes?.success && Array.isArray(featuredBlogsRes.data) ? featuredBlogsRes.data : []) as HomeData["trendingBlogs"];
-    const latestBlogs = (latestBlogsRes?.success && Array.isArray(latestBlogsRes.data) ? latestBlogsRes.data : []) as HomeData["trendingBlogs"];
     const featuredIds = new Set(featuredBlogs.map((b) => b._id));
     const fillFromLatest = latestBlogs.filter((b) => !featuredIds.has(b._id));
     const trendingBlogs = [...featuredBlogs, ...fillFromLatest].slice(0, 6);
@@ -99,12 +120,14 @@ export async function fetchHomeData(): Promise<HomeData> {
 
     return {
       banners,
+      adsBanners: adsBannersRaw,
       categories,
       locations,
-      featuredListings,
+      featuredListings: featuredListingsRaw,
+      listingsForPlaces: listingsForPlacesRaw,
       videos,
-      trendingBlogs,
-      newsBlogs,
+      trendingBlogs: trendingBlogs as HomeData["trendingBlogs"],
+      newsBlogs: newsBlogs as HomeData["newsBlogs"],
     };
   } catch {
     return emptyHomeData;

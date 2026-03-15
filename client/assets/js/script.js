@@ -414,10 +414,12 @@
         })
     }
     if ($('.blog-carousel').length) {
-        var owl = $(".blog-carousel");
-        owl.owlCarousel({
-            loop: true,
-            margin: 24,
+        $(".blog-carousel").each(function() {
+            var owl = $(this);
+            var allowLoop = owl.attr('data-owl-loop') !== 'false' && owl.children().length >= 3;
+            owl.owlCarousel({
+                loop: allowLoop,
+                margin: 24,
             navText: [
                 '<i class="fa-solid fa-arrow-left"></i>',
                 '<i class="fa-solid fa-arrow-right"></i>'
@@ -433,7 +435,8 @@
                     items: 3,
                 }
             }
-        })
+        });
+    });
     }
     if ($('.listings-carousel').length) {
         var owl = $(".listings-carousel");
